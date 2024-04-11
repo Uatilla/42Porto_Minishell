@@ -12,8 +12,17 @@
 
 #include "minishell.h"
 
-int main()
+int main(int argc, char **argv, char **envp)
 {
-    printf("Hello World!\n");
+    t_shell    sh;
+
+    
+    printf("ARGC: %d \t %s\n", argc, argv[1]);
+    while (*envp)
+    {
+        printf("%s\n", *envp);
+        envp++;
+    }
+
     return (0);
 }

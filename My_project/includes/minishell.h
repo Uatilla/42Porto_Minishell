@@ -15,4 +15,13 @@
 
 # include <stdio.h>
 
+typedef struct s_env
+{
+    char    *key;
+    char    *value;
+}   t_env;
+typedef struct s_shell
+{
+    t_env   *env;
+}   t_shell;
 #endif

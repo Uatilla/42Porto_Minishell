@@ -38,7 +38,7 @@ INCLUDES	=	includes
 
 # Flags
 CFLAGS		= -Wall -Wextra -Werror -g -O0
-MK_FLAG		= --no-print-directory
+#MK_FLAG		= --no-print-directory
 
 # Files
 SRCS		=	main.c 
@@ -59,7 +59,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 
 $(LIBFT):
 	printf "Making Libft		$(YELLOW)[OK]$(RESET)\n"
-	$(MAKE) $(MK_FLAG) -sC $(LIBFT_DIR)
+	$(MAKE)  -sC $(LIBFT_DIR)
 
 clean:
 	$(RM) $(OBJS_DIR)
