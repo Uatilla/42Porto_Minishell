@@ -34,14 +34,15 @@ SRCS_DIR	=	srcs
 OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
-
+SUB_DIR		=	environment
+ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
 CFLAGS		= -Wall -Wextra -Werror -g -O0
 #MK_FLAG		= --no-print-directory
 
 # Files
-SRCS		=	main.c 
+SRCS		=	main.c environment/env.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
@@ -52,10 +53,19 @@ $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 	printf "Compiling		$(GREEN)[OK]$(RESET)\n"
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
-	mkdir -p $(@D)
+$(OBJS_DIR):
+	mkdir -p $(OBJS_DIR) $(ALL_OBJS_DIR)
+	printf "Objects directories  	$(YELLOW)[OK]$(RESET)\n"
+
+$(OBJS): $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	$(CC) -I $(INCLUDES) $(CFLAGS) -c $< -o $@
 	printf "Making binary files	$(YELLOW)[OK]$(RESET)\n"
+
+#$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c 
+#	mkdir -p $(@D)
+#	$(CC) -I $(INCLUDES) $(CFLAGS) -c $< -o $@
+#	printf "Making binary files	$(YELLOW)[OK]$(RESET)\n"
+
 
 $(LIBFT):
 	printf "Making Libft		$(YELLOW)[OK]$(RESET)\n"

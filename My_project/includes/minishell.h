@@ -14,15 +14,26 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <stdbool.h>
+# include "../libraries/libft/libft.h"
 
+	// STRUCTURES
 typedef struct s_env
 {
-    char            *key;
-    char            *value;
-    struct s_envv   *next;
-}   t_env;
+	char			*key;
+	char			*value;
+	bool			visible;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_shell
 {
-    t_env   *env;
-}   t_shell;
+	t_env		*env;
+	char		*str;
+}	t_shell;
+
+// FUNCTION PROTOTYPES
+// ENVIRONMENT
+// env.c
+void	fill_env(t_shell *sh, char **env_var);
 #endif
