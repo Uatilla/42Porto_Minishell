@@ -23,12 +23,12 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 	bool			visible;
-	struct s_env	*next;
 }	t_env;
 
 typedef struct s_shell
 {
-	t_env		*env;
+	t_list		*env;
+	//t_env		*content;
 	char		*str;
 }	t_shell;
 
@@ -36,4 +36,7 @@ typedef struct s_shell
 // ENVIRONMENT
 // env.c
 void	fill_env(t_shell *sh, char **env_var);
+
+//exit.c
+//void	free_env(t_env *env);
 #endif

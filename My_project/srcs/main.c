@@ -36,11 +36,8 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	sh;
 
 	init_shell(&sh, envp);
-	while (sh.env->next)
-	{
-		printf("%s %s %d\n", sh.env->key, sh.env->value, sh.env->visible);
-		sh.env = sh.env->next;
-	}
+	
 	printf("IGNORE main(): %d \t %s IGNORE\n", argc, argv[1]);
+	//free_env(&sh.env);
 	return (0);
 }

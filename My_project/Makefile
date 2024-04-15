@@ -42,7 +42,8 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0
 #MK_FLAG		= --no-print-directory
 
 # Files
-SRCS		=	main.c environment/env.c
+SRCS		=	main.c \
+				environment/env.c #exit/exit.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
