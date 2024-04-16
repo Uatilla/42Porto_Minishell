@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-/*t_env	*ft_lstnew_env(char *key, char *value, bool visible)
+t_env	*ft_lstnew_env(char *key, char *value, bool visible)
 {
 	t_env	*temp;
 
@@ -47,7 +47,7 @@ void	ft_lstadd_back_env(t_env **env, t_env *new)
 		if (last)
 			last->next = new;
 	}
-}*/
+}
 
 char	*get_value(char *env_var, int pos)
 {
@@ -77,14 +77,12 @@ char	*get_key(char *env_var, int pos)
 void	fill_env(t_shell *sh, char **env_var)
 {
 	char	*sep;
+	char	*key;
+	char	*value;
 	int		pos;
-	t_env	*node_content;
-	t_list	*new_node;
-
-
+	t_env	*node;
 
 	pos = 0;
-	node_content = ft_calloc(1, sizeof(t_env));
 	printf("IGNORE fill_env()%s IGNORE\n", sh->str);
 	while (*env_var)
 	{
@@ -92,24 +90,14 @@ void	fill_env(t_shell *sh, char **env_var)
 		if (sep)
 		{
 			pos = (int)(sep - *env_var);
-			node_content->key = get_key(*env_var, pos);
-			node_content->value = get_value(*env_var, pos);
-			node_content->visible = true;
-			if (node_content->key && node_content->value)
+			key = get_key(*env_var, pos);
+			value = get_value(*env_var, pos);
+			if (key && value)
 			{
-				new_node = ft_lstnew(node_content);
-
-				/*printf("%s %s %d\n", ((t_env *)(new_node->content))->key,\
-				((t_env *)(new_node->content))->value, ((t_env *)(new_node->content))->visible);*/
-				ft_lstadd_back(&sh->env, new_node);
+				node = ft_lstnew_env(key, value, true);
+				ft_lstadd_back_env(&sh->env, node);
 			}
 		}
 		env_var++;
-	}
-	while (sh->env->next != NULL)
-	{
-		printf("%s %s %d\n", ((t_env *)(new_node->content))->key,\
-				((t_env *)(new_node->content))->value, ((t_env *)(new_node->content))->visible);
-		sh->env = sh->env->next;
 	}
 }

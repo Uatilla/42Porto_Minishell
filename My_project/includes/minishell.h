@@ -23,11 +23,12 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 	bool			visible;
+	int				id;
 }	t_env;
 
 typedef struct s_shell
 {
-	t_list		*env;
+	t_list		*env_lst;
 	//t_env		*content;
 	char		*str;
 }	t_shell;

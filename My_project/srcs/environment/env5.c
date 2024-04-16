@@ -80,15 +80,13 @@ void	fill_env(t_shell *sh, char **env_var)
 	int		pos;
 	t_env	*node_content;
 	t_list	*new_node;
-	int		i = 0;
-	t_list	*env_lst;
+	t_list	*head;
+	int		i = 1;
 
 
 	pos = 0;
-	env_lst = ft_calloc(1, sizeof(t_list *));	
-	
+	head = *sh->env_lst;
 	node_content = ft_calloc(1, sizeof(t_env));
-	sh->env_lst = env_lst;
 	printf("IGNORE fill_env()%s IGNORE\n", sh->str);
 	while (*env_var)
 	{
@@ -103,22 +101,24 @@ void	fill_env(t_shell *sh, char **env_var)
 			if (node_content->key && node_content->value)
 			{
 				new_node = ft_lstnew(node_content);
-				ft_lstadd_back(&sh->env_lst, new_node);
-				printf("ID HEAD: %d | ID: %d\n", ((t_env *)(sh->env_lst->content))->id,\
-						((t_env *)(new_node->content))->id);
-				/*printf("%s %s %d\n", ((t_env *)(sh->env_lst->content))->key,\
-				((t_env *)(sh->env_lst->content))->value, ((t_env *)(sh->env_lst->content))->visible);*/
-				
-				/*printf("%s %s %d\n", ((t_env *)(new_node->content))->key,\
-				((t_env *)(new_node->content))->value, ((t_env *)(new_node->content))->visible);*/
+				printf("New Node ID: %s\n", ((t_env *)(new_node->content))->key);
+				if (sh->env_lst == NULL)
+				{
+					printf("First\n");
+					//SETTING HEAD;
+					*sh->env_lst = new_node;
+					printf("IF Content: %d\n", ((t_env *)(new_node->content))->id);
+					printf("IF HEAD: %d\n", ((t_env *)(head->content))->id);
+				}
+				else
+				{
+					printf("ELSE HEAD: %d\n", ((t_env *)(head->content))->id);
+					ft_lstadd_back(sh->env_lst, new_node);
+				}
 			}
 
 		}
 		i++;
 		env_var++;
 	}
-		//printf("ID HEAD: %d | ID: %d\n", ((t_env *)(head->content))->id, ((t_env *)(new_node->content))->id);
-		/*printf("%s %s %d\n", ((t_env *)(sh->env_lst->content))->key,\
-				((t_env *)(sh->env_lst->content))->value, ((t_env *)(sh->env_lst->content))->visible);*/
-		//sh->env_lst = sh->env_lst->next;
 }
