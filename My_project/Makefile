@@ -34,7 +34,7 @@ SRCS_DIR	=	srcs
 OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
-SUB_DIR		=	environment
+SUB_DIR		=	environment exit
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
@@ -43,7 +43,7 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0
 
 # Files
 SRCS		=	main.c \
-				environment/env.c #exit/exit.c
+				environment/env.c exit/exit.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 

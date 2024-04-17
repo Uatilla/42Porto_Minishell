@@ -12,10 +12,27 @@
 
 #include "minishell.h"
 
-void    free_env(t_env *env)
+void	free_lst_content(void *content)
 {
-    while(env->next)
-    {
-        
-    }
+	t_env	*curr_cont;
+
+	curr_cont = (t_env *)(content);
+	if (!curr_cont)
+		return ;
+	free(curr_cont->key);
+	free(curr_cont->value);
+	free(curr_cont);
+}
+
+void	free_env_list(t_list **env_lst)
+{
+	ft_lstclear(env_lst, free_lst_content);
+}
+
+void	clear_exit(t_shell *sh, int status)
+{
+	if (!sh)
+		exit(EXIT_FAILURE);
+	free_env_list(&sh->env_lst);
+	exit(status);
 }

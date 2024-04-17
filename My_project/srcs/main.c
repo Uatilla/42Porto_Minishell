@@ -24,20 +24,29 @@ int	count_var(char **env_var)
 
 void	init_shell(t_shell *sh, char **env_var)
 {
-	/*0) Set t_shell struct as 0.*/
 	ft_bzero(sh, sizeof(t_shell));
-	/*1) Put each *env into the structure
-	Remember to set the visibility var as true*/
 	fill_env(sh, env_var);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
+	t_list	*temp_lst;
 
+	(void)argc;
+	(void)argv;
 	init_shell(&sh, envp);
-	
-	printf("IGNORE main(): %d \t %s IGNORE\n", argc, argv[1]);
-	//free_env(&sh.env);
+	temp_lst = (sh.env_lst);
+	while (temp_lst->next)
+	{
+		printf("%s %s %d\n", ((t_env *)(temp_lst->content))->key, \
+			((t_env *)(temp_lst->content))->value, \
+				((t_env *)(temp_lst->content))->visible);
+		temp_lst = temp_lst->next;
+	}
+	printf("%s %s %d\n", ((t_env *)(temp_lst->content))->key, \
+		((t_env *)(temp_lst->content))->value, \
+			((t_env *)(temp_lst->content))->visible);
+	clear_exit(&sh, 0);
 	return (0);
 }
