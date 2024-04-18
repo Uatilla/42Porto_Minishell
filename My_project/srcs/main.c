@@ -12,14 +12,12 @@
 
 #include "minishell.h"
 
-int	count_var(char **env_var)
+void	sh_loop(t_shell *sh)
 {
-	int	i;
-
-	i = 0;
-	while (env_var[i])
-		i++;
-	return (i);
+	while (1)
+	{
+		readline();
+	}
 }
 
 void	init_shell(t_shell *sh, char **env_var)
@@ -31,22 +29,10 @@ void	init_shell(t_shell *sh, char **env_var)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
-	t_list	*temp_lst;
 
-	(void)argc;
-	(void)argv;
+	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
-	temp_lst = (sh.env_lst);
-	while (temp_lst->next)
-	{
-		printf("%s %s %d\n", ((t_env *)(temp_lst->content))->key, \
-			((t_env *)(temp_lst->content))->value, \
-				((t_env *)(temp_lst->content))->visible);
-		temp_lst = temp_lst->next;
-	}
-	printf("%s %s %d\n", ((t_env *)(temp_lst->content))->key, \
-		((t_env *)(temp_lst->content))->value, \
-			((t_env *)(temp_lst->content))->visible);
+	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);
 }

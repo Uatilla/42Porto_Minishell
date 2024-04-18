@@ -15,6 +15,8 @@
 
 # include <stdio.h>
 # include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../libraries/libft/libft.h"
 
 	// STRUCTURES
@@ -23,7 +25,6 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 	bool			visible;
-	//struct s_env	*next;
 }	t_env;
 
 typedef struct s_shell
@@ -32,11 +33,16 @@ typedef struct s_shell
 }	t_shell;
 
 // FUNCTION PROTOTYPES
-// ENVIRONMENT
+// ENVIRONMENT FOLDER
 // env.c
 void	fill_env(t_shell *sh, char **env_var);
 
+// EXIT FOLDER
 //exit.c
 void	free_env_list(t_list **env_lst);
 void	clear_exit(t_shell *sh, int status);
+
+// INPUT FOLDER
+// input_checker.c
+void    input_check(int argc, char **argv, char **envp);
 #endif
