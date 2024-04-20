@@ -34,26 +34,29 @@ SRCS_DIR	=	srcs
 OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
-SUB_DIR		=	environment exit input
+SUB_DIR		=	environment exit input signals
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
 CFLAGS		= -Wall -Wextra -Werror -g -O0
+#LFLAGS		=	-L ${LIBFT_PATH} -lft -lreadline
 #MK_FLAG		= --no-print-directory
 
 # Files
 SRCS		=	main.c \
 				environment/env.c \
 				exit/exit.c \
+				signals/signals.c \
 				input/input_checker.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
+#	$(CC) $(CFLAGS) $(OBJS) -L $(LIBFT) -lft -lreadline -o $(NAME)
 # Rules
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 	printf "Compiling		$(GREEN)[OK]$(RESET)\n"
 
 $(OBJS_DIR):

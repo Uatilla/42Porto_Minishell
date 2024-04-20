@@ -15,11 +15,12 @@
 
 # include <stdio.h>
 # include <stdbool.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libraries/libft/libft.h"
 
-	// STRUCTURES
+// STRUCTURES
 typedef struct s_env
 {
 	char			*key;
@@ -31,6 +32,13 @@ typedef struct s_shell
 {
 	t_list		*env_lst;
 }	t_shell;
+
+
+// MACROS
+# define PROMPT "MINISHELL ➜ " 
+
+// EXITING THE GLOBAL VARIABLE
+extern int	g_signo;
 
 // FUNCTION PROTOTYPES
 // ENVIRONMENT FOLDER
@@ -45,4 +53,8 @@ void	clear_exit(t_shell *sh, int status);
 // INPUT FOLDER
 // input_checker.c
 void    input_check(int argc, char **argv, char **envp);
+
+// HANDLING SIGNAL
+// signals.c
+void    reset_signal(void);
 #endif

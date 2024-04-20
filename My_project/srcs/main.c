@@ -12,11 +12,16 @@
 
 #include "minishell.h"
 
+int	g_signo;
+
 void	sh_loop(t_shell *sh)
 {
+	char	*prompt_input; /*This should be an item inside the structure because this
+	variable must be used (probabily) in other functions.*/
+	(void) sh;
 	while (1)
 	{
-		readline();
+		prompt_input = readline(PROMPT);
 	}
 }
 
@@ -32,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
+	reset_signal();
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);
