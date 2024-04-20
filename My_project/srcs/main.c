@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <uviana-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:03 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/11 19:57:06 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:31:32 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signo;
+
+// void	fill_token_lst(t_shell *sh, char *input)
+// {
+// 	t_token *node_content;
+// 	t_list	*new_node;
+
+// 	node_content = ft_calloc(1, sizeof(t_token));
+// 	if (!node_content)
+// 		clear_exit(sh, 1);
+// 	// while(*input == " ")
+// }
 
 void	sh_loop(t_shell *sh)
 {
@@ -22,6 +33,7 @@ void	sh_loop(t_shell *sh)
 	while (1)
 	{
 		prompt_input = readline(PROMPT);
+		// fill_token_lst(sh, prompt_input);
 	}
 }
 
