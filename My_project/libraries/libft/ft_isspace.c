@@ -1,36 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 15:18:48 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/21 20:27:23 by lebarbos         ###   ########.fr       */
+/*   Created: 2024/04/20 20:24:26 by lebarbos          #+#    #+#             */
+/*   Updated: 2024/04/21 20:28:20 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void    refresh_front(void)
+int	ft_isspace(int c)
 {
-    write(1, "\n", 1);
-    rl_on_new_line();
-    // rl_replace_line("", 0);
-    rl_redisplay();
-}
-
-void    sigint_handler(int signo)
-{
-    if (signo == SIGINT)
-    {
-        g_signo = 130;
-        refresh_front();
-    }
-}
-
-void    reset_signal(void)
-{
-    signal(SIGINT, sigint_handler);
-    //signal(SIGQUIT, SIG_IGN);
+	if((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
 }

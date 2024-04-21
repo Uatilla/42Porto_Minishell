@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:03 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/20 17:31:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/21 20:27:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,70 @@
 
 int	g_signo;
 
-// void	fill_token_lst(t_shell *sh, char *input)
-// {
-// 	t_token *node_content;
-// 	t_list	*new_node;
+void	search_quote(char *input, int *j, char c)
+{
+	(*j)++;
+	while(input[*j] != c)
+		(*j)++;
+	if(input[*j] == c)
+		(*j)++;
+}
 
-// 	node_content = ft_calloc(1, sizeof(t_token));
-// 	if (!node_content)
-// 		clear_exit(sh, 1);
-// 	// while(*input == " ")
-// }
+void	search_word(char *input, int *end)
+{
+	int	quotes;
+
+	if (input[*end] && ft_strchr("<>|", input[*end]))
+	{
+		while (input[*end] && ft_strchr("<>|", input[*end]))
+			(*end)++;
+		return ;
+	}
+	while (input[*end] && !ft_strchr("\t\n\v\f\r ", input[*end]) && !ft_strchr("<>|", input[*end]))
+	{
+		if (ft_strchr("\"\'", input[*end]))
+		{
+			quotes = !quotes;
+			search_quote(input, end, input[*end]);
+		}
+		else
+			(*end)++;
+	}
+}
+
+void	fill_token_lst(t_shell *sh, char *input)
+{
+	t_token *node_content;
+	// t_list	*new_node;
+	// char	*value;
+
+	node_content = ft_calloc(1, sizeof(t_token));
+	if (!node_content)
+		clear_exit(sh, 1);
+	while (input[sh->index->start])
+	{
+		while (ft_isspace(input[sh->index->start]))
+			sh->index->start++;
+		sh->index->end = sh->index->start;
+		if(input[sh->index->end] == '\"' || input[sh->index->end] == '\'')
+		{
+			search_quote(input, &sh->index->end, input[sh->index->end]);
+			while (!ft_isspace(input[sh->index->end] && input[sh->index->end]))
+			{
+				if (input[sh->index->end] == '\"' || input[sh->index->end] == '\'')
+					search_quote(input, &sh->index->end, input[sh->index->end]);
+				else
+					search_word(input, &sh->index->end);
+			}
+		}
+		else
+			search_word(input, &sh->index->end);
+		node_content->value = ft_substr(input, sh->index->start, sh->index->end - sh->index->start);
+		// node_content->type = get_token_type(node_content->value);
+		node_content->pos = sh->index->pos;
+		ft_lstadd_back(&sh->token_lst, ft_lstnew(node_content));
+	}
+}
 
 void	sh_loop(t_shell *sh)
 {
@@ -33,7 +87,7 @@ void	sh_loop(t_shell *sh)
 	while (1)
 	{
 		prompt_input = readline(PROMPT);
-		// fill_token_lst(sh, prompt_input);
+		fill_token_lst(sh, prompt_input);
 	}
 }
 

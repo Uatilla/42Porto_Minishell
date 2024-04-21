@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 15:07:18 by uviana-a          #+#    #+#             */
-/*   Updated: 2023/04/18 15:07:21 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/04/20 20:38:17 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ int		ft_toupper(int c);
 //ft_tolower(): Changes one character to lowercase if it's 
 //uppercase else returns the character without changes.
 int		ft_tolower(int c);
+//ft_isspace(): Space character test
+int		ft_isspace(int c);
 
 //STRING TO INTEGER CONVERSION:*******************************************
 

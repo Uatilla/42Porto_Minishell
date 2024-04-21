@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/18 20:30:00 by uviana-a          #+#    #+#              #
-#    Updated: 2023/04/18 20:30:02 by uviana-a         ###   ########.fr        #
+#    Updated: 2024/04/21 20:27:51 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ NAME := libft.a
 SRCS =  ft_strtrim.c     ft_atoi.c         ft_isprint.c    ft_strlen.c\
         ft_strchr.c      ft_strrchr.c      ft_strncmp.c    ft_strnstr.c\
         ft_isalpha.c     ft_isdigit.c      ft_isalnum.c    ft_isascii.c\
+        ft_isspace.c \
         ft_strlcpy.c     ft_strlcat.c      ft_toupper.c    ft_tolower.c\
         ft_bzero.c       ft_memcpy.c       ft_memmove.c\
         ft_putendl_fd.c  ft_putnbr_fd.c    ft_putchar_fd.c ft_putstr_fd.c\

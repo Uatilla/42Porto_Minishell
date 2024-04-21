@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <uviana-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/11 19:58:00 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/04/21 20:21:03 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,27 @@ typedef struct s_env
 	bool			visible;
 }	t_env;
 
+
+typedef struct s_index
+{
+	int	start;
+	int	end;
+	int pos;
+}	t_index;
+
+typedef struct s_token
+{
+	char	*value;
+	int		type;
+	int		pos;
+}	t_token;
+
+
 typedef struct s_shell
 {
 	t_list		*env_lst;
+	t_list		*token_lst;
+	t_index		*index;
 }	t_shell;
 
 
