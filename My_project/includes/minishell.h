@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/21 20:21:03 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:14:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ typedef struct s_env
 	bool			visible;
 }	t_env;
 
-
 typedef struct s_index
 {
 	int	start;
 	int	end;
-	int pos;
+	int	pos;
 }	t_index;
 
 typedef struct s_token
@@ -43,14 +42,12 @@ typedef struct s_token
 	int		pos;
 }	t_token;
 
-
 typedef struct s_shell
 {
 	t_list		*env_lst;
 	t_list		*token_lst;
 	t_index		*index;
 }	t_shell;
-
 
 // MACROS
 # define PROMPT "MINISHELL ➜ " 
@@ -67,12 +64,14 @@ void	fill_env(t_shell *sh, char **env_var);
 //exit.c
 void	free_env_list(t_list **env_lst);
 void	clear_exit(t_shell *sh, int status);
+void	free_token_list(t_list **token_list);
+void	free_token_content(void *content);
 
 // INPUT FOLDER
 // input_checker.c
-void    input_check(int argc, char **argv, char **envp);
+void	input_check(int argc, char **argv, char **envp);
 
 // HANDLING SIGNAL
 // signals.c
-void    reset_signal(void);
+void	reset_signal(void);
 #endif
