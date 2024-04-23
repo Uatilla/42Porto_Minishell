@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:03 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/22 16:42:17 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:13:21 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,29 @@ void	search_quote(char *input, int *j, char c)
 		(*j)++;
 }
 
+int	search_char(char *str, char c)
+{
+	while (*str)
+	{
+		if (*str == c)
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
 void	search_word(char *input, int *end)
 {
-	int	quotes;
-
-	if (input[*end] && ft_strchr("<>|", input[*end]))
+	if (input[*end] && search_char("<>|", input[*end]))
 	{
-		while (input[*end] && ft_strchr("<>|", input[*end]))
+		while (input[*end] && search_char("<>|", input[*end]))
 			(*end)++;
 		return ;
 	}
-	while (input[*end] && !ft_strchr("\t\n\v\f\r ", input[*end]) && !ft_strchr("<>|", input[*end]))
+	while (input[*end] && !search_char("\t\n\v\f\r ", input[*end]) && !search_char("<>|", input[*end]))
 	{
-		if (ft_strchr("\"\'", input[*end]))
-		{
-			quotes = !quotes;
+		if (search_char("\"\'", input[*end]))
 			search_quote(input, end, input[*end]);
-		}
 		else
 			(*end)++;
 	}
@@ -48,15 +54,14 @@ void	search_word(char *input, int *end)
 
 void	print_tokens(t_shell *sh)
 {
-	int	i;
 	t_token *token_content;
+	t_list *tmp = sh->token_lst;
 
-	i = 0;
-	while (i <= sh->index->pos)
+	while (tmp)
 	{
-		token_content = sh->token_lst->content;
-		printf("Pos: %d\nValue:%s\n", token_content->pos, token_content->value);
-		sh->token_lst = sh->token_lst->next;
+		token_content = tmp->content;
+		printf("Pos: %d\nValue:%s\nType: %d\n\n", token_content->pos, token_content->value, token_content->type);
+		tmp = tmp->next;
 	}
 }
 
@@ -78,30 +83,43 @@ void	end_word(t_shell *sh, char *input)
 		search_word(input, &sh->index->end);
 }
 
+int	get_token_type(char *token)
+{
+	if (token[0] == '|' && !search_char("<>|", token[1]))
+		return (PIPE);
+	else if (token[0] == '>' && !search_char("<>|", token[1]))
+		return(GREATER);
+	else if (token[0] == '<' && !search_char("<>|", token[1]))
+		return (LESSER);
+	else if (token[0] == '>' && token[1] == '>' && !search_char("<>|", token[2]))
+		return (D_GREATER);
+	else if (token[0] == '<' && token[1] == '<' && !search_char("<>|", token[2]))
+		return (D_LESSER);
+	else
+		return (WORD);
+}
+
 void	fill_token_lst(t_shell *sh, char *input)
 {
 	t_token *node_content;
 
+	node_content = NULL;
 	while (input[sh->index->start])
 	{
-		node_content = ft_calloc(1, sizeof(t_token));
-		if (!node_content)
-			clear_exit(sh, 1);
 		if (ft_isspace(input[sh->index->start]))
 			sh->index->start++;
 		else 
 		{
+			node_content = ft_calloc(1, sizeof(t_token));
+			if (!node_content)
+				clear_exit(sh, 1);
 			end_word(sh, input);
 			node_content->value = ft_substr(input, sh->index->start, sh->index->end - sh->index->start);
-			// node_content->type = get_token_type(node_content->value); // function to set the type of the node;
+			node_content->type = get_token_type(node_content->value); // function to set the type of the node;
 			node_content->pos = sh->index->pos;
 			ft_lstadd_back(&sh->token_lst, ft_lstnew(node_content));
-			printf("Pos: %d\nValue:%s$\n\n", node_content->pos, node_content->value);
-			free(node_content->value);
-			free(node_content);
 			sh->index->pos++;
 			sh->index->start = sh->index->end;
-			sh->token_lst = sh->token_lst->next;
 		}
 	}
 }
@@ -109,6 +127,59 @@ void	fill_token_lst(t_shell *sh, char *input)
 void	clear_shell(t_shell *sh)
 {
 	ft_bzero(sh->index, sizeof(t_index));
+}
+
+int	check_operator_order(t_list *token)
+{
+	t_list *current;
+	t_list *previous; 
+	t_token	*token_prev;
+	t_token *token_curr;
+
+	current = token;
+	while (current)
+	{
+		previous = current;
+		current = current->next;
+		token_prev = previous->content;
+		token_curr = current->next->content;
+		if (current && token_prev->type && token_curr->type)
+		{
+			if (token_prev->type == PIPE && token_curr->type != PIPE)
+				continue ;
+			else 
+				return (1);
+		}
+	}
+	return (0);
+}
+
+int	check_syntax(t_list *token_list)
+{
+	t_list *tmp;
+	t_token *token;
+
+	tmp = token_list;
+	while (tmp)
+	{
+		token = tmp->content;
+		if (token->value[0] == '|' && token->pos == 0)
+			return (1);
+		if (token->value[0] == '|' && search_char("<>|", token->value[1]))
+			return (1);
+		if (token->value[0] == '<' && search_char(">|", token->value[1]))
+			return (1);
+		if (token->value[0] == '>' && search_char("<|", token->value[1]))
+			return (1);
+		if (token->value[0] == '>' && token->value[1] == '>' && search_char("<>|", token->value[2]))
+			return (1);
+		if (token->value[0] == '>' && token->value[1] == '>' && search_char("<>|", token->value[2]))
+			return (1);
+		tmp = tmp->next;
+	}
+	if (check_operator_order(token_list))
+		return (1);
+	return (0);
 }
 
 void	sh_loop(t_shell *sh)
@@ -122,6 +193,9 @@ void	sh_loop(t_shell *sh)
 		if (!ft_strncmp(prompt_input, "exit", 4)) // just to exit with clear 
 			clear_exit(sh, 0);
 		fill_token_lst(sh, prompt_input);
+		print_tokens(sh); // print token value and position;
+		if (check_syntax(sh->token_lst))
+			printf("syntax error\n");
 		free_token_list(&sh->token_lst);
 		clear_shell(sh); //set everything to zero to restart the tokenization
 	}

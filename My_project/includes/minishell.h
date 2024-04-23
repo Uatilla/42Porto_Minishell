@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/22 16:14:30 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:07:15 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ typedef struct s_env
 	bool			visible;
 }	t_env;
 
+typedef enum s_token_type
+{
+	WORD,
+	PIPE,
+	GREATER,
+	LESSER,
+	D_GREATER,
+	D_LESSER
+} t_token_type;
+
 typedef struct s_index
 {
 	int	start;
@@ -37,9 +47,9 @@ typedef struct s_index
 
 typedef struct s_token
 {
-	char	*value;
-	int		type;
-	int		pos;
+	char			*value;
+	t_token_type	type;
+	int				pos;
 }	t_token;
 
 typedef struct s_shell
