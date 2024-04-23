@@ -24,3 +24,17 @@ void    input_check(int argc, char **argv, char **envp)
         ft_putstr_fd("ERROR: ENVIRONMENT VARIABLES are empty\n", 2);
     }
 }
+
+bool    sintax_validation(char *input)
+{
+    int i;
+
+    i = 0;
+    while (input[i] && )
+    {
+        if (input[i] == '|')
+            check_pipe(input, i);
+        i++;
+    }
+    return (true);
+}

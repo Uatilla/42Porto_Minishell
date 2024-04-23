@@ -22,6 +22,10 @@ void	sh_loop(t_shell *sh)
 	while (1)
 	{
 		prompt_input = readline(PROMPT);
+		if (!ft_strncmp(prompt_input, "exit", 4)) // just to exit with clear 
+			clear_exit(sh, 0);
+		if (!sintax_validation(prompt_input))
+			clear_exit(sh, 0);
 	}
 }
 

@@ -53,6 +53,7 @@ void	clear_exit(t_shell *sh, int status);
 // INPUT FOLDER
 // input_checker.c
 void    input_check(int argc, char **argv, char **envp);
+bool    sintax_validation(char *input);
 
 // HANDLING SIGNAL
 // signals.c
