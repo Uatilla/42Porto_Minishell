@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:03 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/23 18:13:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:49:13 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,12 @@ int	check_operator_order(t_list *token)
 		previous = current;
 		current = current->next;
 		token_prev = previous->content;
-		token_curr = current->next->content;
+		if (current)
+			token_curr = current->content;
+		else
+		{
+			token_curr = NULL;
+		}
 		if (current && token_prev->type && token_curr->type)
 		{
 			if (token_prev->type == PIPE && token_curr->type != PIPE)
@@ -173,7 +178,7 @@ int	check_syntax(t_list *token_list)
 			return (1);
 		if (token->value[0] == '>' && token->value[1] == '>' && search_char("<>|", token->value[2]))
 			return (1);
-		if (token->value[0] == '>' && token->value[1] == '>' && search_char("<>|", token->value[2]))
+		if (token->value[0] == '<' && token->value[1] == '<' && search_char("<>|", token->value[2]))
 			return (1);
 		tmp = tmp->next;
 	}
