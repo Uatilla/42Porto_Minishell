@@ -16,16 +16,22 @@ int	g_signo;
 
 void	sh_loop(t_shell *sh)
 {
-	char	*prompt_input; /*This should be an item inside the structure because this
+	int	i;
+	char	*prompt_input; 
+	/*This should be an item inside the structure because this
 	variable must be used (probabily) in other functions.*/
 	(void) sh;
-	while (1)
+	i = 0;
+	while (i < 1)
 	{
 		prompt_input = readline(PROMPT);
+		add_history(prompt_input);
 		if (!ft_strncmp(prompt_input, "exit", 4)) // just to exit with clear 
 			clear_exit(sh, 0);
-		if (!sintax_validation(prompt_input))
-			clear_exit(sh, 0);
+		/*if (!sintax_validation(prompt_input))
+			clear_exit(sh, 0);*/
+		//free(prompt_input);
+		i++;
 	}
 }
 
