@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:03 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/23 18:49:13 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:45:32 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,12 +196,16 @@ void	sh_loop(t_shell *sh)
 	{
 		prompt_input = readline(PROMPT);
 		if (!ft_strncmp(prompt_input, "exit", 4)) // just to exit with clear 
+		{
+			free(prompt_input);
 			clear_exit(sh, 0);
+		}
 		fill_token_lst(sh, prompt_input);
 		print_tokens(sh); // print token value and position;
 		if (check_syntax(sh->token_lst))
 			printf("syntax error\n");
 		free_token_list(&sh->token_lst);
+		free(prompt_input);
 		clear_shell(sh); //set everything to zero to restart the tokenization
 	}
 }
