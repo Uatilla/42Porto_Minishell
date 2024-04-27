@@ -27,7 +27,8 @@ void	sh_loop(t_shell *sh)
 		if (!ft_strncmp(prompt_input, "exit", 4)) // just to exit with clear 
 			clear_exit(sh, 1);
 		if (!sintax_validation(prompt_input))
-			clear_exit(sh, 1);
+			sh_loop(sh);
+			//clear_exit(sh, 1);
 		free(prompt_input);
 	}
 }
