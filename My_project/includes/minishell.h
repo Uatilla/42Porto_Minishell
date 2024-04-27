@@ -55,6 +55,13 @@ void	clear_exit(t_shell *sh, int status);
 void    input_check(int argc, char **argv, char **envp);
 bool    sintax_validation(char *input);
 
+// input_checker_utils.c
+bool    only_white(char *input, int curr_pos);
+bool    is_a_pipe(char c);
+bool    is_a_bigger(char c);
+bool    is_a_smaller(char c);
+
+
 // HANDLING SIGNAL
 // signals.c
 void    reset_signal(void);

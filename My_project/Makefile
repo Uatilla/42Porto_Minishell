@@ -47,7 +47,7 @@ SRCS		=	main.c \
 				environment/env.c \
 				exit/exit.c \
 				signals/signals.c \
-				input/input_checker.c
+				input/input_checker.c input/input_checker_utils.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
