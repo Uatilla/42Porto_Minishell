@@ -94,7 +94,7 @@ int	search_c_quote(char *input, int i, char search)
 	return (i);
 }
 
-bool	sintax_validation(char *input)
+bool	ch_fst(char *input, char search)
 {
 	int		i;
 	bool	fst_wrd;
@@ -103,29 +103,40 @@ bool	sintax_validation(char *input)
 	fst_wrd = true;
 	while (input[i])
 	{
+		if (input[i] == search && fst_wrd == true)
+			return (true);
+		else if (!ft_iswhitespace(input[i]))
+			return (false);
+		i++;
+	}
+	return (false);
+}
+
+bool	sintax_validation(char *input)
+{
+	int		i;
+
+	i = -1;
+	while (input[++i])
+	{
 		if (input[i] == '\'' || input[i] == '\"')
 		{
-			fst_wrd = false;
 			i = search_c_quote(input, i, input[i]);
 			if (!input[i])
 				return (false);
 		}
-		if (fst_wrd == true && is_a_pipe(input[i]))
+		if ((is_a_pipe(input[i])) && (ch_fst(input, '|') || \
+			only_white(input, i + 1)))
 		{
-			fst_wrd = false;
 			ft_printf("bash: syntax error near unexpected token `|'\n");
 			return (false);
 		}
 		if (is_a_bigger(input [i]) || is_a_smaller(input [i]) || \
 			is_a_pipe(input [i]))
 		{
-			fst_wrd = false;
 			if (!spc_char_check(input, i))
 				return (false);
 		}
-		else
-			fst_wrd = false;
-		i++;
 	}
 	return (true);
 }
