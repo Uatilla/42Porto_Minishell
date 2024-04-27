@@ -51,19 +51,107 @@ bool    is_a_smaller(char c)
     return (c == '<');
 }
 
+bool    check_bigger(char *input, int i)
+{
+    if ((only_white(input, i + 1)) || is_a_pipe(input [i + 1]) || (is_a_bigger(input[i + 1]) && \
+        only_white(input, i + 2)))
+        {
+            ft_printf("bash: syntax error near unexpected token `newline'\n");
+            return (false);
+        }
+    else if (is_a_bigger(input [i + 1]) && is_a_bigger(input [i + 2]))
+        {
+            ft_printf("bash: syntax error near unexpected token `>'\n");
+            return (false);
+        }
+    else if (is_a_smaller(input [i + 1]))
+        {
+            ft_printf("bash: syntax error near unexpected token `<'\n");
+            return (false);
+        }
+    else if (((is_a_bigger(input[i + 1]) && is_a_pipe(input [i + 2]))))
+        {
+            ft_printf("bash: syntax error near unexpected token `|'\n");
+            return (false);
+        }
+    return (true);
+}
 
+bool    check_smaller(char *input, int i)
+{
+    if ((only_white(input, i + 1)) || (is_a_smaller(input[i + 1]) && \
+    (is_a_smaller(input[i + 2]) || only_white(input, i + 2))))
+    {
+        ft_printf("bash: syntax error near unexpected token `newline'\n");
+        return (false);
+    }
+    else if (is_a_bigger(input [i + 1]) && only_white(input, i + 2))
+    {
+        ft_printf("bash: syntax error near unexpected token `newline'\n");
+        return (false);
+    }
+    else if (is_a_pipe(input[i + 1]) || ((is_a_smaller(input[i + 1]) && is_a_pipe(input [i + 2]))))
+    {
+        ft_printf("bash: syntax error near unexpected token `|'\n");
+        return (false);
+    }
+    return (true);
+}
+
+bool    spc_char_check(char *input, int i)
+{
+    if (is_a_bigger(input[i]))
+    {
+        if (!check_bigger(input, i))
+            return (false);
+    }
+    else if (is_a_smaller(input[i]))
+    {
+        if (!check_smaller(input, i))
+            return (false);
+    }
+    else if (is_a_pipe(input[i]))
+    {
+        if (is_a_bigger(input [i + 1]) || is_a_smaller(input [i + 1]))
+        {
+            ft_printf("bash: syntax error near unexpected token `|'\n");
+                return (false);
+        }
+    }
+    return (true);
+}
+
+int     search_c_quote(char *input, int i, char search)
+{
+    while (input[++i])
+    {
+        if (input[i] == search)
+            return (i);
+        
+    }
+    ft_printf("ERROR\n");
+    return (i);
+}
 
 bool    sintax_validation(char *input)
 {
     int i;
     bool    fst_wrd;
-    /*char    *temp;
+    bool    in_quotes;
 
-    temp = ft_strtrim(input, " \t");*/
     i = 0;
     fst_wrd = true;
+    in_quotes = false;
     while (input[i])
     {
+        
+        if (input[i] == '\'' || input[i] == '\"')
+        {
+            fst_wrd = false;
+            i = search_c_quote(input, i, input[i]);
+            if (!input[i])
+                return (false); // Quote error
+        }
         while (ft_iswhitespace(input[i]))
             i++;
         if (fst_wrd == true && is_a_pipe(input[i]))
@@ -72,58 +160,15 @@ bool    sintax_validation(char *input)
             ft_printf("bash: syntax error near unexpected token `|'\n");
             return (false); // Return error flow.
         }
+        if (is_a_bigger(input [i]) || is_a_smaller(input [i])  || is_a_pipe(input [i]))
+        {
+            fst_wrd = false;
+            if (!spc_char_check(input, i))
+                return (false);
+        }
+        else
+            fst_wrd = false;
 
-        if (is_a_bigger(input[i]))
-        {
-            if ((only_white(input, i + 1)) || is_a_pipe(input [i + 1]) || (is_a_bigger(input[i + 1]) && \
-                only_white(input, i + 2)))
-                {
-                    ft_printf("bash: syntax error near unexpected token `newline'\n");
-                    return (false);
-                }
-            else if (is_a_bigger(input [i + 1]) && is_a_bigger(input [i + 2]))
-                {
-                    ft_printf("bash: syntax error near unexpected token `>'\n");
-                    return (false);
-                }
-            else if (is_a_smaller(input [i + 1]))
-                {
-                    ft_printf("bash: syntax error near unexpected token `<'\n");
-                    return (false);
-                }
-            else if (((is_a_bigger(input[i + 1]) && is_a_pipe(input [i + 2]))))
-                {
-                    ft_printf("bash: syntax error near unexpected token `|'\n");
-                    return (false);
-                }
-        }
-        else if (is_a_smaller(input[i]))
-        {
-            if ((only_white(input, i + 1)) || (is_a_smaller(input[i + 1]) && \
-                (is_a_smaller(input[i + 2]) || only_white(input, i + 2))))
-                {
-                    ft_printf("bash: syntax error near unexpected token `newline'\n");
-                    return (false);
-                }
-            else if (is_a_bigger(input [i + 1]) && only_white(input, i + 2))
-                {
-                    ft_printf("bash: syntax error near unexpected token `newline'\n");
-                    return (false);
-                }
-            else if (is_a_pipe(input[i + 1]) || ((is_a_smaller(input[i + 1]) && is_a_pipe(input [i + 2]))))
-                {
-                    ft_printf("bash: syntax error near unexpected token `|'\n");
-                    return (false);
-                }
-        }
-        else if (is_a_pipe(input[i]))
-        {
-            if (is_a_bigger(input [i + 1]) || is_a_smaller(input [i + 1]))
-            {
-                ft_printf("bash: syntax error near unexpected token `|'\n");
-                    return (false);
-            }
-        }
         i++;
     }
     return (true);
