@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:03 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/27 13:45:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:33:16 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,19 @@ int	search_char(char *str, char c)
 
 void	search_word(char *input, int *end)
 {
-	if (input[*end] && search_char("<>|", input[*end]))
+	if (input[*end] && search_char("<>|", input[*end]) && !search_char("\"\'", input[*end]))
 	{
-		while (input[*end] && search_char("<>|", input[*end]))
+		while (input[*end] && search_char("<>|", input[*end]) && !search_char("\"\'", input[*end]))
 			(*end)++;
 		return ;
 	}
-	while (input[*end] && !search_char("\t\n\v\f\r ", input[*end]) && !search_char("<>|", input[*end]))
+	if (input[*end] && search_char("\"\'", input[*end]))
 	{
-		if (search_char("\"\'", input[*end]))
-			search_quote(input, end, input[*end]);
-		else
+		search_quote(input, end, input[*end]);	
+	}
+	else
+	{
+		while(input[*end] && !search_char("\"\'", input[*end]) && !search_char("<>|", input[*end]) && !ft_isspace(input[*end]))
 			(*end)++;
 	}
 }
@@ -60,7 +62,7 @@ void	print_tokens(t_shell *sh)
 	while (tmp)
 	{
 		token_content = tmp->content;
-		printf("Pos: %d\nValue:%s\nType: %d\n\n", token_content->pos, token_content->value, token_content->type);
+		printf("Pos: %d\nValue:%s\nType: %d\nState: %d\n\n", token_content->pos, token_content->value, token_content->type, token_content->state);
 		tmp = tmp->next;
 	}
 }
@@ -69,16 +71,7 @@ void	end_word(t_shell *sh, char *input)
 {
 	sh->index->end = sh->index->start;
 	if (input[sh->index->end] == '\"' || input[sh->index->end] == '\'')
-	{
 		search_quote(input, &sh->index->end, input[sh->index->end]);
-		while (!ft_isspace(input[sh->index->end]) && input[sh->index->end])
-		{
-			if (input[sh->index->end] == '\"' && input[sh->index->end == '\''])
-				search_quote(input, &sh->index->end, input[sh->index->end]);
-			else
-				search_word(input, &sh->index->end);
-		}
-	}
 	else
 		search_word(input, &sh->index->end);
 }
@@ -102,12 +95,23 @@ int	get_token_type(char *token)
 void	fill_token_lst(t_shell *sh, char *input)
 {
 	t_token *node_content;
-
+	
 	node_content = NULL;
 	while (input[sh->index->start])
 	{
 		if (ft_isspace(input[sh->index->start]))
-			sh->index->start++;
+		{
+			node_content = ft_calloc(1, sizeof(t_token));
+			if (!node_content)
+				clear_exit(sh, 1);
+			node_content->value = ft_strdup(" ");
+			node_content->type = E_SPACE;
+			node_content->pos = sh->index->pos;
+			ft_lstadd_back(&sh->token_lst, ft_lstnew(node_content));
+			sh->index->pos++;
+			while (ft_isspace(input[sh->index->start]))
+				sh->index->start++;
+		}
 		else 
 		{
 			node_content = ft_calloc(1, sizeof(t_token));
@@ -202,8 +206,6 @@ void	sh_loop(t_shell *sh)
 		}
 		fill_token_lst(sh, prompt_input);
 		print_tokens(sh); // print token value and position;
-		if (check_syntax(sh->token_lst))
-			printf("syntax error\n");
 		free_token_list(&sh->token_lst);
 		free(prompt_input);
 		clear_shell(sh); //set everything to zero to restart the tokenization

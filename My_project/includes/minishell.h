@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/23 17:07:15 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:04:42 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef enum s_token_type
 	GREATER,
 	LESSER,
 	D_GREATER,
-	D_LESSER
+	D_LESSER,
+	E_SPACE
 } t_token_type;
 
 typedef struct s_index
@@ -45,10 +46,18 @@ typedef struct s_index
 	int	pos;
 }	t_index;
 
+typedef enum s_token_state
+{
+	GENERAL,
+	IN_DQUOTES,
+	IN_SQUOTES
+}	t_token_state;
+
 typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	t_token_state	state;
 	int				pos;
 }	t_token;
 
