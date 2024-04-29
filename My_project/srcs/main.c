@@ -3,16 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <uviana-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:03 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/11 19:57:06 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:39:13 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signo;
+
+void	print_tokens(t_shell *sh)
+{
+	t_token *token_content;
+	t_list *tmp = sh->token_lst;
+
+	while (tmp)
+	{
+		token_content = tmp->content;
+		printf("Pos: %d\nValue:%s$\nType: %d\nState: %d\n\n", token_content->pos, token_content->value, token_content->type, token_content->state);
+		tmp = tmp->next;
+	}
+}
+
+void	reinit_shell(t_shell *sh)
+{
+	free_token_list(&sh->token_lst);
+	ft_bzero(sh->index, sizeof(t_index));
+}
 
 void	sh_loop(t_shell *sh)
 {
@@ -28,7 +47,9 @@ void	sh_loop(t_shell *sh)
 			clear_exit(sh, 1);
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
-			//clear_exit(sh, 1);
+		fill_token_lst(sh, prompt_input); //tokenization without state;
+		print_tokens(sh); // just print
+		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(prompt_input);
 	}
 }
@@ -37,6 +58,8 @@ void	init_shell(t_shell *sh, char **env_var)
 {
 	ft_bzero(sh, sizeof(t_shell));
 	fill_env(sh, env_var);
+	sh->index = malloc(sizeof(t_index));
+	ft_bzero(sh->index, sizeof(t_index));
 }
 
 int	main(int argc, char **argv, char **envp)

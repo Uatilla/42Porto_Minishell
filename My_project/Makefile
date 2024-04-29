@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: uviana-a <uviana-a@student.42.fr>          +#+  +:+       +#+         #
+#    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/11 20:00:01 by uviana-a          #+#    #+#              #
-#    Updated: 2024/04/11 20:00:03 by uviana-a         ###   ########.fr        #
+#    Updated: 2024/04/29 17:26:48 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS_DIR	=	srcs
 OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
-SUB_DIR		=	environment exit input signals
+SUB_DIR		=	environment exit input signals tokenization
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
@@ -47,7 +47,8 @@ SRCS		=	main.c \
 				environment/env.c \
 				exit/exit.c \
 				signals/signals.c \
-				input/input_checker.c input/input_checker_utils.c
+				input/input_checker.c input/input_checker_utils.c \
+				tokenization/tokens.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
