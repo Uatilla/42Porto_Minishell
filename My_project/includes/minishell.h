@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/30 17:20:03 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:18:40 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,13 @@ typedef enum s_token_type
 	WORD,
 	PIPE,
 	GREATER,
+	OUTFILE,
 	LESSER,
+	INFILE,
 	D_GREATER,
+	HERE_DOC,
 	D_LESSER,
+	APP_END,
 	E_SPACE
 } t_token_type;
 
