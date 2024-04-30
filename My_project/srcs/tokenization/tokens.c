@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:13:59 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/04/29 17:53:44 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:01:54 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ int	get_token_type(char *token)
 		return (WORD);
 }
 
+int	get_token_state(char *token)
+{
+	if(token[0] == '\"')
+		return (IN_DQUOTES);
+	else if (token[0] == '\'')
+		return (IN_SQUOTES);
+	else
+		return (GENERAL);
+}
+
 void end_word(t_shell *sh, char *input)
 {
 	sh->index->end = sh->index->start;
@@ -99,6 +109,7 @@ void	fill_token_lst(t_shell *sh, char *input)
 			node_content->value = ft_strdup(" ");
 			node_content->type = E_SPACE;
 			node_content->pos = sh->index->pos;
+			node_content->state = get_token_state(node_content->value);
 			ft_lstadd_back(&sh->token_lst, ft_lstnew(node_content));
 			sh->index->pos++;
 			while (ft_isspace(input[sh->index->start]))
@@ -114,6 +125,7 @@ void	fill_token_lst(t_shell *sh, char *input)
 			node_content->value = ft_substr(input, sh->index->start, sh->index->end - sh->index->start);
 			node_content->type = get_token_type(node_content->value); // function to set the type of the node;
 			node_content->pos = sh->index->pos;
+			node_content->state = get_token_state(node_content->value);
 			ft_lstadd_back(&sh->token_lst, ft_lstnew(node_content));
 			sh->index->pos++;
 			sh->index->start = sh->index->end;

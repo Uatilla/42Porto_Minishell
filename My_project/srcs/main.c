@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:03 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/30 14:28:07 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:30:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ void	print_tokens(t_shell *sh)
 	while (tmp)
 	{
 		token_content = tmp->content;
-		printf("Pos: %d\nValue:", token_content->pos);
+		printf("Token %02d: ", token_content->pos);
 		printf(BLUE_BG"%s"COLOR_RESET, token_content->value);
-		printf("\n\n");
-		// printf("Type: %d\nState: %d\n\n", token_content->type, token_content->state);
+		printf("\nType: %d\nState: %d\n\n", token_content->type, token_content->state);
 		tmp = tmp->next;
 	}
 }
@@ -71,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
-	// reset_signal();
+	reset_signal();
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);
