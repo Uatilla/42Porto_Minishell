@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/29 17:22:12 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:13:22 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libraries/libft/libft.h"
+
+//COLORS
+# define RED "\x1b[38;5;160;1m"
+# define ORANGE "\x1b[38;5;172;1m"
+# define YELLOW "\x1b[38;5;184;1m"
+# define BLUE_BG "\033[38;5;17;48;5;159;1m"
+# define COLOR_RESET "\033[0m"
 
 // STRUCTURES
 typedef struct s_env
