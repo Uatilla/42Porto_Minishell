@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/01 15:13:24 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:34:29 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ typedef enum s_token_type
 	WORD,
 	PIPE,
 	GREATER,
-	OUTFILE,
 	LESSER,
-	INFILE,
 	D_GREATER,
-	HERE_DOC,
 	D_LESSER,
-	APP_END,
-	E_SPACE
+	E_SPACE,
+	INFILE,
+	OUTFILE,
+	HERE_DOC,
+	APP_END
 } t_token_type;
 
 typedef enum s_token_state
