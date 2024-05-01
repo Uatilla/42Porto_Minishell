@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/01 15:13:54 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:14:21 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,9 @@ void	free_token_content(void *content)
 	free(curr_cont);
 }
 
-void	free_token_content(void *content)
-{
-	t_token *curr_cont;
-
-	curr_cont = (t_token *)(content);
-	if (!curr_cont)
-		return ;
-	free(curr_cont->value);
-	free(curr_cont);
-}
-
 void	free_env_list(t_list **env_lst)
 {
 	ft_lstclear(env_lst, free_lst_content);
-}
-
-void	free_token_list(t_list **token_list)
-{
-	ft_lstclear(token_list, free_token_content);
 }
 
 void	free_token_list(t_list **token_list)
