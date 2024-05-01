@@ -71,7 +71,6 @@ typedef struct s_shell
 
 // MACROS
 # define PROMPT "MINISHELL ➜ "
-# define OUTOFSCOPE "{}[]()*\\;&"
 # define OPERATOR "|<>"
 
 // EXITING THE GLOBAL VARIABLE

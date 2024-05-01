@@ -76,8 +76,6 @@ bool	spc_char_check(char *input, int i)
 		if (is_a_pipe(input[i]))
 			return (prt_stx_error("|", false));
 	}
-	else if (ft_strchr(OUTOFSCOPE, input[i]))
-		return (prt_stx_error("Out of Scope:", false));
 	return (true);
 }
 
