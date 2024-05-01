@@ -33,6 +33,36 @@ void	reinit_shell(t_shell *sh)
 	ft_bzero(sh->index, sizeof(t_index));
 }
 
+bool	chk_typ(int type, int inf, int sup)
+{
+	return(type >= inf && type <= sup);
+}
+
+void	review_tkn_typ(t_list *tkn_lst)
+{
+	t_list	*tmp;
+	t_token	*tkn_cont;
+	//t_token	*tkn_to_review;
+
+	tmp = tkn_lst;
+	while (tmp)
+	{
+		tkn_cont = tmp->content;
+		if (chk_typ(tkn_cont->type, GREATER, D_LESSER))
+		{
+			if (chk_typ(((t_token *)(tmp->next->content))->type, E_SPACE, E_SPACE) && \
+				(chk_typ(((t_token *)(tmp->next->next->content))->type, WORD, WORD)))
+				printf(" Space + WORD\n"); // Passar o node com o fato gerador
+				//type tkn_content->type de acordo esse fato gerador voce modifica o conteudo.
+			else if (((t_token *)(tmp->next->content))->type == WORD)
+				printf(" WORD\n");
+			
+			//printf("Type: %d content %d\n", tkn_to_review->type, tkn_to_review->pos);
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	sh_loop(t_shell *sh)
 {
 	char	*prompt_input; 
@@ -48,7 +78,8 @@ void	sh_loop(t_shell *sh)
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		fill_token_lst(sh, prompt_input); //tokenization without state;
-		print_tokens(sh); // just print
+		review_tkn_typ(sh->token_lst);
+		//print_tokens(sh); // just print
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(prompt_input);
 	}
