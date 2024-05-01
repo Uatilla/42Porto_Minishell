@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/01 18:41:45 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:45:33 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	reinit_shell(t_shell *sh)
 void	sh_loop(t_shell *sh)
 {
 	char	*prompt_input;
+	char	*trimmed_input;
 	/*This should be an item inside the structure because this
 	variable must be used (probabily) in other functions.*/
 	(void) sh;
@@ -51,10 +52,12 @@ void	sh_loop(t_shell *sh)
 			clear_exit(sh, 1);
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
-		fill_token_lst(sh, prompt_input); //tokenization without state;
+		trimmed_input = ft_strtrim(prompt_input, "\t ");
+		free(prompt_input);
+		fill_token_lst(sh, trimmed_input); //tokenization without state;
 		print_tokens(sh); // just print
 		reinit_shell(sh); // free tokenlist and set t_index to zero
-		free(prompt_input);
+		free(trimmed_input);
 	}
 }
 
