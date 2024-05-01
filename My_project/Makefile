@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/11 20:00:01 by uviana-a          #+#    #+#              #
-#    Updated: 2024/04/23 12:38:57 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/05/01 14:44:51 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS_DIR	=	srcs
 OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
-SUB_DIR		=	environment exit input signals
+SUB_DIR		=	environment exit input signals tokenization
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
@@ -47,7 +47,8 @@ SRCS		=	main.c \
 				environment/env.c \
 				exit/exit.c \
 				signals/signals.c \
-				input/input_checker.c
+				input/input_checker.c input/input_checker_utils.c \
+				tokenization/tokens.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
@@ -86,6 +87,24 @@ fclean: clean
 	$(RM) $(NAME)
 	$(MAKE) $(MK_FLAG) fclean -sC $(LIBFT_DIR)
 	printf "fclean			$(CYAN)[OK]$(RESET)\n"
+
+leaks: readline.supp
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --log-file=output.log ./minishell
+
+readline.supp:
+	echo "{" > readline.supp
+	echo "    leak readline" >> readline.supp
+	echo "    Memcheck:Leak" >> readline.supp
+	echo "    ..." >> readline.supp
+	echo "    fun:readline" >> readline.supp
+	echo "}" >> readline.supp
+	echo "{" >> readline.supp
+	echo "    leak add_history" >> readline.supp
+	echo "    Memcheck:Leak" >> readline.supp
+	echo "    ..." >> readline.supp
+	echo "    fun:add_history" >> readline.supp
+	echo "}" >> readline.supp
+
 	
 re: fclean all
 

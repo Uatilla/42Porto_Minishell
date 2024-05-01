@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 19:09:42 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/22 16:45:01 by lebarbos         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/05/01 14:44:06 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -35,9 +36,25 @@ void	free_token_content(void *content)
 	free(curr_cont);
 }
 
+void	free_token_content(void *content)
+{
+	t_token *curr_cont;
+
+	curr_cont = (t_token *)(content);
+	if (!curr_cont)
+		return ;
+	free(curr_cont->value);
+	free(curr_cont);
+}
+
 void	free_env_list(t_list **env_lst)
 {
 	ft_lstclear(env_lst, free_lst_content);
+}
+
+void	free_token_list(t_list **token_list)
+{
+	ft_lstclear(token_list, free_token_content);
 }
 
 void	free_token_list(t_list **token_list)

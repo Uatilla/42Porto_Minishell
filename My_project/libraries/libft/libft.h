@@ -169,6 +169,8 @@ void	ft_putnbr_fd(int n, int fd);
 //represents the integer received as an argument.
 char	*ft_itoa(int n);
 
+int		ft_iswhitespace(char c);
+
 /*___________________________________[BONUS]_________________________________*/
 
 //LINKED LIST:************************************************************
