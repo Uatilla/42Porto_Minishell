@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/01 14:43:34 by lebarbos         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/05/01 15:13:24 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -80,7 +81,8 @@ typedef struct s_shell
 }	t_shell;
 
 // MACROS
-# define PROMPT "MINISHELL ➜ " 
+# define PROMPT "MINISHELL ➜ "
+# define OPERATOR "|<>"
 
 // EXITING THE GLOBAL VARIABLE
 extern int	g_signo;
