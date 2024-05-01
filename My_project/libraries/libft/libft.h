@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 15:07:18 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/20 20:38:17 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:28:48 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 //*ft_strtrim(): Returns a pointer to a new string that has the 
 //characters of the set removed from the beginning and the 
 //end of the string.
-char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strtrim(char *s1, char const *set);
 //**ft_split(): Returns a pointer to an array of strings that 
 //are obtained by splitting the string s using the character c as a delimiter.
 char	**ft_split(char const *s, char c);

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:13:54 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/01 16:15:17 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:25:45 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,9 @@ void	reset_signal(void);
 //TOKENIZATION
 //tokens.c
 void	fill_token_lst(t_shell *sh, char *input);
+//tokens_aux.c
+void	search_word(char *input, int *end);
+void	search_quote(char *input, int *j, char c);
+int		search_char(char *str, char c);
 
 #endif

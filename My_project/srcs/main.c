@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/01 17:19:05 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:35:11 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	sh_loop(t_shell *sh)
 			clear_exit(sh, 1);
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
-		fill_token_lst(sh, ft_strtrim(prompt_input, "\t\n\v\f\r ")); //tokenization without state;
+		prompt_input = ft_strtrim(prompt_input, "\t\n\v\f\r ");
+		fill_token_lst(sh, prompt_input); //tokenization without state;
 		print_tokens(sh); // just print
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(prompt_input);

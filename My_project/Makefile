@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/05/01 15:15:30 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/05/01 17:26:24 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ SRCS		=	main.c \
 				exit/exit.c \
 				signals/signals.c \
 				input/input_checker.c input/input_checker_utils.c \
-				tokenization/tokens.c
+				tokenization/tokens.c tokenization/tokens_aux.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
