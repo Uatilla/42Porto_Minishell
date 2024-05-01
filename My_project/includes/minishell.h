@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/01 15:34:29 by lebarbos         ###   ########.fr       */
+/*   Created: 2024/05/01 16:13:54 by lebarbos          #+#    #+#             */
+/*   Updated: 2024/05/01 16:15:17 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -49,7 +48,7 @@ typedef enum s_token_type
 	OUTFILE,
 	HERE_DOC,
 	APP_END
-} t_token_type;
+}	t_token_type;
 
 typedef enum s_token_state
 {
@@ -102,19 +101,18 @@ void	free_token_content(void *content);
 
 // INPUT FOLDER
 // input_checker.c
-void    input_check(int argc, char **argv, char **envp);
-bool    sintax_validation(char *input);
+void	input_check(int argc, char **argv, char **envp);
+bool	sintax_validation(char *input);
 
 // input_checker_utils.c
-bool    only_white(char *input, int curr_pos);
-bool    is_a_pipe(char c);
-bool    is_a_bigger(char c);
-bool    is_a_smaller(char c);
-
+bool	only_white(char *input, int curr_pos);
+bool	is_a_pipe(char c);
+bool	is_a_bigger(char c);
+bool	is_a_smaller(char c);
 
 // HANDLING SIGNAL
 // signals.c
-void    reset_signal(void);
+void	reset_signal(void);
 
 //TOKENIZATION
 //tokens.c

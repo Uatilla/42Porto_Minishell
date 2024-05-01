@@ -6,11 +6,9 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/01 15:14:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:22:10 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../../includes/minishell.h"
 

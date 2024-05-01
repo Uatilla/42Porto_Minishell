@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/01 15:15:10 by lebarbos         ###   ########.fr       */
+/*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
+/*   Updated: 2024/05/01 16:34:12 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell.h"
 
@@ -17,15 +16,17 @@ int	g_signo;
 
 void	print_tokens(t_shell *sh)
 {
-	t_token *token_content;
-	t_list *tmp = sh->token_lst;
+	t_token	*token_content;
+	t_list	*tmp;
 
+	tmp = sh->token_lst;
 	while (tmp)
 	{
 		token_content = tmp->content;
 		printf("Token %02d: ", token_content->pos);
 		printf(BLUE_BG"%s"COLOR_RESET, token_content->value);
-		printf("\nType: %d\nState: %d\n\n", token_content->type, token_content->state);
+		printf("\nType: %d\nState: %d\n\n", token_content->type,
+			token_content->state);
 		tmp = tmp->next;
 	}
 }
@@ -38,7 +39,7 @@ void	reinit_shell(t_shell *sh)
 
 void	sh_loop(t_shell *sh)
 {
-	char	*prompt_input; 
+	char	*prompt_input;
 	/*This should be an item inside the structure because this
 	variable must be used (probabily) in other functions.*/
 	(void) sh;
@@ -63,8 +64,6 @@ void	init_shell(t_shell *sh, char **env_var)
 	sh->index = malloc(sizeof(t_index));
 	ft_bzero(sh->index, sizeof(t_index));
 	fill_env(sh, env_var);
-	sh->index = malloc(sizeof(t_index));
-	ft_bzero(sh->index, sizeof(t_index));
 }
 
 int	main(int argc, char **argv, char **envp)
