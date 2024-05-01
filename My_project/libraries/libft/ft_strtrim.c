@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:47:45 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/01 17:28:30 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:41:05 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static	int	get_end_index(char const *s1, char const *set)
 	return (end_index);
 }
 
-char	*ft_strtrim(char *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t		start_index;
 	size_t		end_index;
@@ -79,7 +79,5 @@ char	*ft_strtrim(char *s1, char const *set)
 	start_index = get_start_index(s1, set);
 	end_index = get_end_index(s1, set);
 	ptr_strtrim = ft_substr(s1, start_index, (end_index - start_index + 1));
-	if (s1)
-		free(s1);
 	return (ptr_strtrim);
 }
