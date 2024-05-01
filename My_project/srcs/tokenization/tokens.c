@@ -6,52 +6,11 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:13:59 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/01 16:32:35 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:22:26 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	search_char(char *str, char c)
-{
-	while (*str)
-	{
-		if (*str == c)
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
-void	search_quote(char *input, int *j, char c)
-{
-	(*j)++;
-	while (input[*j] != c && input[*j])
-		(*j)++;
-	if (input[*j] == c)
-		(*j)++;
-}
-
-void	search_word(char *input, int *end)
-{
-	if (input[*end] && search_char("<>|", input[*end])
-		&& !search_char("\"\'", input[*end]))
-	{
-		while (input[*end] && search_char("<>|", input[*end])
-			&& !search_char("\"\'", input[*end]))
-			(*end)++;
-		return ;
-	}
-	if (input[*end] && search_char("\"\'", input[*end]))
-		search_quote(input, end, input[*end]);
-	else
-	{
-		while (input[*end] && !search_char("\"\'", input[*end])
-			&& !search_char("<>|", input[*end])
-			&& !ft_iswhitespace(input[*end]))
-			(*end)++;
-	}
-}
 
 int	get_token_type(char *token)
 {
@@ -109,7 +68,7 @@ void	fill_token_lst(t_shell *sh, char *input)
 		{
 			end_word(sh, input);
 			node_content->value = ft_substr(input, sh->index->start,
-				sh->index->end - sh->index->start);
+					sh->index->end - sh->index->start);
 			sh->index->start = sh->index->end;
 		}
 		node_content->type = get_token_type(node_content->value);
