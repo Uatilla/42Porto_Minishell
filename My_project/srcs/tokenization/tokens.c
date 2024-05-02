@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:13:59 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/01 17:32:34 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:14:50 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,25 @@ int	get_token_type(char *token)
 		return (WORD);
 }
 
-int	get_token_state(char *token)
+void	get_token_state(t_token *token)
 {
-	if (token[0] == '\"')
-		return (IN_DQUOTES);
-	else if (token[0] == '\'')
-		return (IN_SQUOTES);
+	char	*new_value;
+	char	cmp;
+
+	new_value = NULL;
+	if (token->value[0] == '\'' || token->value[0] == '\"')
+	{		
+		if (token->value[0] == '\"')
+			token->state = IN_DQUOTES;
+		else if (token->value[0] == '\'')
+			token->state = IN_SQUOTES;
+		cmp = token->value[0];
+		new_value = ft_strtrim(token->value, &cmp);
+		free(token->value);
+		token->value = new_value;
+	}
 	else
-		return (GENERAL);
+		token->state = GENERAL;
 }
 
 void	end_word(t_shell *sh, char *input)
@@ -72,7 +83,7 @@ void	fill_token_lst(t_shell *sh, char *input)
 			sh->index->start = sh->index->end;
 		}
 		node_content->type = get_token_type(node_content->value);
-		node_content->state = get_token_state(node_content->value);
+		get_token_state(node_content);
 		ft_lstadd_back(&sh->token_lst, ft_lstnew(node_content));
 		node_content->pos = sh->index->pos++;
 	}

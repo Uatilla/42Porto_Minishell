@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:13:54 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/01 17:25:45 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:36:15 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 # include "../libraries/libft/libft.h"
 
 //COLORS
+# define ROSE "\x1b[38;207;1m"
+# define ROSE_2 "\x1b[38;5;177;1m"
+# define LIGHTGREEN "\x1b[38;5;155;1m"
+# define LIGHTBLUE "\x1b[38;5;39;1m"
+# define LIGHTPURPLE "\x1b[38;5;63;1m"
+# define PURPLE "\x1b[38;5;135;1m"
+# define PINK "\x1b[38;5;199;1m"
 # define RED "\x1b[38;5;160;1m"
 # define ORANGE "\x1b[38;5;172;1m"
 # define YELLOW "\x1b[38;5;184;1m"

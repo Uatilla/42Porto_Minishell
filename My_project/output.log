@@ -1,33 +1,25 @@
-==101804== Memcheck, a memory error detector
-==101804== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==101804== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==101804== Command: ./minishell
-==101804== Parent PID: 101803
-==101804== 
-==101804== 
-==101804== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==101804== Open file descriptor 3: /home/uviana-a/Documents/42Porto_Minishell/42Porto_Minishell_Uatilla/My_project/output.log
-==101804==    <inherited from parent>
-==101804== 
-==101804== 
-==101804== HEAP SUMMARY:
-==101804==     in use at exit: 208,231 bytes in 227 blocks
-==101804==   total heap usage: 666 allocs, 439 frees, 233,145 bytes allocated
-==101804== 
-==101804== 2 bytes in 1 blocks are definitely lost in loss record 1 of 68
-==101804==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==101804==    by 0x40214C: ft_substr (in /home/uviana-a/Documents/42Porto_Minishell/42Porto_Minishell_Uatilla/My_project/minishell)
-==101804==    by 0x401BD0: ft_strtrim (in /home/uviana-a/Documents/42Porto_Minishell/42Porto_Minishell_Uatilla/My_project/minishell)
-==101804==    by 0x4017CE: sintax_validation (input_checker.c:60)
-==101804==    by 0x40121F: sh_loop (main.c:29)
-==101804==    by 0x4012D4: main (main.c:48)
-==101804== 
-==101804== LEAK SUMMARY:
-==101804==    definitely lost: 2 bytes in 1 blocks
-==101804==    indirectly lost: 0 bytes in 0 blocks
-==101804==      possibly lost: 0 bytes in 0 blocks
-==101804==    still reachable: 0 bytes in 0 blocks
-==101804==         suppressed: 208,229 bytes in 226 blocks
-==101804== 
-==101804== For lists of detected and suppressed errors, rerun with: -s
-==101804== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==41026== Memcheck, a memory error detector
+==41026== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41026== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41026== Command: ./minishell
+==41026== Parent PID: 41025
+==41026== 
+==41026== 
+==41026== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==41026== Open file descriptor 3: /home/lebarbos/Desktop/42Porto_Minishell/My_project/output.log
+==41026==    <inherited from parent>
+==41026== 
+==41026== 
+==41026== HEAP SUMMARY:
+==41026==     in use at exit: 208,353 bytes in 233 blocks
+==41026==   total heap usage: 711 allocs, 478 frees, 235,180 bytes allocated
+==41026== 
+==41026== LEAK SUMMARY:
+==41026==    definitely lost: 0 bytes in 0 blocks
+==41026==    indirectly lost: 0 bytes in 0 blocks
+==41026==      possibly lost: 0 bytes in 0 blocks
+==41026==    still reachable: 0 bytes in 0 blocks
+==41026==         suppressed: 208,353 bytes in 233 blocks
+==41026== 
+==41026== For lists of detected and suppressed errors, rerun with: -s
+==41026== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
