@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:13:59 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/02 12:59:13 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:16:16 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,42 @@ void	end_word(t_shell *sh, char *input)
 		search_quote(input, &sh->index->end, input[sh->index->end]);
 	else
 		search_word(input, &sh->index->end);
+}
+
+void	set_pos(t_shell *sh)
+{
+	t_list	*curr;
+	t_list	*prev;
+	int		pos;
+
+	prev = NULL;
+	curr = sh->token_lst;
+	pos = 0;
+	while (curr != NULL)
+	{
+		if (((t_token *)curr->content)->value[0] == '\0')
+		{
+			if (prev == NULL)
+			{
+				sh->token_lst = curr->next;
+				ft_lstdelone(curr, &free_token_content);
+				curr = sh->token_lst;
+			}
+			else
+			{
+				((t_token *)curr->content)->pos = pos++;
+				prev->next = curr->next;
+				ft_lstdelone(curr, &free_token_content);
+				curr = prev->next;
+			}
+		}
+		else
+		{
+			((t_token *)curr->content)->pos = pos++;
+			prev = curr;
+			curr = curr->next;
+		}
+	}
 }
 
 void	fill_token_lst(t_shell *sh, char *input)

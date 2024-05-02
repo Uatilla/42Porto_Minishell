@@ -3,4 +3,4 @@
 /**/*.o/
 /objs/
 minishell
-.vscode
+/.vscode
