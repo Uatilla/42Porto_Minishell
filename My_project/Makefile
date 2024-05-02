@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/05/01 18:37:57 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/05/02 15:00:29 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
 #MK_FLAG		= --no-print-directory
 
 # Files
-SRCS		=	main.c \
+SRCS		=	main.c print.c \
 				environment/env.c \
 				exit/exit.c \
 				signals/signals.c \
