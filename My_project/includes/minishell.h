@@ -36,7 +36,11 @@ typedef enum s_token_type
 	LESSER,
 	D_GREATER,
 	D_LESSER,
-	E_SPACE
+	E_SPACE,
+	APPEND,
+	OUTFILE,
+	INFILE,
+	HEREDOC
 } t_token_type;
 
 typedef enum s_token_state

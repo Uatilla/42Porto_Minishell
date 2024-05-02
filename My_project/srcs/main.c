@@ -38,11 +38,30 @@ bool	chk_typ(int type, int inf, int sup)
 	return(type >= inf && type <= sup);
 }
 
+void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des)
+{
+	int	new_type;
+
+	if (tkn_src->type == GREATER)
+		new_type = OUTFILE;
+	else if (tkn_src->type == LESSER)
+		new_type = INFILE;
+	else if (tkn_src->type == D_GREATER)
+		new_type = APPEND;
+	else if (tkn_src->type == D_LESSER)
+		new_type = HEREDOC;
+	else
+		return ;
+	tkn_des->type = new_type;
+		
+}
+
 void	review_tkn_typ(t_list *tkn_lst)
 {
 	t_list	*tmp;
 	t_token	*tkn_cont;
-	//t_token	*tkn_to_review;
+	t_token *tkn_src;
+	t_token *tkn_des;
 
 	tmp = tkn_lst;
 	while (tmp)
@@ -50,14 +69,19 @@ void	review_tkn_typ(t_list *tkn_lst)
 		tkn_cont = tmp->content;
 		if (chk_typ(tkn_cont->type, GREATER, D_LESSER))
 		{
-			if (chk_typ(((t_token *)(tmp->next->content))->type, E_SPACE, E_SPACE) && \
-				(chk_typ(((t_token *)(tmp->next->next->content))->type, WORD, WORD)))
-				printf(" Space + WORD\n"); // Passar o node com o fato gerador
-				//type tkn_content->type de acordo esse fato gerador voce modifica o conteudo.
-			else if (((t_token *)(tmp->next->content))->type == WORD)
-				printf(" WORD\n");
-			
-			//printf("Type: %d content %d\n", tkn_to_review->type, tkn_to_review->pos);
+			if (chk_typ(((t_token *)(tmp->next->content))->type, WORD, WORD))
+			{
+				tkn_src = tmp->content;
+				tkn_des = tmp->next->content;
+			}
+			else if (chk_typ(((t_token *)(tmp->next->content))->type, \
+					E_SPACE, E_SPACE))
+			{
+				tkn_src = tmp->content;
+				tmp = tmp->next;
+				tkn_des = tmp->next->content;
+			}
+			repl_tkn_typ(tkn_src, tkn_des);
 		}
 		tmp = tmp->next;
 	}
@@ -79,7 +103,7 @@ void	sh_loop(t_shell *sh)
 			sh_loop(sh);
 		fill_token_lst(sh, prompt_input); //tokenization without state;
 		review_tkn_typ(sh->token_lst);
-		//print_tokens(sh); // just print
+		print_tokens(sh); // just print
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(prompt_input);
 	}
