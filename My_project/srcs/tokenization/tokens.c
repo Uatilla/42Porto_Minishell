@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:13:59 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/02 11:14:50 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:59:13 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	get_token_state(t_token *token)
 
 	new_value = NULL;
 	if (token->value[0] == '\'' || token->value[0] == '\"')
-	{		
+	{
 		if (token->value[0] == '\"')
 			token->state = IN_DQUOTES;
 		else if (token->value[0] == '\'')

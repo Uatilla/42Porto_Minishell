@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:13:54 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/02 12:36:15 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:55:31 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,10 @@ void	fill_token_lst(t_shell *sh, char *input);
 void	search_word(char *input, int *end);
 void	search_quote(char *input, int *j, char c);
 int		search_char(char *str, char c);
+
+//EXTRA AUXILIARS
+//print.c
+void	print_env(t_shell *sh);
+void	print_tokens(t_shell *sh);
 
 #endif
