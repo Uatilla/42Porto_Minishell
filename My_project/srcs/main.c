@@ -55,7 +55,7 @@ void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des)
 	tkn_des->type = new_type;
 		
 }
-
+/*Changes the type of the next node if the current node has an operator type.*/
 void	review_tkn_typ(t_list *tkn_lst)
 {
 	t_list	*tmp;
