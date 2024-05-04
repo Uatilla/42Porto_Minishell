@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/01 16:13:54 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/02 12:55:31 by lebarbos         ###   ########.fr       */
+/*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
+/*   Updated: 2024/05/04 14:52:19 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ typedef enum s_token_type
 	D_GREATER,
 	D_LESSER,
 	E_SPACE,
-	INFILE,
+	APPEND,
 	OUTFILE,
-	HERE_DOC,
-	APP_END
-}	t_token_type;
+	INFILE,
+	HEREDOC
+} t_token_type;
 
 typedef enum s_token_state
 {
@@ -89,6 +89,7 @@ typedef struct s_shell
 // MACROS
 # define PROMPT "MINISHELL ➜ "
 # define OPERATOR "|<>"
+# define OUTOFSCOPE "()*;&"
 
 // EXITING THE GLOBAL VARIABLE
 extern int	g_signo;

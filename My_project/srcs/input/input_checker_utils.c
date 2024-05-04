@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+/*checks if all the further positions are white space.*/
 bool	only_white(char *input, int curr_pos)
 {
 	while (input[curr_pos])

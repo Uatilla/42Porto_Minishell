@@ -61,6 +61,7 @@ bool	check_smaller(char *input, int i)
 	return (true);
 }
 
+/*Validating operators sintax*/
 bool	spc_char_check(char *input, int i)
 {
 	if (is_a_bigger(input[i]))
@@ -76,9 +77,12 @@ bool	spc_char_check(char *input, int i)
 		if (is_a_pipe(input[i]))
 			return (prt_stx_error("|", false));
 	}
+	else if (ft_strchr(OUTOFSCOPE, input[i]))
+		return (prt_stx_error("Out of Scope:", false));
 	return (true);
 }
 
+/*Look for unclosed quotes, and returns the close quote position.*/
 int	search_c_quote(char *input, int i, char search)
 {
 	while (input[++i])
@@ -90,6 +94,8 @@ int	search_c_quote(char *input, int i, char search)
 	return (i);
 }
 
+/*Validates if the current search is the first pos
+in the input string.*/
 bool	ch_fst(char *input, char search)
 {
 	int		i;
@@ -107,7 +113,8 @@ bool	ch_fst(char *input, char search)
 	}
 	return (false);
 }
-
+/*Do the validation of syntax analysing quotes, 
+and operators.*/
 bool	sintax_validation(char *input)
 {
 	int		i;
