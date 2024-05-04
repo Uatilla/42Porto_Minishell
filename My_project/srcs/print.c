@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:54:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/02 12:56:55 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:14:11 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_tokens(t_shell *sh)
 {
 	t_token	*token_content;
 	t_list	*tmp;
-	char	*type[] = {YELLOW "WORD" COLOR_RESET, RED "PIPE" COLOR_RESET, RED "GREATER" COLOR_RESET, "LESSER" COLOR_RESET, RED "D_GREATER" COLOR_RESET, RED "D_LESSER" COLOR_RESET, LIGHTBLUE "E_SPACE" COLOR_RESET, LIGHTGREEN"INFILE" COLOR_RESET, LIGHTGREEN "OUTFILE" COLOR_RESET, LIGHTGREEN "HERE_DOC"COLOR_RESET, LIGHTGREEN"APP_END" COLOR_RESET};
+	char	*type[] = {YELLOW "WORD" COLOR_RESET, RED "PIPE" COLOR_RESET, RED "GREATER" COLOR_RESET, RED "LESSER" COLOR_RESET, RED "D_GREATER" COLOR_RESET, RED "D_LESSER" COLOR_RESET, LIGHTBLUE "E_SPACE" COLOR_RESET, LIGHTGREEN"APPEND" COLOR_RESET, LIGHTGREEN "OUTFILE" COLOR_RESET, LIGHTGREEN "INFILE"COLOR_RESET, LIGHTGREEN"HEREDOC" COLOR_RESET};
 	char	*state[] = {PINK"GENERAL"COLOR_RESET, PURPLE"IN_DQUOTES"COLOR_RESET, LIGHTPURPLE"IN_SQUOTES" COLOR_RESET};
 
 	tmp = sh->token_lst;

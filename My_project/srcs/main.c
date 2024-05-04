@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/04 14:53:19 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:17:15 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
 	reset_signal();
-	print_env(&sh);
+	// print_env(&sh);
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);

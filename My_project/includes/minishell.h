@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/04 14:52:19 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:10:45 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ typedef enum s_token_type
 	D_GREATER,
 	D_LESSER,
 	E_SPACE,
-	INFILE,
+	APPEND,
 	OUTFILE,
-	HEREDOC,
-	APPEND
+	INFILE,
+	HEREDOC
 }	t_token_type;
 
 typedef enum s_token_state
@@ -141,7 +141,6 @@ int		search_char(char *str, char c);
 bool	chk_typ(int type, int inf, int sup);
 void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
 void	review_tkn_typ(t_list *tkn_lst);
-
 
 //EXTRA AUXILIARS
 //print.c
