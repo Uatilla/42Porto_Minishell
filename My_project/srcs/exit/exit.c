@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/01 16:22:10 by lebarbos         ###   ########.fr       */
+/*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
+/*   Updated: 2024/05/04 15:11:01 by uviana-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_lst_content(void *content)
 
 void	free_token_content(void *content)
 {
-	t_token *curr_cont;
+	t_token	*curr_cont;
 
 	curr_cont = (t_token *)(content);
 	if (!curr_cont)

@@ -18,70 +18,6 @@ bool	prt_stx_error(char *error, bool exit)
 	return (exit);
 }
 
-bool	check_bigger(char *input, int i)
-{
-	if ((only_white(input, i + 1)) || is_a_pipe(input [i + 1]) || \
-		(is_a_bigger(input[i + 1]) && only_white(input, i + 2)))
-		return (prt_stx_error("newline", false));
-	else if (is_a_bigger(input [i + 1]) && is_a_bigger(input [i + 2]))
-		return (prt_stx_error(">", false));
-	else if (is_a_smaller(input [i + 1]))
-		return (prt_stx_error("<", false));
-	else if (((is_a_bigger(input[i + 1]) && is_a_pipe(input [i + 2]))))
-		return (prt_stx_error("|", false));
-	else if (is_a_bigger(input [i + 1]) || ft_iswhitespace(input [i + 1]))
-	{
-		i++;
-		while (ft_iswhitespace(input[++i]))
-				continue ;
-		if (ft_strchr(OPERATOR, input[i]))
-			return (prt_stx_error("", false));
-	}
-	return (true);
-}
-
-bool	check_smaller(char *input, int i)
-{
-	if ((only_white(input, i + 1)) || (is_a_smaller(input[i + 1]) && \
-	(is_a_smaller(input[i + 2]) || only_white(input, i + 2))))
-		return (prt_stx_error("newline", false));
-	else if (is_a_bigger(input [i + 1]) && only_white(input, i + 2))
-			return (prt_stx_error("newline", false));
-	else if (is_a_pipe(input[i + 1]) || ((is_a_smaller(input[i + 1]) && \
-	is_a_pipe(input [i + 2]))))
-		return (prt_stx_error("|", false));
-	else if (is_a_smaller(input [i + 1]) || ft_iswhitespace(input [i + 1]))
-	{
-		i++;
-		while (ft_iswhitespace(input[++i]))
-				continue ;
-		if (ft_strchr(OPERATOR, input[i]))
-			return (prt_stx_error("", false));
-	}
-	return (true);
-}
-
-/*Validating operators sintax*/
-bool	spc_char_check(char *input, int i)
-{
-	if (is_a_bigger(input[i]))
-		return (check_bigger(input, i));
-	else if (is_a_smaller(input[i]))
-		return (check_smaller(input, i));
-	else if (is_a_pipe(input[i]))
-	{
-		if (is_a_bigger(input [i + 1]) || is_a_smaller(input [i + 1]))
-				return (prt_stx_error("|", false));
-		while (ft_iswhitespace(input[++i]))
-				continue ;
-		if (is_a_pipe(input[i]))
-			return (prt_stx_error("|", false));
-	}
-	else if (ft_strchr(OUTOFSCOPE, input[i]))
-		return (prt_stx_error("Out of Scope:", false));
-	return (true);
-}
-
 /*Look for unclosed quotes, and returns the close quote position.*/
 int	search_c_quote(char *input, int i, char search)
 {
@@ -113,6 +49,7 @@ bool	ch_fst(char *input, char search)
 	}
 	return (false);
 }
+
 /*Do the validation of syntax analysing quotes, 
 and operators.*/
 bool	sintax_validation(char *input)
@@ -128,7 +65,8 @@ bool	sintax_validation(char *input)
 			if (!input[i])
 				return (false);
 		}
-		if (is_a_pipe(input[i]) && ((ch_fst(input, '|') || only_white(input, i + 1))))
+		if (is_a_pipe(input[i]) && ((ch_fst(input, '|') || \
+			only_white(input, i + 1))))
 			return (prt_stx_error("|", false));
 		else
 		{

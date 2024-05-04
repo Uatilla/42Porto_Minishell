@@ -51,11 +51,11 @@ typedef enum s_token_type
 	D_GREATER,
 	D_LESSER,
 	E_SPACE,
-	APPEND,
-	OUTFILE,
 	INFILE,
-	HEREDOC
-} t_token_type;
+	OUTFILE,
+	HEREDOC,
+	APPEND
+}	t_token_type;
 
 typedef enum s_token_state
 {
@@ -118,6 +118,12 @@ bool	is_a_pipe(char c);
 bool	is_a_bigger(char c);
 bool	is_a_smaller(char c);
 
+// sintax_valid.c
+bool	check_bigger(char *input, int i);
+bool	check_smaller(char *input, int i);
+bool	spc_char_check(char *input, int i);
+bool	prt_stx_error(char *error, bool exit);
+
 // HANDLING SIGNAL
 // signals.c
 void	reset_signal(void);
@@ -125,10 +131,17 @@ void	reset_signal(void);
 //TOKENIZATION
 //tokens.c
 void	fill_token_lst(t_shell *sh, char *input);
+
 //tokens_aux.c
 void	search_word(char *input, int *end);
 void	search_quote(char *input, int *j, char c);
 int		search_char(char *str, char c);
+
+//rename_tkn_typ.c
+bool	chk_typ(int type, int inf, int sup);
+void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
+void	review_tkn_typ(t_list *tkn_lst);
+
 
 //EXTRA AUXILIARS
 //print.c

@@ -51,7 +51,9 @@ SRCS		=	main.c print.c \
 				exit/exit.c \
 				signals/signals.c \
 				input/input_checker.c input/input_checker_utils.c \
-				tokenization/tokens.c tokenization/tokens_aux.c
+				input/sintax_valid.c \
+				tokenization/tokens.c tokenization/tokens_aux.c \
+				tokenization/rename_tkn_typ.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
