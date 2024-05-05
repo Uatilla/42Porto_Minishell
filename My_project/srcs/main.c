@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/05 14:52:08 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/05 14:52:56 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sh_loop(t_shell *sh)
 			clear_exit(sh, 1);
 		trimmed_input = ft_strtrim(prompt_input, "\t ");
 		free(prompt_input);
-		if (!sintax_validation(prompt_input))
+		if (!sintax_validation(trimmed_input))
 			sh_loop(sh);
 		fill_token_lst(sh, trimmed_input); //tokenization without state;
 		review_tkn_typ(sh->token_lst);
