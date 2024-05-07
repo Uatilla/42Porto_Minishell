@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/05 14:52:56 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:47:27 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	sh_loop(t_shell *sh)
 			sh_loop(sh);
 		fill_token_lst(sh, trimmed_input); //tokenization without state;
 		review_tkn_typ(sh->token_lst);
+		expander(sh->token_lst);
 		print_tokens(sh); // just print
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(trimmed_input);
