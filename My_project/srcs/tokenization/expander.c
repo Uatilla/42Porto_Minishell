@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/09 21:59:46 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/09 22:07:33 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ void	expander(t_list **token)
 	{
 		if (!ft_strncmp(((t_token *)tmp->content)->value, "$", 2) && tmp->next != NULL)
 		{
-			if (((t_token *)tmp->next->content)->type != E_SPACE && (((t_token *)tmp->next->content)->state == IN_DQUOTES || ((t_token *)tmp->next->content)->state == IN_SQUOTES))
+			if (((t_token *)tmp->next->content)->type != E_SPACE && 
+			(((t_token *)tmp->next->content)->state == IN_DQUOTES || 
+			((t_token *)tmp->next->content)->state == IN_SQUOTES))
 			{
 				tmp_prev = tmp;
 				tmp = tmp->next;
@@ -90,6 +92,8 @@ void	expander(t_list **token)
 				remove_expander_node(token, tmp_prev);
 			}
 		}
+		// else
+		// 	search_expander(token, tmp);
 		tmp = tmp->next;
 	}
 }
