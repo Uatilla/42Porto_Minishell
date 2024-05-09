@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/05/02 15:00:29 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/05/09 20:47:19 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SUB_DIR		=	environment exit input signals tokenization
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
-CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -g -O0 -fsanitize=address
 #LFLAGS		=	-L ${LIBFT_PATH} -lft -lreadline
 #MK_FLAG		= --no-print-directory
 
@@ -53,7 +53,7 @@ SRCS		=	main.c print.c \
 				input/input_checker.c input/input_checker_utils.c \
 				input/sintax_valid.c \
 				tokenization/tokens.c tokenization/tokens_aux.c \
-				tokenization/rename_tkn_typ.c
+				tokenization/rename_tkn_typ.c tokenization/expander.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 

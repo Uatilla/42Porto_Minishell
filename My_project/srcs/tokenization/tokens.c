@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:13:59 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/04 19:35:00 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:29:42 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	end_word(t_shell *sh, char *input)
 		search_word(input, &sh->index->end);
 }
 
-// void	set_pos(t_shell *sh)
+// void	set_pos(t_shell *sh, char *value)
 // {
 // 	t_list	*curr;
 // 	t_list	*prev;
@@ -71,7 +71,7 @@ void	end_word(t_shell *sh, char *input)
 // 	pos = 0;
 // 	while (curr != NULL)
 // 	{
-// 		if (((t_token *)curr->content)->value[0] == '\0')
+// 		if (ft_strncmp(((t_token *)curr->content)->value, value, ft_strlen(((t_token *)curr->content)->value)))
 // 		{
 // 			if (prev == NULL)
 // 			{
@@ -81,17 +81,10 @@ void	end_word(t_shell *sh, char *input)
 // 			}
 // 			else
 // 			{
-// 				((t_token *)curr->content)->pos = pos++;
 // 				prev->next = curr->next;
 // 				ft_lstdelone(curr, &free_token_content);
 // 				curr = prev->next;
 // 			}
-// 		}
-// 		else
-// 		{
-// 			((t_token *)curr->content)->pos = pos++;
-// 			prev = curr;
-// 			curr = curr->next;
 // 		}
 // 	}
 // }
