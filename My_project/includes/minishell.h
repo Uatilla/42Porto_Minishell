@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/09 20:56:18 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:38:54 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_token
 	t_token_type	type;
 	t_token_state	state;
 	int				pos;
-	bool			expander;
+	bool			to_keep;
 }	t_token;
 
 typedef struct s_shell
@@ -144,7 +144,7 @@ void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
 void	review_tkn_typ(t_list *tkn_lst);
 
 //expander.c
-void	expander(t_list **token);
+void	expander(t_shell *sh, t_list **token);
 
 //EXTRA AUXILIARS
 //print.c

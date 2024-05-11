@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:54:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/04 19:14:11 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/11 01:00:08 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_env(t_shell *sh)
 	while (tmp)
 	{
 		env_content = tmp->content;
-		printf("%s: %s\n", env_content->key, env_content->value);
+		printf("%s=%s\n", env_content->key, env_content->value);
 		tmp = tmp->next;
 	}
 }

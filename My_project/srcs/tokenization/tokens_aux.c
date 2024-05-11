@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:20:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/09 21:51:04 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:39:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void	search_word(char *input, int *end)
 		if (input[*end] == '$')
 		{
 			(*end)++;
+			if (input[*end] == '$' || (input[*end] >= '0' && 
+			input[*end] <= '9') || input[*end] == '?')
+				(*end)++;
 			return ;
 		}
 		while (input[*end] && search_char("<>|", input[*end])
