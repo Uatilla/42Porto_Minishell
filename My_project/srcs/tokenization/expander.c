@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/11 22:56:50 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:48:10 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ char	*get_env(t_list *env_list, t_token *token)
 	char	*expansion;
 	char	*new_token;
 	char	*new_key;
+	char	*new_sub;
 	int		i;
 
 	env = env_list;
@@ -109,8 +110,11 @@ char	*get_env(t_list *env_list, t_token *token)
 	}
 	if (expansion == NULL)
 		expansion = ft_strdup("\0");
-	new_token = ft_strjoin(expansion, ft_substr(token->value, i, ft_strlen(token->value) - i));
+	new_sub = ft_substr(token->value, i, ft_strlen(token->value) - i);
+	new_token = ft_strjoin(expansion, new_sub);
+	free(new_sub);
 	free(new_key);
+	free(expansion);
 	return (new_token);
 }
 
@@ -136,6 +140,7 @@ t_list	*expand_aux(t_shell *sh, t_list *xtoken)
 	free(((t_token *)xtoken->content)->value);
 	if (((t_token *)xtoken->next->content)->state != GENERAL || ((t_token *)xtoken->content)->type == HEREDOC)
 	{
+		free((((t_token *)xtoken->content)->value));
 		((t_token *)xtoken->content)->value = ft_strdup(((t_token *)xtoken->next->content)->value);
 		((t_token *)xtoken->content)->state = (((t_token *)xtoken->next->content)->state);
 	}
@@ -143,7 +148,7 @@ t_list	*expand_aux(t_shell *sh, t_list *xtoken)
 	{
 		((t_token *)xtoken->content)->value = get_env(sh->env_lst, (t_token *)xtoken->next->content);
 	}
-	remove_expander_node(&sh->token_lst,xtoken->next);
+	remove_expander_node(&sh->token_lst, xtoken->next);
 	return (xtoken);
 }
 
@@ -156,13 +161,12 @@ char	*get_env2(t_shell *sh,  char *key, int *index)
 
 	env = sh->env_lst;
 	expansion = NULL;
-	printf(RED "%s$\n%d$\n" COLOR_RESET, key, *index);
+	printf("%s\n", key);
 	(*index)++;
 	start = *index;
 	while(ft_isalnum(key[(*index)]))
 		(*index)++;
 	new_key = ft_substr(key, start, *index - 1);
-	printf(RED "%s$\n%d$\n" COLOR_RESET, new_key, *index);
 	while (env)
 	{
 		if (!ft_strncmp(new_key, ((t_env *)env->content)->key,
@@ -170,6 +174,7 @@ char	*get_env2(t_shell *sh,  char *key, int *index)
 			expansion = ft_strdup(((t_env *)env->content)->value);
 		env = env->next;
 	}
+	free(new_key);
 	return (expansion);
 }
 
@@ -190,6 +195,7 @@ void	expand_inside_word(t_shell *sh, t_list *tokens)
 		key = ft_strdup(token_content->value);
 		if (token_content->state == IN_DQUOTES && ft_strlen(token_content->value) >= 2)
 		{
+			free(token_content->value);
 			while(key[index_key])
 			{
 				{
@@ -205,6 +211,7 @@ void	expand_inside_word(t_shell *sh, t_list *tokens)
 				}
 			}
 			token_content->value = ft_strdup(new_token_value);
+			free(new_token_value);
 		}
 		free(key);
 		tokens = tokens->next;
@@ -219,7 +226,7 @@ void	expander(t_shell *sh, t_list **tokens)
 	tmp = *tokens;
 	while (tmp)
 	{
-		if(((t_token *)tmp->content)->value[0] == '$')
+		if(((t_token *)tmp->content)->value[0] == '$' && ((t_token *)tmp->content)->state == GENERAL)
 		{
 			if (ft_strlen(((t_token *)tmp->content)->value) == 2)
 				simple_expand(tmp);
@@ -229,8 +236,9 @@ void	expander(t_shell *sh, t_list **tokens)
 				tmp = expand_aux(sh, to_exclude);
 			}
 		}
+		else
+			expand_inside_word(sh, tmp);
 		tmp = tmp->next;
 	}
 	tmp = *tokens;
-	expand_inside_word(sh, tmp);
 }
