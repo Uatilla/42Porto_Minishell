@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/12 17:48:10 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:38:21 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,30 @@ char	*get_env(t_list *env_list, t_token *token)
 	env = env_list;
 	expansion = NULL;
 	new_token = NULL;
+	new_key = NULL;
 	i = 0;
-	while (ft_isalnum(token->value[i]))
-		i++;
-	new_key = ft_substr(token->value, 0, i);
-	while(env)
+	if (token->value[i] == '0' || token->value[i] == '?' || token->value[i] == '$')
 	{
-		if (!ft_strncmp(new_key, ((t_env *)env->content)->key,
-			ft_strlen(token->value)))
-			expansion = ft_strdup(((t_env *)env->content)->value);
-		env = env->next;
+		expansion = ft_strdup("lalala");
+		i++;
 	}
-	if (expansion == NULL)
-		expansion = ft_strdup("\0");
+	else
+	{
+		while (ft_isalnum(token->value[i]))
+			i++;
+		new_key = ft_substr(token->value, 0, i);
+		while(env)
+		{
+			if (!ft_strncmp(new_key, ((t_env *)env->content)->key,
+				ft_strlen(token->value)))
+				expansion = ft_strdup(((t_env *)env->content)->value);
+			else
+				expansion = ft_strdup(new_key);
+			env = env->next;
+		}
+		if (expansion == NULL)
+			expansion = ft_strdup("\0");
+	}
 	new_sub = ft_substr(token->value, i, ft_strlen(token->value) - i);
 	new_token = ft_strjoin(expansion, new_sub);
 	free(new_sub);
@@ -140,7 +151,6 @@ t_list	*expand_aux(t_shell *sh, t_list *xtoken)
 	free(((t_token *)xtoken->content)->value);
 	if (((t_token *)xtoken->next->content)->state != GENERAL || ((t_token *)xtoken->content)->type == HEREDOC)
 	{
-		free((((t_token *)xtoken->content)->value));
 		((t_token *)xtoken->content)->value = ft_strdup(((t_token *)xtoken->next->content)->value);
 		((t_token *)xtoken->content)->state = (((t_token *)xtoken->next->content)->state);
 	}
@@ -228,15 +238,15 @@ void	expander(t_shell *sh, t_list **tokens)
 	{
 		if(((t_token *)tmp->content)->value[0] == '$' && ((t_token *)tmp->content)->state == GENERAL)
 		{
-			if (ft_strlen(((t_token *)tmp->content)->value) == 2)
-				simple_expand(tmp);
-			else if (tmp->next && ((t_token *)tmp->next->content)->type == WORD)
+			// if (ft_strlen(((t_token *)tmp->content)->value) == 2)
+			// 	simple_expand(tmp);
+			if (tmp->next)
 			{
 				to_exclude = tmp;
 				tmp = expand_aux(sh, to_exclude);
 			}
 		}
-		else
+		else if (((t_token *)tmp->content)->type != E_SPACE && ((t_token *)tmp->content)->state != IN_SQUOTES)
 			expand_inside_word(sh, tmp);
 		tmp = tmp->next;
 	}
