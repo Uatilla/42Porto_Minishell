@@ -40,7 +40,8 @@ void	sh_loop(t_shell *sh)
 		free(prompt_input);
 		fill_token_lst(sh, trimmed_input); //tokenization without state;
 		review_tkn_typ(sh->token_lst);
-		print_tokens(sh); // just print
+		parsing_tree(sh);
+		//print_tokens(sh); // just print
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(trimmed_input);
 	}
@@ -50,6 +51,7 @@ void	init_shell(t_shell *sh, char **env_var)
 {
 	ft_bzero(sh, sizeof(t_shell));
 	sh->index = malloc(sizeof(t_index));
+	//PROTECAO DO MALLOC
 	ft_bzero(sh->index, sizeof(t_index));
 	fill_env(sh, env_var);
 }
@@ -61,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
 	reset_signal();
-	print_env(&sh);
+	//print_env(&sh);
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);

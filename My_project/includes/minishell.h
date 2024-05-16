@@ -79,11 +79,34 @@ typedef struct s_token
 	int				pos;
 }	t_token;
 
+//TREE STRUCTURE
+typedef enum e_node_type
+{
+	N_EXEC,
+	N_REDIR,
+	N_PIPE
+}	t_node_type;
+
+typedef struct s_execcmd
+{
+	t_node_type n_type;
+	t_list		*curr_tkn_pos;
+	char		*argv[];
+}	t_execcmd;
+
+typedef	struct s_cmd
+{
+	t_node_type n_type;
+	t_list		*curr_tkn_pos;
+}	t_cmd;
+
+//MAIN STRUCTURE
 typedef struct s_shell
 {
 	t_list		*env_lst;
 	t_list		*token_lst;
 	t_index		*index;
+	t_cmd		*cmd;
 }	t_shell;
 
 // MACROS
@@ -142,6 +165,9 @@ bool	chk_typ(int type, int inf, int sup);
 void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
 void	review_tkn_typ(t_list *tkn_lst);
 
+//PARSING
+//building_tree.c
+void    parsing_tree(t_shell *sh);
 
 //EXTRA AUXILIARS
 //print.c

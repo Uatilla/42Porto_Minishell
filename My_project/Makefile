@@ -36,8 +36,8 @@ SRCS_DIR	=	srcs
 OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
-SUB_DIR		=	environment exit input signals tokenization
-SUB_DIR		=	environment exit input signals tokenization
+SUB_DIR		=	environment exit input signals tokenization parsing
+#SUB_DIR		=	environment exit input signals tokenization
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
@@ -53,7 +53,8 @@ SRCS		=	main.c print.c \
 				input/input_checker.c input/input_checker_utils.c \
 				input/sintax_valid.c \
 				tokenization/tokens.c tokenization/tokens_aux.c \
-				tokenization/rename_tkn_typ.c
+				tokenization/rename_tkn_typ.c \
+				parsing/building_tree.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
