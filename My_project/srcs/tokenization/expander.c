@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/13 20:38:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:31:44 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	remove_expander_node(t_list **list, t_list *node)
 		return ;
 	if (*list == node)
 	{
-
 			*list = (*list)->next;
 			ft_lstdelone(node, &free_token_content);
 			return ;
@@ -85,48 +84,26 @@ void	expand_node(t_shell *sh, t_list *expander, char *key)
 	}
 }
 
-char	*get_env(t_list *env_list, t_token *token)
+char	*get_env(t_list *env_list, char *token)
 {
 	t_list *env;
 	char	*expansion;
-	char	*new_token;
-	char	*new_key;
-	char	*new_sub;
-	int		i;
 
 	env = env_list;
 	expansion = NULL;
-	new_token = NULL;
-	new_key = NULL;
-	i = 0;
-	if (token->value[i] == '0' || token->value[i] == '?' || token->value[i] == '$')
+	while(env)
 	{
-		expansion = ft_strdup("lalala");
-		i++;
-	}
-	else
-	{
-		while (ft_isalnum(token->value[i]))
-			i++;
-		new_key = ft_substr(token->value, 0, i);
-		while(env)
+		if (!ft_strncmp(token, ((t_env *)env->content)->key,
+			ft_strlen(token)))
 		{
-			if (!ft_strncmp(new_key, ((t_env *)env->content)->key,
-				ft_strlen(token->value)))
-				expansion = ft_strdup(((t_env *)env->content)->value);
-			else
-				expansion = ft_strdup(new_key);
-			env = env->next;
+			expansion = ft_strdup(((t_env *)env->content)->value);
+			break ;
 		}
-		if (expansion == NULL)
-			expansion = ft_strdup("\0");
+		else
+			expansion = ft_strdup("");
+		env = env->next;
 	}
-	new_sub = ft_substr(token->value, i, ft_strlen(token->value) - i);
-	new_token = ft_strjoin(expansion, new_sub);
-	free(new_sub);
-	free(new_key);
-	free(expansion);
-	return (new_token);
+	return (expansion);
 }
 
 void	simple_expand(t_list *token_node)
@@ -146,8 +123,43 @@ void	simple_expand(t_list *token_node)
 	((t_token *)token_node->content)->value = new_token;
 }
 
-t_list	*expand_aux(t_shell *sh, t_list *xtoken)
+char	*expansion(t_list *env_list, char *str, int *i, t_token *token)
 {
+	char	*key;
+	char	*new_token;
+	int		start;
+	
+	new_token = "";
+	if (token->state == IN_DQUOTES)
+		(*i)++;
+	start = *i;
+	printf("String: %s\n\n", &str[*i]);
+	if((str[*i] >= '0' && str[*i] <= '9') || str[*i] == '$' || str[*(i)] == '?' || search_char(OPERATORS, str[*i]))
+	{
+		new_token = ft_strdup("lalala");
+		(*i)++;
+	}
+	else 
+	{
+		while (isalnum(str[(*i)++]))
+		{
+			;
+		}
+		printf("\n\nNUMERO DE I DEPOIS: %d\n\n", *i);
+		(*i)--;
+		key = ft_substr(&str[start], 0, *i);
+		printf("\n\nKEY: %s\n\n", key);
+		new_token = get_env(env_list, key);
+		free(key); // Add this line to free the allocated memory for key
+	}
+	return (new_token);
+}
+
+void	expand_general(t_shell *sh, t_list *xtoken)
+{
+	int i = 0; // Add this line to initialize the variable i
+	char	*new_token;
+
 	free(((t_token *)xtoken->content)->value);
 	if (((t_token *)xtoken->next->content)->state != GENERAL || ((t_token *)xtoken->content)->type == HEREDOC)
 	{
@@ -156,10 +168,11 @@ t_list	*expand_aux(t_shell *sh, t_list *xtoken)
 	}
 	else
 	{
-		((t_token *)xtoken->content)->value = get_env(sh->env_lst, (t_token *)xtoken->next->content);
+		new_token = expansion(sh->env_lst, ((t_token *)xtoken->next->content)->value, &i, ((t_token *)xtoken->next->content)); // Pass the address of i to the expansion function	
+		((t_token *)xtoken->content)->value = ft_strjoin(new_token, ft_strdup(&((t_token *)xtoken->next->content)->value[i]));
+		free(new_token);
 	}
 	remove_expander_node(&sh->token_lst, xtoken->next);
-	return (xtoken);
 }
 
 char	*get_env2(t_shell *sh,  char *key, int *index)
@@ -210,7 +223,7 @@ void	expand_inside_word(t_shell *sh, t_list *tokens)
 			{
 				{
 					if (key[index_key] == '$' && token_content->type != HEREDOC)
-						expansion = get_env2(sh, key, &index_key);
+						expansion = get_env(sh->env_lst, &key[index_key]);
 					else
 					{
 						expansion = ft_substr(key, index_key, 1);
@@ -228,6 +241,46 @@ void	expand_inside_word(t_shell *sh, t_list *tokens)
 	}
 }
 
+void	expand_quotes(t_shell *sh, t_list *token)
+{
+	int		i;
+	char	*token_str;
+	char	*new_word;
+	char	*new_token; 
+	int	len;
+	
+	token_str = ft_strdup(((t_token *)token->content)->value);
+	i = 0;
+	len = 0;
+	new_token = ft_strdup("");
+	new_word = NULL;
+	while (token_str[i] != '\0')
+	{
+		if (token_str[i] == '$' && token_str[i + 1] != '\0')
+		{
+			printf("NUMERO DE I: %d\n", i);
+			new_word = expansion(sh->env_lst, token_str, &i, ((t_token *)token->content));
+			new_token = ft_strjoin(new_token, new_word);
+			free(new_word);
+
+		}
+		else
+		{
+			len = i;
+			while (token_str[len] && isalnum(token_str[len]))
+				len++;
+			new_word = ft_substr(token_str, i, len);
+			i=+len;
+			new_token = ft_strjoin(new_token, new_word);
+			free(new_word);
+		}
+		// i++;
+	}
+	free(((t_token *)token->content)->value);
+	free(token_str);
+	((t_token *)token->content)->value = new_token;
+}
+
 void	expander(t_shell *sh, t_list **tokens)
 {
 	t_list *tmp;
@@ -236,18 +289,16 @@ void	expander(t_shell *sh, t_list **tokens)
 	tmp = *tokens;
 	while (tmp)
 	{
-		if(((t_token *)tmp->content)->value[0] == '$' && ((t_token *)tmp->content)->state == GENERAL)
+		if(((t_token *)tmp->content)->value[0] == '$' && ((t_token *)tmp->content)->state == GENERAL && (t_token *)tmp->next)
 		{
-			// if (ft_strlen(((t_token *)tmp->content)->value) == 2)
-			// 	simple_expand(tmp);
-			if (tmp->next)
+			if (((t_token *)tmp->next->content)->type != E_SPACE)
 			{
 				to_exclude = tmp;
-				tmp = expand_aux(sh, to_exclude);
+				expand_general(sh, to_exclude);
 			}
 		}
 		else if (((t_token *)tmp->content)->type != E_SPACE && ((t_token *)tmp->content)->state != IN_SQUOTES)
-			expand_inside_word(sh, tmp);
+			expand_quotes(sh, tmp);
 		tmp = tmp->next;
 	}
 	tmp = *tokens;

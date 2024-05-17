@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/11 15:38:54 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:18:11 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_shell
 # define PROMPT "MINISHELL ➜ "
 # define OPERATOR "|<>"
 # define OUTOFSCOPE "()*;&"
+# define OPERATORS "[]._+%"
 
 // EXITING THE GLOBAL VARIABLE
 extern int	g_signo;
