@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libraries/libft/libft.h"
@@ -53,8 +54,8 @@ typedef enum s_token_type
 	E_SPACE,
 	INFILE,
 	OUTFILE,
-	HEREDOC,
-	APPEND
+	APPEND,
+	HEREDOC
 }	t_token_type;
 
 typedef enum s_token_state
@@ -87,18 +88,27 @@ typedef enum e_node_type
 	N_PIPE
 }	t_node_type;
 
-typedef struct s_execcmd
-{
-	t_node_type n_type;
-	t_list		*curr_tkn_pos;
-	char		*argv[];
-}	t_execcmd;
-
 typedef	struct s_cmd
 {
 	t_node_type n_type;
 	t_list		*curr_tkn_pos;
 }	t_cmd;
+typedef struct s_redircmd
+{
+	t_node_type n_type;
+	t_list		*curr_tkn_pos;
+	t_cmd		*cmd;
+	char		*file;
+	int			mode;
+	int			fd;
+}	t_redircmd;
+typedef struct s_execcmd
+{
+	t_node_type n_type;
+	t_list		*curr_tkn_pos;
+	char		**argv;
+}	t_execcmd;
+
 
 //MAIN STRUCTURE
 typedef struct s_shell
