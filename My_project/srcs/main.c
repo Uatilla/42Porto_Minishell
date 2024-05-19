@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/19 15:24:46 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:58:22 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ void	reinit_shell(t_shell *sh)
 {
 	free_token_list(&sh->token_lst);
 	ft_bzero(sh->index, sizeof(t_index));
+}
+
+void	init_shell(t_shell *sh, char **env_var)
+{
+	ft_bzero(sh, sizeof(t_shell));
+	sh->index = malloc(sizeof(t_index));
+	ft_bzero(sh->index, sizeof(t_index));
+	fill_env(sh, env_var);
 }
 
 /*This should be an item inside the structure because this
@@ -34,6 +42,11 @@ void	sh_loop(t_shell *sh)
 		add_history(prompt_input);
 		if (!ft_strncmp(prompt_input, "exit", 5)) // just to exit with clear 
 			clear_exit(sh, 1);
+		if (!ft_strcmp(prompt_input, "clear"))
+		{
+			system("clear");
+			sh_loop(sh);
+		}
 		trimmed_input = ft_strtrim(prompt_input, "\t ");
 		free(prompt_input);
 		if (!sintax_validation(trimmed_input))
@@ -42,14 +55,6 @@ void	sh_loop(t_shell *sh)
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(trimmed_input);
 	}
-}
-
-void	init_shell(t_shell *sh, char **env_var)
-{
-	ft_bzero(sh, sizeof(t_shell));
-	sh->index = malloc(sizeof(t_index));
-	ft_bzero(sh->index, sizeof(t_index));
-	fill_env(sh, env_var);
 }
 
 int	main(int argc, char **argv, char **envp)
