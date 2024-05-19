@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/19 15:31:22 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:50:20 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,30 @@ void	expander(t_shell *sh, t_list **tokens)
 	}
 }
 
+void	review_tkn_list(t_list **tkn)
+{
+	t_list	*tmp;
+	t_list	*nxt;
+
+	tmp = *tkn;
+	while (tmp)
+	{
+		nxt = tmp->next;
+		if (ft_strcmp(get(tmp)->value, "") == 0
+			&& !is_removable(get(nxt)->type))
+		{
+			get(nxt)->type = get(tmp)->type;
+			remove_node(tkn, tmp);// Remove o nó atual
+		}
+		tmp = nxt;// Avança para o próximo nó
+	}
+}
+
 void	lexer(t_shell *sh, char *input)
 {
 	fill_token_lst(sh, input); //tokens without state;
 	review_tkn_typ(sh->token_lst); // set state
+	review_tkn_list(&sh->token_lst);
 	expander(sh, &sh->token_lst);
 	clean_tokenlist(&sh->token_lst); // join and clean spaces
 	print_tokens(sh); // just print
