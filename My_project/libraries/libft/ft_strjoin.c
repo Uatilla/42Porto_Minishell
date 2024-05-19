@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 14:46:26 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/11 21:59:16 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 12:58:56 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 
-	if (!s1)
-		return (ft_strdup(s1));
-	else if (!s2)
-		return (ft_strdup(s1));
 	ptr_strjoin = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!ptr_strjoin)
 		return (NULL);

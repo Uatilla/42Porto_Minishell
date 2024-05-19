@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 15:07:18 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/02 15:46:10 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 12:59:50 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,8 @@ void	ft_putnbr_fd(int n, int fd);
 char	*ft_itoa(int n);
 
 int		ft_iswhitespace(char c);
+
+int		ft_strcmp(char *s1, char *s2);
 
 /*___________________________________[BONUS]_________________________________*/
 
