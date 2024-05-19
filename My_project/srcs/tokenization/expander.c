@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/19 15:26:29 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:08:37 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,8 @@ void	expand_quotes(t_shell *sh, t_list *token)
 		else
 			expanded = get_word(get(token)->value, &i);
 		new_token = ft_strjoin(new_token, expanded);
-	}
-	if (expanded && *expanded)
 		free(expanded);
+	}
 	free(get(token)->value);
 	get(token)->value = new_token;
 }

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/17 20:29:42 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:03:59 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	free_token_content(void *content)
 	curr_cont = (t_token *)(content);
 	if (!curr_cont)
 		return ;
-	free(curr_cont->value);
+	if (curr_cont->value && *curr_cont->value)
+		free(curr_cont->value);
 	free(curr_cont);
 }
 
