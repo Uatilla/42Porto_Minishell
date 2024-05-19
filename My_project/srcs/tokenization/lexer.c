@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/19 16:51:47 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:03:38 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,28 @@ void	review_tkn_list(t_list **tkn)
 			get(nxt)->type = get(tmp)->type;
 			remove_node(tkn, tmp);// Remove o nó atual
 		}
+		else if (get(tmp)->type == HEREDOC)
+        {
+            char *joined_value = strdup(get(tmp)->value);
+            t_list *to_remove = nxt;
+            while (to_remove && !is_removable(get(to_remove)->type))
+            {
+                char *new_joined_value = ft_strjoin(joined_value, get(to_remove)->value);
+                free(joined_value); // Liberar a string anterior
+                joined_value = new_joined_value;
+                to_remove = to_remove->next;
+            }
+            free(get(tmp)->value); // Liberar o valor antigo
+            get(tmp)->value = joined_value; // Atualizar com o novo valor unido
+
+            // Remover todos os nós subsequentes até encontrar um tipo removível
+            while (nxt && nxt != to_remove)
+            {
+                t_list *next_nxt = nxt->next;
+                remove_node(tkn, nxt);
+                nxt = next_nxt;
+            }
+        }
 		tmp = nxt;// Avança para o próximo nó
 	}
 }
