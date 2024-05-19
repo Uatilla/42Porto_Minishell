@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/19 13:08:38 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:32:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,14 +145,23 @@ void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
 void	review_tkn_typ(t_list *tkn_lst);
 
 //expander.c
-void	expander(t_shell *sh, t_list **token);
+void	expand_quotes(t_shell *sh, t_list *token);
+void	expand_general(t_shell *sh, t_list *tkn);
+char	*expansion(t_list *env_list, char *str, int *i);
+char	*get_env(t_list *env_list, char *token);
 
 //expander_aux.c
 t_token	*get(t_list *token);
-void	remove_expander_node(t_list **list, t_list *node);
+void	remove_node(t_list **list, t_list *node);
 char	*simple_expand(char token);
-int	check_exp(char key);
+int		check_exp(char key);
 char	*get_word(char *str, int *i);
+
+//lexer.c
+void	lexer(t_shell *sh, char *input);
+
+//lexer_aux.c
+int		is_removable(int type);
 
 //EXTRA AUXILIARS
 //print.c

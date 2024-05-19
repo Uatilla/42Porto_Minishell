@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/19 13:11:11 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:26:29 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	expand_general(t_shell *sh, t_list *tkn)
 	}
 	if (new_token && *new_token)
 		free(new_token);
-	remove_expander_node(&sh->token_lst, tkn->next);
+	remove_node(&sh->token_lst, tkn->next);
 }
 
 void	expand_quotes(t_shell *sh, t_list *token)
@@ -109,33 +109,4 @@ void	expand_quotes(t_shell *sh, t_list *token)
 		free(expanded);
 	free(get(token)->value);
 	get(token)->value = new_token;
-}
-
-void	expander(t_shell *sh, t_list **tokens)
-{
-	t_list	*tmp;
-	t_list	*to_exclude;
-
-	tmp = *tokens;
-	while (tmp)
-	{
-		if (get(tmp)->value[0] == '$' && get(tmp)->state == GENERAL
-			&& tmp->next)
-		{
-			if (get(tmp->next)->type != E_SPACE)
-			{
-				to_exclude = tmp;
-				expand_general(sh, to_exclude);
-			}
-		}
-		tmp = tmp->next;
-	}
-	tmp = *tokens;
-	while (tmp)
-	{
-		if (get(tmp)->state == IN_DQUOTES)
-			if (get(tmp)->type != HEREDOC)
-				expand_quotes(sh, tmp);
-		tmp = tmp->next;
-	}
 }

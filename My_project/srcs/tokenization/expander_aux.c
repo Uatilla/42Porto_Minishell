@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:05:30 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/19 13:12:40 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:52:59 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*simple_expand(char token)
 	return (new_token);
 }
 
-void	remove_expander_node(t_list **list, t_list *node)
+void	remove_node(t_list **list, t_list *node)
 {
 	t_list	*prev;
 	t_list	*curr;
