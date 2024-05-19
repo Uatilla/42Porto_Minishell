@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/19 16:50:20 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:51:47 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	review_tkn_list(t_list **tkn)
 	t_list	*nxt;
 
 	tmp = *tkn;
-	while (tmp)
+	while (tmp && tmp->next)
 	{
 		nxt = tmp->next;
 		if (ft_strcmp(get(tmp)->value, "") == 0
