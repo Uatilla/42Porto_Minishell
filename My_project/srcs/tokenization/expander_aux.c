@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:05:30 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/20 12:16:29 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/20 20:44:35 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_word(char *str, int *i)
 	int		start;
 
 	start = *i;
+	if (!str[*i])
+		return ("");
 	while (str[*i] && str[*i] != '$')
 		(*i)++;
 	key = ft_substr(str, start, ((*i) - start));
@@ -40,13 +42,17 @@ char	*simple_expand(char token)
 {
 	char	*new_token;
 
-	new_token = "";
-	if (token == '$')
-		new_token = ft_itoa(getpid());
-	else if (token == '?')
-		new_token = ft_itoa(g_signo);
-	else if (token == '0')
-		new_token = ft_strdup("bash");
+	new_token = ft_strdup("");
+	if (token == '$' || token == '?' || token == '0')
+	{
+		free(new_token);
+		if (token == '$')
+			new_token = ft_itoa(getpid());
+		else if (token == '?')
+			new_token = ft_itoa(g_signo);
+		else if (token == '0')
+			new_token = ft_strdup("bash");
+	}
 	return (new_token);
 }
 

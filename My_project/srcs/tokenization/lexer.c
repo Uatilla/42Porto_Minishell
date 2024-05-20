@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/20 17:18:36 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:06:21 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,9 +219,6 @@ void	review_tkn_list(t_list **tkn)
 		}
 	}
 }
-
-
-
 
 void	lexer(t_shell *sh, char *input)
 {
