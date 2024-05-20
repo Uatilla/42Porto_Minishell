@@ -12,15 +12,25 @@
 
 #include "minishell.h"
 
+
 t_cmd   *build_exec_nd(void)
 {
     t_execcmd   *cmd;
 
-
-    cmd = malloc(sizeof(t_cmd));
+    cmd = malloc(sizeof(t_execcmd));
     if (!cmd)
         return (NULL); //IF THIS RETURNS AN ERROR, SHOULD CALL CLEAN EXIT.
     ft_memset(cmd, 0, sizeof(t_cmd));
+
+
+
+    cmd->argv = malloc(128 * sizeof(char *)); //CASO EU NAO SAIBA A QUANTIDADE DE ARGS.
+
+
+
+    if (!cmd->argv)
+        return (NULL);
+    ft_memset(cmd->argv, 0, sizeof(char *));
     cmd->n_type = N_EXEC;
     return (t_cmd *)cmd;
 }
@@ -75,12 +85,13 @@ t_cmd*  parse_exec(t_list *pos_tkn_lst)
         tkn_cont = ((t_token *)pos_tkn_lst->content);
         if (tkn_cont->type == WORD)
         {
-            printf("%s\n", tkn_cont->value);
-            //cmd->argv[argc] = ft_strdup(tkn_cont->value); // REMEMBER TO FREE
+            printf("WORD[%d]: %s\n", argc, tkn_cont->value);
+            cmd->argv[argc] = ft_strdup(tkn_cont->value); // REMEMBER TO FREE
             argc++;
         }
         else if (tkn_cont->type == INFILE || tkn_cont->type == OUTFILE || tkn_cont->type == APPEND)
         {
+            printf("REDIR[%d]: %s\n", argc, tkn_cont->value);
             ret = parse_redir(ret, pos_tkn_lst);
             pos_tkn_lst = ret->curr_tkn_pos;
         }
@@ -99,17 +110,21 @@ t_cmd*  parse_pipe(t_shell *sh)
 {
     t_cmd   *cmd;
     t_list  *pos_tkn_lst;
+    t_token *ab;
+    //t_cmd   *cmd2;
 
     (void)sh;
     
     pos_tkn_lst = sh->token_lst;
-	while (pos_tkn_lst)
-	{
-		//tkn_cont = tkn_lst->content;
-		cmd = parse_exec(pos_tkn_lst); //SEND THE CURR TOKEN LIST POS.
-		pos_tkn_lst = cmd->curr_tkn_pos; //UPDATE THE CUR TKN POS FROM CMD STRUCTURE.
-	}
+    cmd = parse_exec(pos_tkn_lst); //SEND THE CURR TOKEN LIST POS.
+    pos_tkn_lst = cmd->curr_tkn_pos;
 
+    ab = ((t_token *)(pos_tkn_lst->content));
+    if (ab->type == PIPE)
+    {
+        printf("Call Pipe process\n");
+        //cmd2 = parse_exec(pos_tkn_lst);
+    }
     return (cmd);
 }
 
