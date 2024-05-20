@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/19 16:52:52 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:04:04 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ char	*get_env(t_list *env_list, char *token)
 	char	*key;
 
 	env = env_list;
-	expansion = "";
+	expansion = ft_strdup("");
 	while (env)
 	{
 		key = ((t_env *)env->content)->key;
 		if (!ft_strcmp(token, key))
 		{
+			free(expansion);
 			expansion = ft_strdup(((t_env *)env->content)->value);
 			break ;
 		}
@@ -39,8 +40,8 @@ char	*expansion(t_list *env_list, char *str, int *i)
 	char	*new_token;
 	int		start;
 
-	new_token = "";
-	if (isnumber(str[*i]) || search_char(OPERATORS_EX, str[*i]))
+	// new_token = NULL;
+	if (ft_isnumber(str[*i]) || search_char(OPERATORS_EX, str[*i]))
 	{
 		new_token = simple_expand(str[*i]);
 		(*i)++;
@@ -78,7 +79,7 @@ void	expand_general(t_shell *sh, t_list *tkn)
 		new_token = expansion(sh->env_lst, get(tkn->next)->value, &i);
 		get(tkn)->value = ft_strjoin(new_token, &get(tkn->next)->value[i]);
 	}
-	if (new_token && *new_token)
+	if (new_token /* && *new_token */)
 		free(new_token);
 	remove_node(&sh->token_lst, tkn->next);
 }
@@ -89,22 +90,23 @@ void	expand_quotes(t_shell *sh, t_list *token)
 	char	*expanded;
 	int		i;
 
-	new_token = "";
+	new_token = ft_strdup("");
 	i = 0;
 	while (get(token)->value[i])
 	{
 		if (get(token)->value[i] == '$')
 		{
 			i++;
-			if (check_exp(get(token)->value[i]) || get(token)->value[i] == '_')
+			if (check_exp(get(token)->value[i]))
 				expanded = expansion(sh->env_lst, get(token)->value, &i);
 			else
-				expanded = ft_strjoin("$", get_word(get(token)->value, &i));
+				expanded = ft_strjoin_mod("$", get_word(get(token)->value, &i));
 		}
 		else
 			expanded = get_word(get(token)->value, &i);
-		new_token = ft_strjoin(new_token, expanded);
-		// free(expanded);
+		new_token = ft_strjoin_mod(new_token, expanded);
+		if (expanded /* && *expanded */)
+			free(expanded);
 	}
 	free(get(token)->value);
 	get(token)->value = new_token;

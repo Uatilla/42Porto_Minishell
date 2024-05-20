@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/18 20:30:00 by uviana-a          #+#    #+#              #
-#    Updated: 2024/05/19 12:16:55 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/05/20 10:57:47 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS =  ft_strtrim.c     ft_atoi.c         ft_isprint.c    ft_strlen.c\
         ft_count_words.c ft_atoi_hex.c     get_next_line.c  get_next_line_utils.c\
         ft_printf.c      ft_printf_func.c  ft_lstnew.c       ft_lstsize.c\
         ft_lstlast.c     ft_lstiter.c     ft_lstdelone.c    ft_lstclear.c\
-        ft_lstmap.c      ft_lstadd_front.c ft_lstadd_back.c     ft_iswhitespace.c ft_strcmp.c
+        ft_lstmap.c      ft_lstadd_front.c ft_lstadd_back.c     ft_iswhitespace.c ft_strcmp.c ft_isnumber.c
 
 
 SRCS_O	:= ${SRCS:.c=.o}

@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "type_traits": "c",
-        "minishell.h": "c"
-    }
-}
