@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/21 18:31:48 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:18:33 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ void	lexer(t_shell *sh, char *input);
 
 //lexer_aux.c
 int		is_removable(int type);
+void	handle_heredoc(t_list *start);
+void	transform_nodes(t_list *start, int type);
 
 //EXTRA AUXILIARS
 //print.c
