@@ -12,119 +12,70 @@
 
 #include "minishell.h"
 
-
-t_cmd   *build_exec_nd(void)
+/*CONSTRUCTORS*/
+t_cmd   *execcmd(t_shell *sh)
 {
     t_execcmd   *cmd;
 
+    (void)sh;
     cmd = malloc(sizeof(t_execcmd));
     if (!cmd)
-        return (NULL); //IF THIS RETURNS AN ERROR, SHOULD CALL CLEAN EXIT.
-    ft_memset(cmd, 0, sizeof(t_cmd));
-
-
-
-    cmd->argv = malloc(128 * sizeof(char *)); //CASO EU NAO SAIBA A QUANTIDADE DE ARGS.
-
-
-
-    if (!cmd->argv)
-        return (NULL);
-    ft_memset(cmd->argv, 0, sizeof(char *));
+        clear_exit(sh, 1); //CLEAN RECURSIVELY
+    ft_memset(cmd, 0, sizeof(t_execcmd));
+    /*allocate memory for the argv*/
     cmd->n_type = N_EXEC;
     return (t_cmd *)cmd;
+        
 }
 
-t_cmd*  build_redir_nd(t_cmd *subcmd, char *file, int mode, int fd)
+t_cmd*  parse_exec(t_shell *sh, t_list *tkn_pos)
 {
-    t_redircmd  *cmd;
-
-    cmd = malloc(sizeof(t_cmd));
-    if (!cmd)
-        return (NULL); //IF THIS RETURNS AN ERROR, SHOULD CALL CLEAN EXIT.
-    ft_memset(cmd, 0, sizeof(t_cmd));
-    cmd->n_type = N_REDIR;
-    cmd->cmd = subcmd;
-    cmd->file = file;
-    cmd->mode = mode;
-    cmd->fd = fd;
-    return ((t_cmd *)cmd);
-}
-
-t_cmd*  parse_redir(t_cmd *cmd, t_list *pos_tkn_lst)
-{
+    t_cmd   *ret;
     t_token *tkn_cont;
-    int redir_type;
 
-    tkn_cont = ((t_token *)(pos_tkn_lst->content));
-    redir_type = tkn_cont->type;
-    if (redir_type == INFILE)
+    (void)sh;
+
+    ret = execcmd(sh);
+    /*SET THE EXEC NODE*/
+    //(void)ret;
+
+
+
+    while (tkn_pos)
     {
-        cmd = build_redir_nd(cmd, tkn_cont->value, O_RDONLY, 0);
-        cmd->curr_tkn_pos = pos_tkn_lst;
-    }
-    return (cmd);//IF THE THE CUR TKN IS NOT A REDIR, STAY IN THE SAME TKN POS.
-}
-
-t_cmd*  parse_exec(t_list *pos_tkn_lst)
-{
-    t_execcmd   *cmd;
-    t_cmd       *ret;
-    t_token     *tkn_cont;
-    int         argc;
-
-    
-    ret = build_exec_nd(); //Build the blank exec structure.
-    ret->curr_tkn_pos = pos_tkn_lst;
-    cmd = (t_execcmd *)ret;
-    argc = 0;
-
-    //loop infinito
-    while (pos_tkn_lst) //CONTINUE RUNNING TKN_LST AND RUN WHILE I DONT FIND A PIPE
-    {
-        tkn_cont = ((t_token *)pos_tkn_lst->content);
+        ret->curr_tkn_pos = tkn_pos;
+        tkn_cont = ret->curr_tkn_pos->content;
         if (tkn_cont->type == WORD)
         {
-            printf("WORD[%d]: %s\n", argc, tkn_cont->value);
-            cmd->argv[argc] = ft_strdup(tkn_cont->value); // REMEMBER TO FREE
-            argc++;
+            printf("CMD: %s \n", tkn_cont->value);
         }
-        else if (tkn_cont->type == INFILE || tkn_cont->type == OUTFILE || tkn_cont->type == APPEND)
+        else if (tkn_cont->type == INFILE || tkn_cont->type == OUTFILE 
+                || tkn_cont->type == APPEND)
         {
-            printf("REDIR[%d]: %s\n", argc, tkn_cont->value);
-            ret = parse_redir(ret, pos_tkn_lst);
-            pos_tkn_lst = ret->curr_tkn_pos;
+            printf("REDIR: %s\n", tkn_cont->value);
         }
         else if (tkn_cont->type == PIPE)
-            break;
-        pos_tkn_lst = pos_tkn_lst->next;
-    }
-    //cmd->argv[argc] = ft_calloc(1, sizeof(char *));
-    ret->curr_tkn_pos = pos_tkn_lst;
+            break ;
+        tkn_pos = tkn_pos->next;
+    }    
     return (ret);
 }
 
 /*Start calling parse_exec to build the very first node of the tree.
 Then move forward into the other tree nodes.*/
-t_cmd*  parse_pipe(t_shell *sh)
+t_cmd*  parse_pipe(t_shell *sh, t_list *tkn_pos)
 {
     t_cmd   *cmd;
-    t_list  *pos_tkn_lst;
-    t_token *ab;
-    //t_cmd   *cmd2;
 
     (void)sh;
-    
-    pos_tkn_lst = sh->token_lst;
-    cmd = parse_exec(pos_tkn_lst); //SEND THE CURR TOKEN LIST POS.
-    pos_tkn_lst = cmd->curr_tkn_pos;
-
-    ab = ((t_token *)(pos_tkn_lst->content));
-    if (ab->type == PIPE)
+    cmd = parse_exec(sh, tkn_pos);
+    tkn_pos = cmd->curr_tkn_pos;
+    if (cmd && tkn_pos && ((t_token *)(tkn_pos->content))->type == PIPE)
     {
-        printf("Call Pipe process\n");
-        //cmd2 = parse_exec(pos_tkn_lst);
+        tkn_pos = tkn_pos->next;
+        cmd = parse_pipe(sh, tkn_pos);
     }
+
     return (cmd);
 }
 
@@ -136,7 +87,7 @@ void    parsing_tree(t_shell *sh)
     1) Call Pipe Constructor
     2) Call EXEC
     3) Call REDIR*/
-    sh->cmd = parse_pipe(sh);
+    sh->cmd = parse_pipe(sh, sh->token_lst);
 }
 
 /*
