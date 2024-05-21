@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/20 21:06:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:14:44 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,54 +169,105 @@ void	expander(t_shell *sh, t_list **tokens)
 // 	}
 // }
 
-void	review_tkn_list(t_list **tkn)
+// void	review_tkn_list(t_list **tkn)
+// {
+// 	t_list *tmp;
+// 	t_list *heredoc_start;
+// 	int		typee;
+
+// 	tmp = *tkn;
+// 	while (tmp)
+// 	{
+// 		typee = get(tmp)->type;
+// 		if (typee >= 7)
+// 		{
+// 			// Transformar nós do tipo 0 após um tipo >= 7 para o tipo >= 7
+// 			t_list *start = tmp->next;
+// 			while (start && get(start)->type == 0)
+// 			{
+// 				get(start)->type = typee;
+// 				start = start->next;
+// 			}
+// 			// Se o tipo for HEREDOC, realizar a verificação adicional
+// 			if (typee == HEREDOC)
+// 			{
+// 				heredoc_start = tmp;
+// 				t_list *inner_tmp = tmp;
+// 				while (inner_tmp && get(inner_tmp)->type != E_SPACE)
+// 				{
+// 					if (get(inner_tmp)->state == IN_DQUOTES || get(inner_tmp)->state == IN_SQUOTES)
+// 					{
+// 						// int quote_type = get(inner_tmp)->state;
+// 						inner_tmp = heredoc_start;
+// 						while (inner_tmp && get(inner_tmp)->type != E_SPACE)
+// 						{
+// 							// if (get(inner_tmp)->type == HEREDOC)
+// 							get(inner_tmp)->not_expand = true;
+// 							inner_tmp = inner_tmp->next;
+// 						}
+// 						break;
+// 					}
+// 					inner_tmp = inner_tmp->next;
+// 				}
+// 			}
+// 			tmp = start;  // Avançar tmp para continuar iterando na lista
+// 		}
+// 		else
+// 		{
+// 			tmp = tmp->next;
+// 		}
+// 	}
+// }
+
+void transform_nodes(t_list *start, int type) 
+{
+	while (start && get(start)->type == 0) 
+	{
+		get(start)->type = type;
+		start = start->next;
+	}
+}
+
+void handle_heredoc(t_list *start) 
+{
+	t_list *inner_tmp;
+	
+	inner_tmp = start;
+	while (inner_tmp && get(inner_tmp)->type != E_SPACE) 
+	{
+		if (get(inner_tmp)->state == IN_DQUOTES
+			|| get(inner_tmp)->state == IN_SQUOTES) {
+			t_list *heredoc_start = start;
+			while (heredoc_start && get(heredoc_start)->type != E_SPACE) 
+			{
+				get(heredoc_start)->not_expand = true;
+				heredoc_start = heredoc_start->next;
+			}
+			break;
+		}
+		inner_tmp = inner_tmp->next;
+	}
+}
+
+// Função principal refatorada
+void review_tkn_list(t_list **tkn) 
 {
 	t_list *tmp;
-	t_list *heredoc_start;
 	int		typee;
 
 	tmp = *tkn;
-	while (tmp)
+	while (tmp) 
 	{
 		typee = get(tmp)->type;
-		if (typee >= 7)
+		if (typee >= 7) 
 		{
-			// Transformar nós do tipo 0 após um tipo >= 7 para o tipo >= 7
-			t_list *start = tmp->next;
-			while (start && get(start)->type == 0)
-			{
-				get(start)->type = typee;
-				start = start->next;
-			}
-
-			// Se o tipo for HEREDOC, realizar a verificação adicional
+			transform_nodes(tmp->next, typee);
 			if (typee == HEREDOC)
-			{
-				heredoc_start = tmp;
-				t_list *inner_tmp = tmp->next;
-				while (inner_tmp && get(inner_tmp)->type != E_SPACE)
-				{
-					if (get(inner_tmp)->state == IN_DQUOTES || get(inner_tmp)->state == IN_SQUOTES)
-					{
-						int quote_type = get(inner_tmp)->state;
-						inner_tmp = heredoc_start;
-						while (inner_tmp && get(inner_tmp)->type != E_SPACE)
-						{
-							if (get(inner_tmp)->type == HEREDOC)
-								get(inner_tmp)->state = quote_type;
-							inner_tmp = inner_tmp->next;
-						}
-						break;
-					}
-					inner_tmp = inner_tmp->next;
-				}
-			}
-			tmp = start;  // Avançar tmp para continuar iterando na lista
-		}
-		else
-		{
+				handle_heredoc(tmp);
 			tmp = tmp->next;
-		}
+		} 
+		else
+			tmp = tmp->next;
 	}
 }
 

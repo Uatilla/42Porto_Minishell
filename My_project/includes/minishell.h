@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/19 15:32:01 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:31:48 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_token
 	t_token_type	type;
 	t_token_state	state;
 	int				pos;
-	bool			to_keep;
+	bool			not_expand;
 }	t_token;
 
 typedef struct s_shell

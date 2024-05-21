@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/20 21:11:14 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:08:21 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	expand_general(t_shell *sh, t_list *tkn)
 	char	*new_token;
 
 	i = 0;
-	if (get(tkn->next)->type)
-		return ;
+	// if (get(tkn->next)->type)
+	// 	return ;
 	free(get(tkn)->value);
 	new_token = NULL;
 	if (get(tkn->next)->state != GENERAL)
