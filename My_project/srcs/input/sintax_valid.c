@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sintax_valid.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:14:07 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/04 15:14:09 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:30:07 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 bool	check_bigger(char *input, int i)
 {
-	if ((only_white(input, i + 1)) || is_a_pipe(input [i + 1]) || \
+	/*comentei isso pq tava dando erro no teste "ls >| grep a"*/
+	if ((only_white(input, i + 1)) || /* is_a_pipe(input [i + 1]) || */ \
 		(is_a_bigger(input[i + 1]) && only_white(input, i + 2)))
 		return (prt_stx_error("newline", false));
 	else if (is_a_bigger(input [i + 1]) && is_a_bigger(input [i + 2]))
@@ -64,7 +65,7 @@ bool	spc_char_check(char *input, int i)
 		return (check_smaller(input, i));
 	else if (is_a_pipe(input[i]))
 	{
-		if (is_a_bigger(input [i + 1]) || is_a_smaller(input [i + 1]))
+		if ((is_a_bigger(input [i + 1]) || is_a_smaller(input [i + 1])) && (only_white(input, i+2) || !input[i+2]))
 			return (prt_stx_error("|", false));
 		while (ft_iswhitespace(input[++i]))
 			continue ;

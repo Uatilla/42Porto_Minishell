@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/21 19:26:41 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:12:18 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,17 @@ void	expand_general(t_shell *sh, t_list *tkn)
 	char	*new_token;
 
 	i = 0;
+	new_token = NULL;
 	if (get(tkn->next)->type >= 2 && get(tkn->next)->type <= 6)
 		return ;
 	free(get(tkn)->value);
-	new_token = NULL;
 	if (get(tkn->next)->state != GENERAL)
 	{
 		get(tkn)->value = ft_strdup(get(tkn->next)->value);
-		get(tkn)->state = (get(tkn->next)->state);
+		get(tkn)->state = get(tkn->next)->state;
 	}
 	else if (get(tkn)->type == HEREDOC)
-	{
-		new_token = ft_strjoin("$", get(tkn->next)->value);
-		get(tkn)->value = ft_strdup(new_token);
-	}
+		get(tkn)->value = ft_strjoin("$", get(tkn->next)->value);
 	else
 	{
 		new_token = expansion(sh->env_lst, get(tkn->next)->value, &i);
