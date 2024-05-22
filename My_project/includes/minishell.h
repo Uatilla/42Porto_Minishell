@@ -103,6 +103,14 @@ typedef struct s_redircmd
 	int			mode;
 	int			fd;
 }	t_redircmd;
+
+typedef struct s_pipecmd
+{
+	t_node_type n_type;
+	t_list		*curr_tkn_pos;
+	t_cmd		*left;
+	t_cmd		*right;
+}	t_pipecmd;
 typedef struct s_execcmd
 {
 	t_node_type n_type;
