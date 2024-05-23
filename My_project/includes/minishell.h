@@ -89,14 +89,15 @@ typedef enum e_node_type
 	N_PIPE
 }	t_node_type;
 
-typedef	struct s_cmd
+typedef struct s_cmd
 {
-	t_node_type n_type;
+	t_node_type	n_type;
 	t_list		*curr_tkn_pos;
 }	t_cmd;
+
 typedef struct s_redircmd
 {
-	t_node_type n_type;
+	t_node_type	n_type;
 	t_list		*curr_tkn_pos;
 	t_cmd		*cmd;
 	char		*file;
@@ -106,18 +107,17 @@ typedef struct s_redircmd
 
 typedef struct s_pipecmd
 {
-	t_node_type n_type;
+	t_node_type	n_type;
 	t_list		*curr_tkn_pos;
 	t_cmd		*left;
 	t_cmd		*right;
 }	t_pipecmd;
 typedef struct s_execcmd
 {
-	t_node_type n_type;
+	t_node_type	n_type;
 	t_list		*curr_tkn_pos;
 	char		**argv;
 }	t_execcmd;
-
 
 //MAIN STRUCTURE
 typedef struct s_shell
@@ -148,6 +148,9 @@ void	free_token_list(t_list **token_list);
 void	clear_exit(t_shell *sh, int status);
 void	free_token_list(t_list **token_list);
 void	free_token_content(void *content);
+
+//cleaning_tree.c
+void    free_tree(t_cmd *cmd);
 
 // INPUT FOLDER
 // input_checker.c
@@ -186,7 +189,13 @@ void	review_tkn_typ(t_list *tkn_lst);
 
 //PARSING
 //building_tree.c
-void    parsing_tree(t_shell *sh);
+void	parsing_tree(t_shell *sh);
+
+//construct_tree.c
+t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos);
+t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
+t_cmd	*pipecmd(t_shell *sh, t_cmd *left, t_cmd *right);
+void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg);
 
 //EXTRA AUXILIARS
 //print.c

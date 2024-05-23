@@ -48,13 +48,13 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
 # Files
 SRCS		=	main.c print.c \
 				environment/env.c \
-				exit/exit.c \
+				exit/exit.c exit/cleaning_tree.c\
 				signals/signals.c \
 				input/input_checker.c input/input_checker_utils.c \
 				input/sintax_valid.c \
 				tokenization/tokens.c tokenization/tokens_aux.c \
 				tokenization/rename_tkn_typ.c \
-				parsing/building_tree.c
+				parsing/building_tree.c parsing/construct_tree.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
