@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/05/20 10:58:04 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/05/27 14:52:11 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,8 @@ SRCS_DIR	=	srcs
 OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
-SUB_DIR		=	environment exit input signals tokenization
-SUB_DIR		=	environment exit input signals tokenization
+SUB_DIR		=	environment exit input signals tokenization parsing
+#SUB_DIR		=	environment exit input signals tokenization
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
@@ -48,12 +48,13 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
 # Files
 SRCS		=	main.c print.c \
 				environment/env.c \
-				exit/exit.c \
+				exit/exit.c exit/cleaning_tree.c\
 				signals/signals.c \
 				input/input_checker.c input/input_checker_utils.c \
 				input/sintax_valid.c \
 				tokenization/tokens.c tokenization/tokens_aux.c \
-				tokenization/rename_tkn_typ.c tokenization/expander.c \
+				tokenization/rename_tkn_typ.c \
+				parsing/building_tree.c parsing/construct_tree.c tokenization/expander.c \
 				tokenization/expander_aux.c tokenization/lexer.c \
 				tokenization/lexer_aux.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
