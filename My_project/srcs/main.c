@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/27 17:31:59 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:01:39 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	init_shell(t_shell *sh, char **env_var)
 {
 	ft_bzero(sh, sizeof(t_shell));
 	sh->index = malloc(sizeof(t_index));
-	//PROTECAO DO MALLOC
+	if (!sh->index)
+	{
+		write(1, "Malloc error!", 14);
+		clear_exit(sh, 1);
+	}
 	ft_bzero(sh->index, sizeof(t_index));
 	fill_env(sh, env_var);
 }
