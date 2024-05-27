@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:54:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/21 18:37:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:08:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_tokens(t_shell *sh)
 		printf("\nType: %s\nState: %s\n", type[token_content->type],
 			state[token_content->state]);
 		if (token_content->type == HEREDOC)
-			printf("Type of heredoc: %d %s\n\n", token_content->not_expand, expand[token_content->not_expand]);
+			printf("Type of heredoc: %d %s\n", token_content->not_expand, expand[token_content->not_expand]);
 		tmp = tmp->next;
 	}
 }

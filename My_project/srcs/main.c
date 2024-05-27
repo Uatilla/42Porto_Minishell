@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/27 14:51:05 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:01:42 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_shell(t_shell *sh, char **env_var)
 {
 	ft_bzero(sh, sizeof(t_shell));
 	sh->index = malloc(sizeof(t_index));
+	//PROTECAO DO MALLOC
 	ft_bzero(sh->index, sizeof(t_index));
 	fill_env(sh, env_var);
 }
@@ -55,20 +56,11 @@ void	sh_loop(t_shell *sh)
 		fill_token_lst(sh, trimmed_input); //tokenization without state;
 		review_tkn_typ(sh->token_lst);
 		parsing_tree(sh);
-		//print_tokens(sh); // just print
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(trimmed_input);
 	}
 }
 
-void	init_shell(t_shell *sh, char **env_var)
-{
-	ft_bzero(sh, sizeof(t_shell));
-	sh->index = malloc(sizeof(t_index));
-	//PROTECAO DO MALLOC
-	ft_bzero(sh->index, sizeof(t_index));
-	fill_env(sh, env_var);
-}
 
 int	main(int argc, char **argv, char **envp)
 {
