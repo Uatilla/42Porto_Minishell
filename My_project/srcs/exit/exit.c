@@ -53,6 +53,7 @@ void	clear_exit(t_shell *sh, int status)
 	free_env_list(&sh->env_lst);
 	free_token_list(&sh->token_lst);
 	free(sh->index);
-	free_tree(sh->cmd);
+	if (sh->cmd)
+		free_tree(sh->cmd);
 	exit(status);
 }
