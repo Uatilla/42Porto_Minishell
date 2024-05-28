@@ -53,10 +53,10 @@ t_cmd	*parse_exec(t_shell *sh, t_list *tkn_pos)
 		if (tkn_cont->type == WORD)
 			fill_execcmd(sh, ex_cmd, tkn_cont->value);
 		else if (tkn_cont->type == INFILE || tkn_cont->type == OUTFILE
-			|| tkn_cont->type == APPEND)
+			|| tkn_cont->type == APPEND || tkn_cont->type == HEREDOC)
 		{
 			ret = parse_redir(sh, ret);
-			printf("REDIR: %s\n", ((t_redircmd *)(ret))->file);
+			//printf("REDIR: %s\n", ((t_redircmd *)(ret))->file);
 		}
 		else if (tkn_cont->type == PIPE)
 			break ;

@@ -193,16 +193,6 @@ bool	chk_typ(int type, int inf, int sup);
 void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
 void	review_tkn_typ(t_list *tkn_lst);
 
-//PARSING
-//building_tree.c
-void	parsing_tree(t_shell *sh);
-
-//construct_tree.c
-t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos);
-t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
-t_cmd	*pipecmd(t_shell *sh, t_cmd *left, t_cmd *right);
-void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg);
-
 //expander.c
 void	expand_quotes(t_shell *sh, t_list *token);
 void	expand_general(t_shell *sh, t_list *tkn);
@@ -223,6 +213,20 @@ void	lexer(t_shell *sh, char *input);
 int		is_removable(int type);
 void	handle_heredoc(t_list *start);
 void	transform_nodes(t_list *start, int type);
+
+//PARSING
+//building_tree.c
+void	parsing_tree(t_shell *sh);
+
+//construct_tree.c
+t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos);
+t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
+t_cmd	*pipecmd(t_shell *sh, t_cmd *left, t_cmd *right);
+void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg);
+
+//EXEC
+//exec_tree.c
+void    exec_tree(t_shell *sh, t_cmd *cmd);
 
 //EXTRA AUXILIARS
 //print.c

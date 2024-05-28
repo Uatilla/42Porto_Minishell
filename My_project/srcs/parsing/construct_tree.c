@@ -19,7 +19,7 @@ void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg)
 	argc = 0;
 	while (cmd->argv[argc])
 		argc++;
-	printf("CMD[%d]: %s \n", argc, arg);
+	//printf("CMD[%d]: %s \n", argc, arg);
 	cmd->argv[argc] = ft_strdup(arg);
 	if (!cmd->argv[argc])
 		clear_exit(sh, 1);

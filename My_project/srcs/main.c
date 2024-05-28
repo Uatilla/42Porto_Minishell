@@ -70,6 +70,7 @@ void	sh_loop(t_shell *sh)
 		fill_token_lst(sh, prompt_input); //tokenization without state;
 		review_tkn_typ(sh->token_lst);
 		parsing_tree(sh);
+		exec_tree(sh, sh->cmd);
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(prompt_input);
 	}
