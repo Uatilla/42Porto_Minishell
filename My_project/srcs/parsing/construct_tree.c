@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   construct_tree.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <uviana-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:35:14 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/23 16:35:17 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:46:08 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos)
 	ft_memset(cmd, 0, sizeof(t_execcmd));
 	cmd->n_type = N_EXEC;
 	cmd->curr_tkn_pos = tkn_pos;
-	cmd->argv = malloc(1024 * sizeof(char *));//QTY.
+	cmd->argv = calloc(1024, sizeof(char *));//QTY.
 	if (!cmd->argv)
 		clear_exit(sh, 1);
-	ft_memset(cmd->argv, 0, sizeof(char *));
+	// ft_memset(cmd->argv, 0, sizeof(char *));
 	return ((t_cmd *)cmd);
 }
 

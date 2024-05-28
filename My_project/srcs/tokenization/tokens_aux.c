@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:20:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/01 17:22:38 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/20 20:47:27 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,16 @@ void	search_quote(char *input, int *j, char c)
 
 void	search_word(char *input, int *end)
 {
-	if (input[*end] && search_char("<>|", input[*end])
+	if (input[*end] && search_char("<>|$", input[*end])
 		&& !search_char("\"\'", input[*end]))
 	{
+		if (input[*end] == '$')
+		{
+			(*end)++;
+			return ;
+		}
 		while (input[*end] && search_char("<>|", input[*end])
-			&& !search_char("\"\'", input[*end]))
+			&& !search_char("\"\'", input[*end]) && input[*end] != '$')
 			(*end)++;
 		return ;
 	}
@@ -47,7 +52,7 @@ void	search_word(char *input, int *end)
 	else
 	{
 		while (input[*end] && !search_char("\"\'", input[*end])
-			&& !search_char("<>|", input[*end])
+			&& !search_char("<>|$", input[*end])
 			&& !ft_iswhitespace(input[*end]))
 			(*end)++;
 	}

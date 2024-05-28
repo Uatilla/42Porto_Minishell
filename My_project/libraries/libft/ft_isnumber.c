@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_isnumber.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/21 14:08:25 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/12 17:02:16 by lebarbos         ###   ########.fr       */
+/*   Created: 2024/05/20 10:56:27 by lebarbos          #+#    #+#             */
+/*   Updated: 2024/05/20 10:57:13 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_isnumber(char c)
 {
-	void	*ptr_substr;
-	size_t	i;
-
-	if (ft_strlen(s) - start < len)
-		len = ft_strlen(s) - start;
-	if (ft_strlen(s) < start)
-		len = 0;
-	ptr_substr = malloc (sizeof(char) * (len + 1));
-	if (!ptr_substr)
-	{
-		return (NULL);
-	}
-	i = 0;
-	while (i < len)
-	{
-		((char *)ptr_substr)[i] = s[start + i];
-		i++;
-	}
-	((char *)ptr_substr)[i] = '\0';
-	return ((char *)ptr_substr);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

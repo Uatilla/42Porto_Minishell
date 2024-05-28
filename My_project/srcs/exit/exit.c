@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/04 15:11:01 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:19:03 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	free_token_content(void *content)
 	curr_cont = (t_token *)(content);
 	if (!curr_cont)
 		return ;
-	free(curr_cont->value);
+	if (curr_cont->value)
+		free(curr_cont->value);
 	free(curr_cont);
 }
 

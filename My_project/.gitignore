@@ -4,3 +4,4 @@
 /objs/
 minishell
 /.vscode
+../vscode/*

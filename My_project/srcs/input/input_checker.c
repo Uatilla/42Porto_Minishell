@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 20:32:43 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/18 20:32:47 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:03:11 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ bool	sintax_validation(char *input)
 		{
 			i = search_c_quote(input, i, input[i]);
 			if (!input[i])
-				return (false);
+				return ((g_signo = 2), false);
 		}
 		if (is_a_pipe(input[i]) && ((ch_fst(input, '|') || \
 			only_white(input, i + 1))))
-			return (prt_stx_error("|", false));
+			return (prt_stx_error("|", false), (g_signo = 2));
 		else
 		{
 			if (!spc_char_check(input, i))
-				return (false);
+				return ((g_signo = 2), false);
 		}
 	}
 	return (true);
