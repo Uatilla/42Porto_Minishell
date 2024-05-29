@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/27 21:01:39 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:53:46 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	sh_loop(t_shell *sh)
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		lexer(sh, prompt_input);
-		fill_token_lst(sh, prompt_input); //tokenization without state;
-		review_tkn_typ(sh->token_lst);
 		parsing_tree(sh);
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		free(prompt_input);
