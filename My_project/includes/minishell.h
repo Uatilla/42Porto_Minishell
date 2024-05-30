@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/27 17:11:03 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/30 01:09:14 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_execcmd
 {
 	t_node_type	n_type;
 	t_list		*curr_tkn_pos;
+	char		*command;
 	char		**argv;
 }	t_execcmd;
 
@@ -127,6 +128,7 @@ typedef struct s_shell
 	t_list		*token_lst;
 	t_index		*index;
 	t_cmd		*cmd;
+	char		**paths;
 }	t_shell;
 
 // MACROS
@@ -228,5 +230,6 @@ void	transform_nodes(t_list *start, int type);
 //print.c
 void	print_env(t_shell *sh);
 void	print_tokens(t_shell *sh);
+void	print_arrays(char **paths);
 
 #endif
