@@ -19,34 +19,34 @@ void    run_exec(t_shell *sh, t_cmd *cmd)
     if (excmd->argv[0] == 0)
         exit (1); //exit para limpar a lista?
     execve(excmd->command, excmd->argv, sh->paths);
-    printf("exec %s failed\n", excmd->argv[0]);//ESCERVER NO FD 2.
+    printf("%s: command not found\n", excmd->argv[0]);//ESCERVER NO FD 2.
     exit (1); //exit para limpar a lista?
 }
 
+void    run_redir(t_shell *sh, t_cmd *cmd)
+{
+    t_redircmd  *rdcmd;
+
+    rdcmd = (t_redircmd *)cmd;
+    close(rdcmd->fd);
+    if (open(rdcmd->file, rdcmd->mode) < 0)
+    {
+        printf("bash: %s: No such file or directory\n", rdcmd->file);//ESCERVER NO FD 2.
+        exit (1); //exit para limpar a lista?
+    }
+    exec_tree(sh, rdcmd->cmd);
+}
 
 void    exec_tree(t_shell *sh, t_cmd *cmd)
 {
-    
-    t_redircmd  *rdcmd;
     t_pipecmd   *ppcmd;
 
     if (!cmd)
         clear_exit(sh, 1);
     if (cmd->n_type == N_EXEC)
-    {
         run_exec(sh, cmd);
-    }
     else if (cmd->n_type == N_REDIR)
-    {
-        rdcmd = (t_redircmd *)cmd;
-        close(rdcmd->fd);
-        if (open(rdcmd->file, rdcmd->mode) < 0)
-        {
-            printf("open %s failed\n", rdcmd->file);//ESCERVER NO FD 2.
-            exit (1); //exit para limpar a lista?
-        }
-        exec_tree(sh, rdcmd->cmd);
-    }
+        run_redir(sh, cmd);
     else if (cmd->n_type == N_PIPE)
     {
         ppcmd = (t_pipecmd *)cmd;

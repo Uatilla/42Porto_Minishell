@@ -73,10 +73,31 @@ void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg)
 	}
 }
 
+int		count_args(t_shell *sh, t_list *tkn_pos)
+{
+	t_token	*tkn_cont;
+	int		count;
+	
+	count = 0;
+	while (tkn_pos)
+	{
+		tkn_cont = (t_token *)tkn_pos->content;
+		if (tkn_cont->type == WORD)
+			count++;
+		else if (tkn_cont->type == PIPE)
+			break;
+		tkn_pos = tkn_pos->next;
+	}
+	if (count == 0)
+		clear_exit(sh, 1);
+	return (count);
+}
+
 /*Construct the exec structure.*/
 t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos)
 {
 	t_execcmd	*cmd;
+	int	num_args;
 
 	(void)sh;
 	cmd = malloc(sizeof(t_execcmd));
@@ -85,15 +106,32 @@ t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos)
 	ft_memset(cmd, 0, sizeof(t_execcmd));
 	cmd->n_type = N_EXEC;
 	cmd->curr_tkn_pos = tkn_pos;
-	cmd->argv = calloc(1024, sizeof(char *));//QTY.
+	num_args = count_args(sh, tkn_pos);
+	cmd->argv = ft_calloc(num_args + 1, sizeof(char *));
 	if (!cmd->argv)
 		clear_exit(sh, 1);
-	// ft_memset(cmd->argv, 0, sizeof(char *));
 	cmd->command = NULL;
 	return ((t_cmd *)cmd);
 }
 
 /*Construct the Redir node and updates the pointer*/
+/*t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
+{
+	t_redircmd	*cmd;
+
+	cmd = malloc(sizeof(t_redircmd));
+	if (!cmd)
+		return (NULL);
+	ft_memset(cmd, 0, sizeof(t_redircmd));
+	cmd->n_type = N_REDIR;
+	cmd->cmd = subcmd;
+	cmd->file = file;
+	cmd->mode = mode;
+	cmd->fd = fd;
+	cmd->curr_tkn_pos = subcmd->curr_tkn_pos;
+	return ((t_cmd *)cmd);
+}*/
+
 t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
 {
 	t_redircmd	*cmd;
