@@ -19,11 +19,11 @@ void    exec_tree(t_shell *sh, t_cmd *cmd)
         clear_exit(sh, 1);
     if (cmd->n_type == N_EXEC)
     {
+        printf("EXEC\n");
         execcmd = (t_execcmd *)cmd;
         if (execcmd->argv[0] == 0)
             exit (1);
-        exec(execcmd->argv[0], execcmd->argv);
-        printf("EXEC\n");
+        //exec(execcmd->argv[0], execcmd->argv);
     }
     else if (cmd->n_type == N_REDIR)
     {
