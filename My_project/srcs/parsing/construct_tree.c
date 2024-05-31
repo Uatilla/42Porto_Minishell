@@ -114,27 +114,26 @@ t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos)
 	return ((t_cmd *)cmd);
 }
 
-/*Construct the Redir node and updates the pointer*/
-/*t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
+t_cmd	*get_redir(t_cmd *cmd)
 {
-	t_redircmd	*cmd;
+	t_redircmd   *redircmd;
 
-	cmd = malloc(sizeof(t_redircmd));
-	if (!cmd)
-		return (NULL);
-	ft_memset(cmd, 0, sizeof(t_redircmd));
-	cmd->n_type = N_REDIR;
-	cmd->cmd = subcmd;
-	cmd->file = file;
-	cmd->mode = mode;
-	cmd->fd = fd;
-	cmd->curr_tkn_pos = subcmd->curr_tkn_pos;
-	return ((t_cmd *)cmd);
-}*/
+    while (cmd->n_type == N_REDIR)
+	{
+		redircmd = (t_redircmd *)cmd;
+		if ((redircmd->cmd)->n_type == N_EXEC)
+			break ;
+		else
+			cmd = redircmd->cmd;
+	}
+	return (cmd);
+}
 
+/*Construct the Redir node and updates the pointer*/
 t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
 {
 	t_redircmd	*cmd;
+	t_cmd	*old_rd_valid;
 
 	cmd = malloc(sizeof(t_redircmd));
 	if (!cmd)
@@ -146,6 +145,13 @@ t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
 	cmd->mode = mode;
 	cmd->fd = fd;
 	cmd->curr_tkn_pos = subcmd->curr_tkn_pos;
+	if (subcmd->n_type != N_EXEC)
+	{
+		old_rd_valid = get_redir((t_cmd *)cmd);
+		cmd->cmd = ((t_redircmd *)old_rd_valid)->cmd;
+		((t_redircmd *)(old_rd_valid))->cmd = (t_cmd *)cmd;
+		return (subcmd);
+	}
 	return ((t_cmd *)cmd);
 }
 

@@ -175,7 +175,7 @@ void	sh_loop(t_shell *sh)
 		if (fork1(sh)  == 0)
 		{
 			parsing_tree(sh);
-			exec_tree(sh, sh->cmd);
+			//exec_tree(sh, sh->cmd);
 		}
 		wait (0);
 		reinit_shell(sh); // free tokenlist and set t_index to zero
