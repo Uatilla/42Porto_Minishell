@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/01 13:53:49 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:11:54 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	free_token_list(t_list **token_list)
 
 void	clear_exit(t_shell *sh, int status)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!sh)
@@ -56,8 +56,6 @@ void	clear_exit(t_shell *sh, int status)
 	free_env_list(&sh->env_lst);
 	free_token_list(&sh->token_lst);
 	free(sh->index);
-	/*if (sh->cmd)
-		free_tree(sh->cmd);*/
 	if (sh->paths)
 	{
 		while (sh->paths[i])

@@ -6,11 +6,33 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/01 17:07:29 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:09:21 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_line(t_shell *sh)
+{
+	char	*input;
+	char	*trimmed_input;
+
+	input = readline(PROMPT);
+	if (!input || !*input)
+		sh_loop(sh);
+	add_history(input);
+	if (!ft_strncmp(input, "exit", 5))
+		clear_exit(sh, 1);
+	if (!ft_strcmp(input, "clear"))
+	{
+		system("clear");
+		reinit_shell(sh);
+		sh_loop(sh);
+	}
+	trimmed_input = ft_strtrim(input, "\t ");
+	free(input);
+	return (trimmed_input);
+}
 
 char	*ft_get_path_aux(char **envp)
 {

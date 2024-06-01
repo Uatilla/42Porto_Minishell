@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:35:14 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/30 01:33:17 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:02:42 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg)
 	}
 }
 
-int		count_args(t_shell *sh, t_list *tkn_pos)
+int	count_args(t_shell *sh, t_list *tkn_pos)
 {
 	t_token	*tkn_cont;
 	int		count;
-	
+
 	count = 0;
 	while (tkn_pos)
 	{
@@ -85,7 +85,7 @@ int		count_args(t_shell *sh, t_list *tkn_pos)
 		if (tkn_cont->type == WORD)
 			count++;
 		else if (tkn_cont->type == PIPE)
-			break;
+			break ;
 		tkn_pos = tkn_pos->next;
 	}
 	if (count == 0)
@@ -97,7 +97,7 @@ int		count_args(t_shell *sh, t_list *tkn_pos)
 t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos)
 {
 	t_execcmd	*cmd;
-	int	num_args;
+	int			num_args;
 
 	(void)sh;
 	cmd = malloc(sizeof(t_execcmd));
@@ -116,9 +116,9 @@ t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos)
 
 t_cmd	*get_redir(t_cmd *cmd)
 {
-	t_redircmd   *redircmd;
+	t_redircmd	*redircmd;
 
-    while (cmd->n_type == N_REDIR)
+	while (cmd->n_type == N_REDIR)
 	{
 		redircmd = (t_redircmd *)cmd;
 		if ((redircmd->cmd)->n_type == N_EXEC)
@@ -133,7 +133,7 @@ t_cmd	*get_redir(t_cmd *cmd)
 t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
 {
 	t_redircmd	*cmd;
-	t_cmd	*old_rd_valid;
+	t_cmd		*old_rd_valid;
 
 	cmd = malloc(sizeof(t_redircmd));
 	if (!cmd)

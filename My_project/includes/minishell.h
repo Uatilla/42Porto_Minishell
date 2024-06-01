@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/01 17:28:58 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:13:58 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	free_token_list(t_list **token_list);
 void	free_token_content(void *content);
 
 //cleaning_tree.c
-void    free_tree(t_cmd *cmd);
+void	free_tree(t_cmd *cmd);
 
 // INPUT FOLDER
 // input_checker.c
@@ -237,7 +237,7 @@ void	transform_nodes(t_list *start, int type);
 
 //EXEC
 //exec_tree.c
-void    exec_tree(t_shell *sh, t_cmd *cmd);
+void	exec_tree(t_shell *sh, t_cmd *cmd);
 
 //EXTRA AUXILIARS
 //print.c
@@ -247,6 +247,7 @@ void	print_arrays(char **paths);
 
 /*TO BE DEFINED*/
 void	get_paths(t_shell *sh);
+char	*get_line(t_shell *sh);
 int		fork1(t_shell *sh);
-
+void	reinit_shell(t_shell *sh);
 #endif

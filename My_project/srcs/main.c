@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/01 17:30:44 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:10:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	reinit_shell(t_shell *sh)
 {
 	free_token_list(&sh->token_lst);
 	if (sh->cmd)
-	 	free_tree(sh->cmd);
+		free_tree(sh->cmd);
 	ft_bzero(sh->index, sizeof(t_index));
 }
 
@@ -34,28 +34,6 @@ void	init_shell(t_shell *sh, char **env_var)
 	ft_bzero(sh->index, sizeof(t_index));
 	fill_env(sh, env_var);
 	get_paths(sh);
-}
-
-char	*get_line(t_shell *sh)
-{
-	char *input;
-	char *trimmed_input;
-
-	input = readline(PROMPT);
-	if (!input || !*input)
-		sh_loop(sh);
-	add_history(input);
-	if (!ft_strncmp(input, "exit", 5)) // just to exit with clear 
-		clear_exit(sh, 1);
-	if (!ft_strcmp(input, "clear"))
-	{
-		system("clear");
-		reinit_shell(sh);
-		sh_loop(sh);
-	}
-	trimmed_input = ft_strtrim(input, "\t ");
-	free(input);
-	return (trimmed_input);
 }
 
 int	fork1(t_shell *sh)
@@ -86,12 +64,12 @@ void	sh_loop(t_shell *sh)
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		lexer(sh, prompt_input);
-		if (fork1(sh)  == 0)
+		if (fork1(sh) == 0)
 		{
 			parsing_tree(sh);
 			exec_tree(sh, sh->cmd);
 		}
-		reinit_shell(sh); // free tokenlist and set t_index to zero
+		reinit_shell(sh);
 		wait (0);
 		free(prompt_input);
 	}
@@ -104,7 +82,6 @@ int	main(int argc, char **argv, char **envp)
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
 	reset_signal();
-	//print_env(&sh);
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);
