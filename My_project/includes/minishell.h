@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/01 19:23:58 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:27:04 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ typedef struct s_execcmd
 	t_node_type	n_type;
 	t_list		*curr_tkn_pos;
 	char		*command;
-	char		*command;
 	char		**argv;
 }	t_execcmd;
 
@@ -132,7 +131,6 @@ typedef struct s_shell
 	t_list		*token_lst;
 	t_index		*index;
 	t_cmd		*cmd;
-	char		**paths;
 	char		**paths;
 }	t_shell;
 
