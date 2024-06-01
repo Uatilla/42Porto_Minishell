@@ -238,7 +238,8 @@ void	print_env(t_shell *sh);
 void	print_tokens(t_shell *sh);
 void	print_arrays(char **paths);
 
-
+/*TO BE DEFINED*/
 void	get_paths(t_shell *sh);
+int		fork1(t_shell *sh);
 
 #endif

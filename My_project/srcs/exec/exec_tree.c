@@ -40,10 +40,35 @@ void    run_redir(t_shell *sh, t_cmd *cmd)
     exec_tree(sh, rdcmd->cmd);
 }
 
+void    run_pipe(t_shell *sh, t_cmd *cmd)
+{
+    int         p[2];
+ 
+    if (pipe(p) < 0)
+        clear_exit(sh, 1);
+    if (fork1(sh) == 0)
+    {
+        dup2(p[1], STDOUT_FILENO);
+        close(p[0]);
+        close(p[1]);
+        exec_tree(sh, ((t_pipecmd *)cmd)->left);
+    }
+    if (fork1(sh) == 0)
+    {
+        dup2(p[0], STDIN_FILENO);
+        close(p[0]);
+        close(p[1]);
+        exec_tree(sh, ((t_pipecmd *)cmd)->right);
+    }
+    close(p[0]);
+    close(p[1]);
+    wait(0);
+    wait(0);
+    exit(0);
+}
+
 void    exec_tree(t_shell *sh, t_cmd *cmd)
 {
-    t_pipecmd   *ppcmd;
-
     if (!cmd)
         clear_exit(sh, 1);
     if (cmd->n_type == N_EXEC)
@@ -52,9 +77,8 @@ void    exec_tree(t_shell *sh, t_cmd *cmd)
         run_redir(sh, cmd);
     else if (cmd->n_type == N_PIPE)
     {
-        ppcmd = (t_pipecmd *)cmd;
-        exec_tree(sh, ppcmd->left);
-        exec_tree(sh, ppcmd->right);
         printf("PIPE\n");
+        run_pipe(sh, cmd);
     }
+        
 }
