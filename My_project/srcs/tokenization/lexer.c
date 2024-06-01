@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/21 19:18:08 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:04:28 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,35 @@ void	expander(t_shell *sh, t_list **tokens)
 	}
 }
 
+void get_last_token(__attribute_maybe_unused__ t_list *tkn_list )
+{
+	char	*new_token;
+
+	new_token = readline("> ");
+	
+}
+
 // Função principal refatorada
 void	review_tkn_list(t_list **tkn)
 {
 	t_list	*tmp;
 	int		typee;
+	int		i;
+	int		size_list;
+
+	i = 1;
+	size_list = ft_lstsize(*tkn);
+	printf("\n\nLISTSIZE: %d\n\n", size_list);
 
 	tmp = *tkn;
 	while (tmp)
 	{
 		typee = get(tmp)->type;
+		if (tmp && i == (size_list) && get(tmp)->type == PIPE)
+		{
+			printf("HEREEE\n\n");
+			get_last_token(*tkn);
+		}
 		if (typee >= 7)
 		{
 			transform_nodes(tmp->next, typee);
@@ -88,16 +107,19 @@ void	review_tkn_list(t_list **tkn)
 			tmp = tmp->next;
 		}
 		else
+		{
 			tmp = tmp->next;
+		}
+		i++;
 	}
 }
 
 void	lexer(t_shell *sh, char *input)
 {
-	fill_token_lst(sh, input); //tokens without state;
-	review_tkn_typ(sh->token_lst); // set state
+	fill_token_lst(sh, input);
+	review_tkn_typ(sh->token_lst);
 	review_tkn_list(&sh->token_lst);
 	expander(sh, &sh->token_lst);
-	clean_tokenlist(&sh->token_lst); // join and clean spaces
-	print_tokens(sh); // just print
+	clean_tokenlist(&sh->token_lst);
+	// print_tokens(sh);
 }

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 20:32:43 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/27 21:03:11 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:51:15 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ bool	sintax_validation(char *input)
 			if (!input[i])
 				return ((g_signo = 2), false);
 		}
-		if (is_a_pipe(input[i]) && ((ch_fst(input, '|') || \
-			only_white(input, i + 1))))
+		if (is_a_pipe(input[i]) && ((ch_fst(input, '|') /* || \
+			only_white(input, i + 1))) */)))
 			return (prt_stx_error("|", false), (g_signo = 2));
 		else
 		{

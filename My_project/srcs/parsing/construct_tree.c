@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:35:14 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/01 19:26:25 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:36:52 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg)
 	argc = 0;
 	while (cmd->argv[argc])
 		argc++;
-	printf("CMD[%d]: %s \n", argc, arg);
+	// printf("CMD[%d]: %s \n", argc, arg);
 	cmd->argv[argc] = ft_strdup(arg);
 	if (!cmd->argv[argc])
 		clear_exit(sh, 1);
 	if (argc == 0)
 	{
 		cmd->command = find_path(sh, cmd->argv[0]);
-		printf("\nPATH_CMD: %s\n\n", cmd->command);
+		// printf("\nPATH_CMD: %s\n\n", cmd->command);
 	}
 }
 

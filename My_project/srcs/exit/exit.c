@@ -6,11 +6,21 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/01 19:26:02 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:34:52 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	custom_error(char *file, char *message, int error)
+{
+	// ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(file, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(message, 2);
+	ft_putstr_fd("\n", 2);
+	g_signo = error;
+}
 
 void	free_lst_content(void *content)
 {

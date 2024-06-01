@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/01 19:05:07 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:33:27 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 	if (!excmd->command)
 	{
 		//ft_putstr_fd(excmd->argv[0] & "command not found\n", 2);
-		printf("%s: command not found\n", excmd->argv[0]);//ESCERVER NO FD 2.
-		exit (1); //exit para limpar a lista?
+		custom_error(excmd->argv[0], "command not found", 1);
+		// printf("%s: command not found\n", excmd->argv[0]);//ESCERVER NO FD 2.
+		exit (1);
 	}
 	if (execve(excmd->command, excmd->argv, sh->paths) == -1)
 		printf("execve() didn't worked.\n");//ESCERVER NO FD 2.
