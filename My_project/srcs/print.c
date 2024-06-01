@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:54:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/30 01:09:00 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:25:42 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	print_tokens(t_shell *sh)
 		printf("\nType: %s\nState: %s\n", type[token_content->type],
 			state[token_content->state]);
 		if (token_content->type == HEREDOC)
-			printf("Type of heredoc: %d %s\n", token_content->not_expand, expand[token_content->not_expand]);
+			printf("Type of heredoc: %d %s\n",
+				token_content->not_expand, expand[token_content->not_expand]);
 		tmp = tmp->next;
 	}
 }
@@ -50,10 +51,12 @@ void	print_env(t_shell *sh)
 
 void	print_arrays(char **paths)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (paths[i])
 	{
 		printf("%s\n", paths[i]);
 		i++;
-	}	
+	}
 }

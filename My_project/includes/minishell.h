@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/30 01:09:14 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:23:58 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdbool.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <unistd.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libraries/libft/libft.h"
@@ -104,6 +106,7 @@ typedef struct s_redircmd
 	char		*file;
 	int			mode;
 	int			fd;
+	int			perm;
 }	t_redircmd;
 
 typedef struct s_pipecmd
@@ -118,6 +121,7 @@ typedef struct s_execcmd
 	t_node_type	n_type;
 	t_list		*curr_tkn_pos;
 	char		*command;
+	char		*command;
 	char		**argv;
 }	t_execcmd;
 
@@ -128,6 +132,7 @@ typedef struct s_shell
 	t_list		*token_lst;
 	t_index		*index;
 	t_cmd		*cmd;
+	char		**paths;
 	char		**paths;
 }	t_shell;
 
@@ -158,7 +163,7 @@ void	free_token_list(t_list **token_list);
 void	free_token_content(void *content);
 
 //cleaning_tree.c
-void    free_tree(t_cmd *cmd);
+void	free_tree(t_cmd *cmd);
 
 // INPUT FOLDER
 // input_checker.c
@@ -195,6 +200,12 @@ bool	chk_typ(int type, int inf, int sup);
 void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
 void	review_tkn_typ(t_list *tkn_lst);
 
+//path_aux.c
+char	**initialize_array(t_shell *sh, int size);
+char	*convert_content_to_string(t_shell *sh, void *content, int type);
+void	free_array_on_error(char **array, int i);
+char	**list_to_array(t_shell *sh, t_list *list, int type);
+
 //PARSING
 //building_tree.c
 void	parsing_tree(t_shell *sh);
@@ -226,10 +237,19 @@ int		is_removable(int type);
 void	handle_heredoc(t_list *start);
 void	transform_nodes(t_list *start, int type);
 
+//EXEC
+//exec_tree.c
+void	exec_tree(t_shell *sh, t_cmd *cmd);
+
 //EXTRA AUXILIARS
 //print.c
 void	print_env(t_shell *sh);
 void	print_tokens(t_shell *sh);
 void	print_arrays(char **paths);
 
+/*TO BE DEFINED*/
+void	get_paths(t_shell *sh);
+char	*get_line(t_shell *sh);
+int		fork1(t_shell *sh);
+void	reinit_shell(t_shell *sh);
 #endif
