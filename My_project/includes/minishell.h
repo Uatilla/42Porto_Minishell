@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/01 14:50:17 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:28:58 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,12 @@ int		search_char(char *str, char c);
 bool	chk_typ(int type, int inf, int sup);
 void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
 void	review_tkn_typ(t_list *tkn_lst);
+
+//path_aux.c
+char	**initialize_array(t_shell *sh, int size);
+char	*convert_content_to_string(t_shell *sh, void *content, int type);
+void	free_array_on_error(char **array, int i);
+char	**list_to_array(t_shell *sh, t_list *list, int type);
 
 //PARSING
 //building_tree.c
