@@ -6,11 +6,54 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:35:14 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/27 20:46:08 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/30 01:33:17 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_check_command_location(t_shell *sh, char *command, char *path_i)
+{
+	char	*path_aux;
+	char	*path_command;
+
+	path_command = NULL;
+	path_aux = ft_strjoin(path_i, "/");
+	path_command = ft_strjoin(path_aux, command);
+	free(path_aux);
+	if (command[0] == '/' || (ft_strncmp(command, "./", 2) == 0))
+		path_command = ft_strdup(command);
+	else if (ft_strnstr(command, ".sh", ft_strlen(command))
+		&& ft_strchr(command, '/'))
+		path_command = ft_strdup(command);
+	if (!path_command)
+		clear_exit(sh, 1);
+	if (access(path_command, F_OK) == 0)
+		return (path_command);
+	free(path_command);
+	return (NULL);
+}
+
+char	*find_path(t_shell *sh, char *command)
+{
+	char	*path_command;
+	int		i;
+
+	i = 0;
+	if (!sh->paths)
+		return (NULL);
+	else
+	{
+		while (sh->paths[i])
+		{
+			path_command = ft_check_command_location(sh, command, sh->paths[i]);
+			if (path_command != NULL)
+				return (path_command);
+			i++;
+		}
+	}
+	return (NULL);
+}
 
 void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg)
 {
@@ -23,6 +66,11 @@ void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg)
 	cmd->argv[argc] = ft_strdup(arg);
 	if (!cmd->argv[argc])
 		clear_exit(sh, 1);
+	if (argc == 0)
+	{
+		cmd->command = find_path(sh, cmd->argv[0]);
+		printf("\nPATH_CMD: %s\n\n", cmd->command);
+	}
 }
 
 /*Construct the exec structure.*/
@@ -41,6 +89,7 @@ t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos)
 	if (!cmd->argv)
 		clear_exit(sh, 1);
 	// ft_memset(cmd->argv, 0, sizeof(char *));
+	cmd->command = NULL;
 	return ((t_cmd *)cmd);
 }
 

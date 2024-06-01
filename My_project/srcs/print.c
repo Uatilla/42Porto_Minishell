@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:54:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/27 15:08:01 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/05/30 01:09:00 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ void	print_env(t_shell *sh)
 		printf("%s=%s\n", env_content->key, env_content->value);
 		tmp = tmp->next;
 	}
+}
+
+void	print_arrays(char **paths)
+{
+	int i = 0;
+	while (paths[i])
+	{
+		printf("%s\n", paths[i]);
+		i++;
+	}	
 }
