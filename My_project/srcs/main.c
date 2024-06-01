@@ -17,8 +17,8 @@ int	g_signo;
 void	reinit_shell(t_shell *sh)
 {
 	free_token_list(&sh->token_lst);
-	// if (sh->cmd)
-	// 	free_tree(sh->cmd);
+	if (sh->cmd)
+	 	free_tree(sh->cmd);
 	ft_bzero(sh->index, sizeof(t_index));
 }
 
