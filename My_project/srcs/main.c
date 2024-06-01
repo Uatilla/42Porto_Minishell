@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/30 01:09:42 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:59:15 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	g_signo;
 void	reinit_shell(t_shell *sh)
 {
 	free_token_list(&sh->token_lst);
+	// if (sh->cmd)
+	// 	free_tree(sh->cmd);
 	ft_bzero(sh->index, sizeof(t_index));
 }
 
@@ -31,6 +33,7 @@ void	init_shell(t_shell *sh, char **env_var)
 	}
 	ft_bzero(sh->index, sizeof(t_index));
 	fill_env(sh, env_var);
+	get_paths(sh);
 }
 
 char	*get_line(t_shell *sh)
@@ -47,6 +50,7 @@ char	*get_line(t_shell *sh)
 	if (!ft_strcmp(input, "clear"))
 	{
 		system("clear");
+		reinit_shell(sh);
 		sh_loop(sh);
 	}
 	trimmed_input = ft_strtrim(input, "\t ");
@@ -61,8 +65,8 @@ char	**list_to_array(t_shell *sh, t_list *list, int type)
 
 	env = NULL;
 	temp = NULL;
-     int size = ft_lstsize(list);
-    char **array = malloc((size + 1) * sizeof(char*));
+    int size = ft_lstsize(list);
+    char **array = malloc((size + 1) * sizeof(char *));
     if (!array) {
         clear_exit(sh, 1);
     }
@@ -94,6 +98,7 @@ char	**list_to_array(t_shell *sh, t_list *list, int type)
 			free(value);
             clear_exit(sh, 1);
         }
+		free(value);
         list = list->next;
         i++;
     }
@@ -138,11 +143,17 @@ void	get_paths(t_shell *sh)
 {
 	char	**envp;
 	char	*path_aux;
+	int i;
 
+	i = 0;
 	envp = list_to_array(sh, sh->env_lst, 2);
 	path_aux = get_path_aux(envp);
 	if (path_aux)
 		sh->paths = ft_split(path_aux, ':');
+	while (envp[i])
+		free(envp[i++]);
+	free(envp);
+	free(path_aux);
 }
 
 int	fork1(t_shell *sh)
@@ -168,17 +179,18 @@ void	sh_loop(t_shell *sh)
 	while (1)
 	{
 		prompt_input = get_line(sh);
-		get_paths(sh);
+		if (!prompt_input)
+			sh_loop(sh);
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		lexer(sh, prompt_input);
-		if (fork1(sh)  == 0)
-		{
+		// if (fork1(sh)  == 0)
+		// {
 			parsing_tree(sh);
-			//exec_tree(sh, sh->cmd);
-		}
-		wait (0);
+			// exec_tree(sh, sh->cmd);
+		// }
 		reinit_shell(sh); // free tokenlist and set t_index to zero
+		wait (0);
 		free(prompt_input);
 	}
 }

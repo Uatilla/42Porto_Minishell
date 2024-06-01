@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/30 00:29:06 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 13:53:49 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,14 @@ void	clear_exit(t_shell *sh, int status)
 	free(sh->index);
 	if (sh->cmd)
 		free_tree(sh->cmd);
-	while (sh->paths[i])
-		free(sh->paths[i]);
-	free(sh->paths);
+	if (sh->paths)
+	{
+		while (sh->paths[i])
+		{
+			free(sh->paths[i]);
+			i++;
+		}
+		free(sh->paths);
+	}
 	exit(status);
 }

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/30 01:09:14 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:50:17 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,5 +237,8 @@ void    exec_tree(t_shell *sh, t_cmd *cmd);
 void	print_env(t_shell *sh);
 void	print_tokens(t_shell *sh);
 void	print_arrays(char **paths);
+
+
+void	get_paths(t_shell *sh);
 
 #endif
