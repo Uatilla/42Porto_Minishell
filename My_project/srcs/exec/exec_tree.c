@@ -18,6 +18,7 @@ void    run_exec(t_shell *sh, t_cmd *cmd)
     excmd = (t_execcmd *)cmd;
     if (!excmd->command)
     {
+        //ft_putstr_fd(excmd->argv[0] & "command not found\n", 2);
         printf("%s: command not found\n", excmd->argv[0]);//ESCERVER NO FD 2.
         exit (1); //exit para limpar a lista?
     }
@@ -32,7 +33,7 @@ void    run_redir(t_shell *sh, t_cmd *cmd)
 
     rdcmd = (t_redircmd *)cmd;
     close(rdcmd->fd);
-    if (open(rdcmd->file, rdcmd->mode) < 0)
+    if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
     {
         printf("bash: %s: No such file or directory\n", rdcmd->file);//ESCERVER NO FD 2.
         exit (1); //exit para limpar a lista?
@@ -76,9 +77,5 @@ void    exec_tree(t_shell *sh, t_cmd *cmd)
     else if (cmd->n_type == N_REDIR)
         run_redir(sh, cmd);
     else if (cmd->n_type == N_PIPE)
-    {
-        printf("PIPE\n");
-        run_pipe(sh, cmd);
-    }
-        
+        run_pipe(sh, cmd); 
 }

@@ -144,6 +144,10 @@ t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd)
 	cmd->file = file;
 	cmd->mode = mode;
 	cmd->fd = fd;
+	if (fd == 0)
+		cmd->perm = 0444;
+	else
+		cmd->perm = 0644;
 	cmd->curr_tkn_pos = subcmd->curr_tkn_pos;
 	if (subcmd->n_type != N_EXEC)
 	{
