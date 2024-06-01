@@ -67,5 +67,6 @@ void	clear_exit(t_shell *sh, int status)
 		}
 		free(sh->paths);
 	}
+	rl_clear_history();
 	exit(status);
 }
