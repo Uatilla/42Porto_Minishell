@@ -16,10 +16,13 @@ void    run_exec(t_shell *sh, t_cmd *cmd)
 {
     t_execcmd   *excmd;
     excmd = (t_execcmd *)cmd;
-    if (excmd->argv[0] == 0)
+    if (!excmd->command)
+    {
+        printf("%s: command not found\n", excmd->argv[0]);//ESCERVER NO FD 2.
         exit (1); //exit para limpar a lista?
-    execve(excmd->command, excmd->argv, sh->paths);
-    printf("%s: command not found\n", excmd->argv[0]);//ESCERVER NO FD 2.
+    }
+    if (execve(excmd->command, excmd->argv, sh->paths) == -1)
+        printf("execve() didn't worked.\n");//ESCERVER NO FD 2.
     exit (1); //exit para limpar a lista?
 }
 

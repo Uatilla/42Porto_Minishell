@@ -184,11 +184,11 @@ void	sh_loop(t_shell *sh)
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		lexer(sh, prompt_input);
-		// if (fork1(sh)  == 0)
-		// {
+		if (fork1(sh)  == 0)
+		{
 			parsing_tree(sh);
-			// exec_tree(sh, sh->cmd);
-		// }
+			exec_tree(sh, sh->cmd);
+		}
 		reinit_shell(sh); // free tokenlist and set t_index to zero
 		wait (0);
 		free(prompt_input);
