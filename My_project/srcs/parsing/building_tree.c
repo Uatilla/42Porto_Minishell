@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:25:01 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/30 01:18:02 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/02 21:56:49 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,13 @@ t_cmd	*parse_redir(t_shell *sh, t_cmd *cmd)
 
 	tkn_cont = cmd->curr_tkn_pos->content;
 	redir_type = tkn_cont->type;
-	if (redir_type == INFILE)
+	if (redir_type == INFILE || redir_type == HEREDOC)
 		cmd = redircmd(cmd, tkn_cont->value, O_RDONLY, 0);
 	else if (redir_type == OUTFILE)
 		cmd = redircmd(cmd, tkn_cont->value, \
 			O_WRONLY | O_CREAT | O_TRUNC, 1);
 	else if (redir_type == APPEND)
 		cmd = redircmd(cmd, tkn_cont->value, O_WRONLY | O_CREAT, 1);
-	else if (redir_type == HEREDOC)
-		printf("HEREDOC\n");
 	if (!cmd)
 		clear_exit(sh, 1);
 	return (cmd);

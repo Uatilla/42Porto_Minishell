@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/02 17:56:43 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:57:25 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,11 @@ typedef struct s_shell
 extern int	g_signo;
 
 // FUNCTION PROTOTYPES
-
 //main.c
 void	sh_loop(t_shell *sh);
+int		fork1(t_shell *sh);
+void	init_shell(t_shell *sh, char **env_var);
+void	reinit_shell(t_shell *sh);
 
 // ENVIRONMENT FOLDER
 // env.c
@@ -190,6 +192,9 @@ void	reset_signal(void);
 //TOKENIZATION
 //tokens.c
 void	fill_token_lst(t_shell *sh, char *input);
+void	end_word(t_shell *sh, char *input);
+void	get_token_state(t_token *token);
+int		get_token_type(char *token);
 
 //tokens_aux.c
 void	search_word(char *input, int *end);
@@ -199,7 +204,14 @@ int		search_char(char *str, char c);
 //rename_tkn_typ.c
 bool	chk_typ(int type, int inf, int sup);
 void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
+void	def_new_tkn_typ(t_list *tmp);
 void	review_tkn_typ(t_list *tkn_lst);
+
+//path.c
+char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input);
+char	*get_line(t_shell *sh);
+char	*get_path_aux(char **envp);
+void	get_paths(t_shell *sh);
 
 //path_aux.c
 char	**initialize_array(t_shell *sh, int size);
@@ -207,15 +219,28 @@ char	*convert_content_to_string(t_shell *sh, void *content, int type);
 void	free_array_on_error(char **array, int i);
 char	**list_to_array(t_shell *sh, t_list *list, int type);
 
-//PARSING
-//building_tree.c
-void	parsing_tree(t_shell *sh);
+//lexer.c
+void	clean_tokenlist(t_list **tkns);
+void	expander(t_shell *sh, t_list **tokens);
+void	review_tkn_list(t_list **tkn);
+void	lexer(t_shell *sh, char *input);
 
-//construct_tree.c
-t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos);
-t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
-t_cmd	*pipecmd(t_shell *sh, t_cmd *left, t_cmd *right);
-void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg);
+//lexer_aux.c
+int		is_removable(int type);
+void	transform_nodes(t_list *start, int type);
+void	set_heredoc_type(t_list *start);
+
+//handle_heredoc.c
+char	*create_temp_file(void);
+void	append_doc_to_file(char *filename, char *content);
+void	update_token_to_file(t_list *token, char *filename);
+void	get_doc(t_shell *sh, t_list *tmp);
+void	handle_heredoc(t_shell *sh, t_list *tkns);
+
+//handle_heredoc_aux.c
+void	unlink_heredoc(t_list *token);
+char	*expand_heredoc(t_shell *sh, char *str);
+char	*generate_temp_filename(void);
 
 //expander.c
 void	expand_quotes(t_shell *sh, t_list *token);
@@ -230,13 +255,15 @@ char	*simple_expand(char token);
 int		check_exp(char key);
 char	*get_word(char *str, int *i);
 
-//lexer.c
-void	lexer(t_shell *sh, char *input);
+//PARSING
+//building_tree.c
+void	parsing_tree(t_shell *sh);
 
-//lexer_aux.c
-int		is_removable(int type);
-void	set_heredoc_type(t_list *start);
-void	transform_nodes(t_list *start, int type);
+//construct_tree.c
+t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos);
+t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
+t_cmd	*pipecmd(t_shell *sh, t_cmd *left, t_cmd *right);
+void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg);
 
 //EXEC
 //exec_tree.c

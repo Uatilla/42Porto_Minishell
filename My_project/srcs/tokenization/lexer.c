@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/02 19:21:24 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:41:18 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,71 +85,6 @@ void	review_tkn_list(t_list **tkn)
 			transform_nodes(tmp->next, typee);
 			if (typee == HEREDOC)
 				set_heredoc_type(tmp);
-		}
-		tmp = tmp->next;
-	}
-}
-char	*expand_heredoc(t_shell *sh, char *str)
-{
-	char	*new_token;
-	char	*expanded;
-	int		i;
-
-	new_token = ft_strdup("");
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			i++;
-			if (check_exp(str[i]))
-				expanded = expansion(sh->env_lst, str, &i);
-			else
-				expanded = ft_strjoin("$", get_word(str, &i));
-		}
-		else
-			expanded = get_word(str, &i);
-		new_token = ft_strjoin_mod(new_token, expanded);
-		if (expanded)
-			free(expanded);
-	}
-	free(str);
-	return (new_token);
-}
-
-void	get_doc(t_shell *sh, t_list *tmp)
-{
-	char	*ret;
-
-	ret = NULL;
-	while (1)
-	{
-		ret = readline("> ");
-		if (!get(tmp)->not_expand)
-			ret = expand_heredoc(sh, ret);
-		if (!ft_strcmp(ret, get(tmp)->value))
-		{
-			free(ret);
-			break ;
-		}
-		// append doc
-		free(ret);
-	}
-}
-
-void	handle_heredoc(t_shell *sh, t_list *tkns)
-{
-	t_list	*tmp;
-	char	*ret;
-
-	tmp = tkns;
-	while (tmp)
-	{
-		if (get(tmp)->type == HEREDOC)
-		{
-			// Create future infile -> return an file name
-			// get _doc -> appends the DOC to the file
-			//  -> change the token value to the file name and change token 
 		}
 		tmp = tmp->next;
 	}
