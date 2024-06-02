@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:25:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/21 19:18:12 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:53:27 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	transform_nodes(t_list *start, int type)
 	}
 }
 
-void	handle_heredoc(t_list *start)
+void	set_heredoc_type(t_list *start)
 {
 	t_list	*inner_tmp;
 	t_list	*heredoc_start;

@@ -6,32 +6,76 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/01 19:09:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:28:11 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input)
+{
+	char	*ret;
+	char	*join;
+	char	*temp;
+
+	join = ft_strdup(input);
+	while (1)
+	{
+		ret = readline("> ");
+		if (!ret)
+			return (free(join), NULL);// Handle EOF (Ctrl+D)
+		temp = ft_strdup(join);
+		join = ft_strjoin_mod(join, ret);
+		free(temp);
+		free(ret);
+		if (join[ft_strlen(join) - 1] != '|')
+			break ;
+		if (join[ft_strlen(join) - 1] == '|'
+			&& join[ft_strlen(join) - 2] == '|')
+		{
+			free(join);
+			return (custom_error(NULL, SYNTAX_PIPE, 2), NULL);
+		}
+	}
+	return (join);
+}
+
 char	*get_line(t_shell *sh)
 {
 	char	*input;
 	char	*trimmed_input;
+	char	*ret;
 
+	ret = NULL;
 	input = readline(PROMPT);
 	if (!input || !*input)
+	{
+		free(input);
 		sh_loop(sh);
+	}
 	add_history(input);
 	if (!ft_strncmp(input, "exit", 5))
+	{
+		free(input);
 		clear_exit(sh, 1);
+	}
 	if (!ft_strcmp(input, "clear"))
 	{
+		free(input);
 		system("clear");
 		reinit_shell(sh);
 		sh_loop(sh);
 	}
 	trimmed_input = ft_strtrim(input, "\t ");
+	if (trimmed_input[ft_strlen(trimmed_input) - 1] == '|')
+	{
+		ret = open_pipe(sh, trimmed_input);
+		free(trimmed_input);
+	}
+	else
+		ret = trimmed_input;
 	free(input);
-	return (trimmed_input);
+	return (ret);
 }
 
 char	*ft_get_path_aux(char **envp)

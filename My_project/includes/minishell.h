@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/01 19:32:20 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:53:27 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@
 # define YELLOW "\x1b[38;5;184;1m"
 # define BLUE_BG "\033[38;5;159;48;5;16;1m"
 # define COLOR_RESET "\033[0m"
+
+//ERROR MESSAGES
+#define SYNTAX_PIPE "bash: syntax error near unexpected token `|'"
 
 // STRUCTURES
 typedef struct s_env
@@ -232,7 +235,7 @@ void	lexer(t_shell *sh, char *input);
 
 //lexer_aux.c
 int		is_removable(int type);
-void	handle_heredoc(t_list *start);
+void	set_heredoc_type(t_list *start);
 void	transform_nodes(t_list *start, int type);
 
 //EXEC

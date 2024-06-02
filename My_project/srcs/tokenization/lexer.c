@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/01 20:04:28 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:54:12 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	clean_tokenlist(t_list **tkns)
 	tmp = *tkns;
 	while (tmp && tmp->next)
 	{
-		if (!is_removable(get(tmp->next)->type)
-			&& !is_removable(get(tmp)->type))
+		if (!is_removable(get(tmp->next)->type) && !is_removable(get(tmp)->type)
+			&& get(tmp)->type != PIPE && get(tmp->next)->type != PIPE)
 		{
 			next = tmp->next;
-			get(tmp)->value = ft_strjoin_mod(get(tmp)->value,
+			get(tmp)->value = ft_strjoin_mod(get(tmp)->value, 
 				get(tmp->next)->value);
 			remove_node(tkns, next);
 		}
@@ -70,47 +70,23 @@ void	expander(t_shell *sh, t_list **tokens)
 	}
 }
 
-void get_last_token(__attribute_maybe_unused__ t_list *tkn_list )
-{
-	char	*new_token;
-
-	new_token = readline("> ");
-	
-}
-
 // Função principal refatorada
 void	review_tkn_list(t_list **tkn)
 {
 	t_list	*tmp;
 	int		typee;
-	int		i;
-	int		size_list;
-
-	i = 1;
-	size_list = ft_lstsize(*tkn);
-	printf("\n\nLISTSIZE: %d\n\n", size_list);
 
 	tmp = *tkn;
 	while (tmp)
 	{
 		typee = get(tmp)->type;
-		if (tmp && i == (size_list) && get(tmp)->type == PIPE)
-		{
-			printf("HEREEE\n\n");
-			get_last_token(*tkn);
-		}
 		if (typee >= 7)
 		{
 			transform_nodes(tmp->next, typee);
 			if (typee == HEREDOC)
-				handle_heredoc(tmp);
-			tmp = tmp->next;
+				set_heredoc_type(tmp);
 		}
-		else
-		{
-			tmp = tmp->next;
-		}
-		i++;
+		tmp = tmp->next;
 	}
 }
 
@@ -121,5 +97,4 @@ void	lexer(t_shell *sh, char *input)
 	review_tkn_list(&sh->token_lst);
 	expander(sh, &sh->token_lst);
 	clean_tokenlist(&sh->token_lst);
-	// print_tokens(sh);
 }
