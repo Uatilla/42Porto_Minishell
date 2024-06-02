@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/02 17:53:27 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:56:43 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@
 # define COLOR_RESET "\033[0m"
 
 //ERROR MESSAGES
-#define SYNTAX_PIPE "bash: syntax error near unexpected token `|'"
+# define SYNTAX_PIPE "bash: syntax error near unexpected token `|'"
 
 // STRUCTURES
 typedef struct s_env
 {
-	char			*key;
-	char			*value;
-	bool			visible;
+	char	*key;
+	char	*value;
+	bool	visible;
 }	t_env;
 
 typedef enum s_token_type
