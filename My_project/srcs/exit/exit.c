@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/02 22:39:02 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:49:59 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ void	clear_exit(t_shell *sh, int status)
 			i++;
 		}
 		free(sh->paths);
+	}
+	if (sh->envp)
+	{
+		while (sh->envp[i])
+			free(sh->envp[i++]);
 	}
 	rl_clear_history();
 	exit(status);

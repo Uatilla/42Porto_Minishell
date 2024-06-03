@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/03 14:59:59 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:47:16 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,11 @@ char	*get_path_aux(char **envp)
 
 void	get_paths(t_shell *sh)
 {
-	char	**envp;
 	char	*path_aux;
-	int		i;
 
-	i = 0;
-	envp = list_to_array(sh, sh->env_lst, 2);
-	path_aux = get_path_aux(envp);
+	sh->envp = list_to_array(sh, sh->env_lst, 2);
+	path_aux = get_path_aux(sh->envp);
 	if (path_aux)
 		sh->paths = ft_split(path_aux, ':');
-	while (envp[i])
-		free(envp[i++]);
-	free(envp);
 	free(path_aux);
 }

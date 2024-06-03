@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/02 22:57:25 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:45:40 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct s_shell
 	t_index		*index;
 	t_cmd		*cmd;
 	char		**paths;
+	char		**envp;
 }	t_shell;
 
 // MACROS
