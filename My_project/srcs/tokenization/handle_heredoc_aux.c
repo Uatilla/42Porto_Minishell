@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:42:00 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/02 22:42:59 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:40:13 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ char	*generate_temp_filename(void)
 	num = ft_itoa(random_number);
 	filename = ft_strjoin(file_aux, num);
 	free(file_aux);
+	free(num);
 	return (filename);
 }

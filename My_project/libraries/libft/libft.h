@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 15:07:18 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/20 10:57:39 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:59:04 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*ft_strchr_mod(char *s, int c);
 char	*ft_strjoin_mod(char *s1, char *s2); //libft
 char	*get_next_line(int fd);
 size_t	ft_strlen_gnl(const char *s); //libft
+char	*ft_strtrim_mod(char *s1, char const *set);
 
 //LIBFT
 /*_________________________________[FUNCTIONS]_______________________________*/

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/02 23:12:34 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:59:59 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input)
 		ret = readline("> ");
 		if (!ret)
 			return (free(join), NULL);// Handle EOF (Ctrl+D)
-		ret = ft_strtrim(ret, " \t");
+		ret = ft_strtrim_mod(ret, " \t");
 		temp = ft_strdup(join);
 		join = ft_strjoin_mod(join, ret);
 		free(temp);
 		free(ret);
-		join = ft_strtrim(join, " \t");
+		join = ft_strtrim_mod(join, " \t");
 		if (join[ft_strlen(join) - 1] != '|')
 			break ;
 		if (join[ft_strlen(join) - 1] == '|'
@@ -52,7 +52,6 @@ char	*get_line(t_shell *sh)
 		free(input);
 		sh_loop(sh);
 	}
-	add_history(input);
 	if (!ft_strncmp(input, "exit", 5))
 	{
 		free(input);
@@ -74,6 +73,7 @@ char	*get_line(t_shell *sh)
 	else
 		ret = trimmed_input;
 	free(input);
+	add_history(ret);
 	return (ret);
 }
 
