@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/27 17:11:03 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:50:17 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdbool.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <unistd.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libraries/libft/libft.h"
@@ -37,6 +39,14 @@
 # define COLOR_RESET "\033[0m"
 
 // STRUCTURES
+
+typedef enum s_signal
+{
+	PARENT_SIG,
+	CAT_SIG,
+	HEREDOC_SIG
+}	t_signal;
+
 typedef struct s_env
 {
 	char			*key;
@@ -104,6 +114,7 @@ typedef struct s_redircmd
 	char		*file;
 	int			mode;
 	int			fd;
+	int			perm;
 }	t_redircmd;
 
 typedef struct s_pipecmd
@@ -117,6 +128,7 @@ typedef struct s_execcmd
 {
 	t_node_type	n_type;
 	t_list		*curr_tkn_pos;
+	char		*command;
 	char		**argv;
 }	t_execcmd;
 
@@ -127,6 +139,7 @@ typedef struct s_shell
 	t_list		*token_lst;
 	t_index		*index;
 	t_cmd		*cmd;
+	char		**paths;
 }	t_shell;
 
 // MACROS
@@ -177,7 +190,8 @@ bool	prt_stx_error(char *error, bool exit);
 
 // HANDLING SIGNAL
 // signals.c
-void	reset_signal(void);
+void	set_signals(void);
+void	set_child_signals(void);
 
 //TOKENIZATION
 //tokens.c
@@ -224,9 +238,18 @@ int		is_removable(int type);
 void	handle_heredoc(t_list *start);
 void	transform_nodes(t_list *start, int type);
 
+//EXEC
+//exec_tree.c
+void    exec_tree(t_shell *sh, t_cmd *cmd);
+
 //EXTRA AUXILIARS
 //print.c
 void	print_env(t_shell *sh);
 void	print_tokens(t_shell *sh);
+void	print_arrays(char **paths);
+
+/*TO BE DEFINED*/
+void	get_paths(t_shell *sh);
+int		fork1(t_shell *sh);
 
 #endif
