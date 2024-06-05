@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/03 20:47:16 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:57:22 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*get_line(t_shell *sh)
 
 	ret = NULL;
 	input = readline(PROMPT);
-	if (!input || !*input)
+	if (!input || !*input) // acho que precisa ser so !*input
 	{
 		free(input);
 		sh_loop(sh);

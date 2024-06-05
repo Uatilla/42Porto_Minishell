@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:35:14 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/02 17:51:02 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:51:48 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ char	*ft_check_command_location(t_shell *sh, char *command, char *path_i)
 		path_command = ft_strdup(command);
 	else
 		path_command = ft_strjoin(path_aux, command);
+	free(path_aux);
 	if (!path_command)
 		clear_exit(sh, 1);
 	if (access(path_command, F_OK) == 0)
 		return (path_command);
-	free(path_aux);
 	free(path_command);
 	return (NULL);
 }
