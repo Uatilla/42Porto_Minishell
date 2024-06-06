@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 20:25:01 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/02 21:56:49 by lebarbos         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/06/06 19:22:17 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 /*CONSTRUCTORS*/
@@ -51,6 +52,7 @@ t_cmd	*parse_exec(t_shell *sh, t_list *tkn_pos)
 		if (tkn_cont->type == WORD)
 			fill_execcmd(sh, ex_cmd, tkn_cont->value);
 		else if (tkn_cont->type == INFILE || tkn_cont->type == OUTFILE
+			|| tkn_cont->type == APPEND || tkn_cont->type == HEREDOC)
 			|| tkn_cont->type == APPEND || tkn_cont->type == HEREDOC)
 			ret = parse_redir(sh, ret);
 		else if (tkn_cont->type == PIPE)

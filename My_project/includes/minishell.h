@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/06 17:56:56 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:16:10 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@
 # define SYNTAX_PIPE "bash: syntax error near unexpected token `|'"
 
 // STRUCTURES
+
+typedef enum s_signal
+{
+	PARENT_SIG,
+	CAT_SIG,
+	HEREDOC_SIG
+}	t_signal;
+
 typedef struct s_env
 {
 	char	*key;
@@ -189,7 +197,8 @@ bool	prt_stx_error(char *error, bool exit);
 
 // HANDLING SIGNAL
 // signals.c
-void	reset_signal(void);
+void	set_signals(void);
+void	set_child_signals(void);
 
 //TOKENIZATION
 //tokens.c
@@ -267,9 +276,26 @@ t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
 t_cmd	*pipecmd(t_shell *sh, t_cmd *left, t_cmd *right);
 void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg);
 
-//EXEC
-//exec_tree.c
-void	exec_tree(t_shell *sh, t_cmd *cmd);
+//expander.c
+void	expand_quotes(t_shell *sh, t_list *token);
+void	expand_general(t_shell *sh, t_list *tkn);
+char	*expansion(t_list *env_list, char *str, int *i);
+char	*get_env(t_list *env_list, char *token);
+
+//expander_aux.c
+t_token	*get(t_list *token);
+void	remove_node(t_list **list, t_list *node);
+char	*simple_expand(char token);
+int		check_exp(char key);
+char	*get_word(char *str, int *i);
+
+//lexer.c
+void	lexer(t_shell *sh, char *input);
+
+//lexer_aux.c
+int		is_removable(int type);
+void	handle_heredoc(t_list *start);
+void	transform_nodes(t_list *start, int type);
 
 //EXTRA AUXILIARS
 //print.c
