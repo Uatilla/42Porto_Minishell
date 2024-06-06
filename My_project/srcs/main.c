@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/27 21:01:39 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:31:29 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	g_signo;
 void	reinit_shell(t_shell *sh)
 {
 	free_token_list(&sh->token_lst);
+	if (sh->cmd)
+		free_tree(sh->cmd);
 	ft_bzero(sh->index, sizeof(t_index));
 }
 
@@ -31,27 +33,21 @@ void	init_shell(t_shell *sh, char **env_var)
 	}
 	ft_bzero(sh->index, sizeof(t_index));
 	fill_env(sh, env_var);
+	get_paths(sh);
 }
 
-char	*get_line(t_shell *sh)
+int	fork1(t_shell *sh)
 {
-	char *input;
-	char *trimmed_input;
+	int	pid;
 
-	input = readline(PROMPT);
-	if (!input || !*input)
-		sh_loop(sh);
-	add_history(input);
-	if (!ft_strncmp(input, "exit", 5)) // just to exit with clear 
-		clear_exit(sh, 1);
-	if (!ft_strcmp(input, "clear"))
+	pid = fork();
+	if (pid == -1)
 	{
-		system("clear");
-		sh_loop(sh);
+		printf("Fork failed\n");
+		clear_exit(sh, 1);
 	}
-	trimmed_input = ft_strtrim(input, "\t ");
-	free(input);
-	return (trimmed_input);
+	sh->pid = pid;
+	return (pid);
 }
 
 /*This should be an item inside the structure because this
@@ -59,23 +55,29 @@ variable must be used (probabily) in other functions.*/
 void	sh_loop(t_shell *sh)
 {
 	char	*prompt_input;
+	int		status;
 
 	(void) sh;
 	while (1)
 	{
 		prompt_input = get_line(sh);
+		if (!prompt_input)
+			sh_loop(sh);
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		lexer(sh, prompt_input);
-		fill_token_lst(sh, prompt_input); //tokenization without state;
-		review_tkn_typ(sh->token_lst);
-		parsing_tree(sh);
-		exec_tree(sh, sh->cmd);
-		reinit_shell(sh); // free tokenlist and set t_index to zero
+		if (fork1(sh) == 0)
+		{
+			parsing_tree(sh);
+			exec_tree(sh, sh->cmd);
+		}
+		waitpid(0, &status, 0);
+		if (WIFEXITED(status))
+			g_signo = WEXITSTATUS(status);
+		reinit_shell(sh);
 		free(prompt_input);
 	}
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -83,8 +85,7 @@ int	main(int argc, char **argv, char **envp)
 
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
-	reset_signal();
-	//print_env(&sh);
+	set_signals();
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);

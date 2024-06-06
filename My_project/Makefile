@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/05/27 14:52:11 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/06 19:13:04 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,9 +54,13 @@ SRCS		=	main.c print.c \
 				input/sintax_valid.c \
 				tokenization/tokens.c tokenization/tokens_aux.c \
 				tokenization/rename_tkn_typ.c \
-				parsing/building_tree.c parsing/construct_tree.c tokenization/expander.c \
-				tokenization/expander_aux.c tokenization/lexer.c tokenization/lexer_aux.c \
-				exec/exec_tree.c
+				parsing/building_tree.c parsing/construct_tree.c \
+				tokenization/expander.c \
+				tokenization/expander_aux.c tokenization/lexer.c \
+				tokenization/lexer_aux.c tokenization/path.c \
+				tokenization/path_aux.c tokenization/handle_heredoc.c \
+				tokenization/handle_heredoc_aux.c \
+				exec/exec_tree.c 
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 

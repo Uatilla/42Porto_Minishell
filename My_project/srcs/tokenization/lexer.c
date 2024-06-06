@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/21 19:18:08 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:13:20 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	clean_tokenlist(t_list **tkns)
 	tmp = *tkns;
 	while (tmp && tmp->next)
 	{
-		if (!is_removable(get(tmp->next)->type)
-			&& !is_removable(get(tmp)->type))
+		if (!is_removable(get(tmp->next)->type) && !is_removable(get(tmp)->type)
+			&& get(tmp)->type != PIPE && get(tmp->next)->type != PIPE)
 		{
 			next = tmp->next;
-			get(tmp)->value = ft_strjoin_mod(get(tmp)->value,
+			get(tmp)->value = ft_strjoin_mod(get(tmp)->value, 
 				get(tmp->next)->value);
 			remove_node(tkns, next);
 		}
@@ -45,6 +45,7 @@ void	expander(t_shell *sh, t_list **tokens)
 {
 	t_list	*tmp;
 	t_list	*to_exclude;
+	t_list	*next;
 
 	tmp = *tokens;
 	while (tmp)
@@ -63,10 +64,17 @@ void	expander(t_shell *sh, t_list **tokens)
 	tmp = *tokens;
 	while (tmp)
 	{
+		next = tmp->next;
 		if (get(tmp)->state == IN_DQUOTES)
-			if (get(tmp)->type != HEREDOC)
+		{
+			if (get(tmp)->type != HEREDOC && get(tmp)->value[0])
+			{
 				expand_quotes(sh, tmp);
-		tmp = tmp->next;
+				if (!*get(tmp)->value)
+					remove_node(tokens, tmp);
+			}
+		}
+		tmp = next;
 	}
 }
 
@@ -84,20 +92,18 @@ void	review_tkn_list(t_list **tkn)
 		{
 			transform_nodes(tmp->next, typee);
 			if (typee == HEREDOC)
-				handle_heredoc(tmp);
-			tmp = tmp->next;
+				set_heredoc_type(tmp);
 		}
-		else
-			tmp = tmp->next;
+		tmp = tmp->next;
 	}
 }
 
 void	lexer(t_shell *sh, char *input)
 {
-	fill_token_lst(sh, input); //tokens without state;
-	review_tkn_typ(sh->token_lst); // set state
+	fill_token_lst(sh, input);
+	review_tkn_typ(sh->token_lst);
 	review_tkn_list(&sh->token_lst);
 	expander(sh, &sh->token_lst);
-	clean_tokenlist(&sh->token_lst); // join and clean spaces
-	//print_tokens(sh); // just print
+	clean_tokenlist(&sh->token_lst);
+	handle_heredoc(sh, sh->token_lst);
 }

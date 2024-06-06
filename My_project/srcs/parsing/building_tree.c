@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   building_tree.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <uviana-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 20:25:01 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/15 20:25:30 by uviana-a         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/06/06 19:23:31 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 /*CONSTRUCTORS*/
@@ -21,15 +22,13 @@ t_cmd	*parse_redir(t_shell *sh, t_cmd *cmd)
 
 	tkn_cont = cmd->curr_tkn_pos->content;
 	redir_type = tkn_cont->type;
-	if (redir_type == INFILE)
+	if (redir_type == INFILE || redir_type == HEREDOC)
 		cmd = redircmd(cmd, tkn_cont->value, O_RDONLY, 0);
 	else if (redir_type == OUTFILE)
 		cmd = redircmd(cmd, tkn_cont->value, \
 			O_WRONLY | O_CREAT | O_TRUNC, 1);
 	else if (redir_type == APPEND)
 		cmd = redircmd(cmd, tkn_cont->value, O_WRONLY | O_CREAT, 1);
-	else if (redir_type == HEREDOC)
-		printf("HEREDOC\n");
 	if (!cmd)
 		clear_exit(sh, 1);
 	return (cmd);
@@ -54,10 +53,7 @@ t_cmd	*parse_exec(t_shell *sh, t_list *tkn_pos)
 			fill_execcmd(sh, ex_cmd, tkn_cont->value);
 		else if (tkn_cont->type == INFILE || tkn_cont->type == OUTFILE
 			|| tkn_cont->type == APPEND || tkn_cont->type == HEREDOC)
-		{
 			ret = parse_redir(sh, ret);
-			//printf("REDIR: %s\n", ((t_redircmd *)(ret))->file);
-		}
 		else if (tkn_cont->type == PIPE)
 			break ;
 		ret->curr_tkn_pos = ret->curr_tkn_pos->next;

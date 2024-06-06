@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/22 16:12:18 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:06:03 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_env(t_list *env_list, char *token)
 	return (expansion);
 }
 
-char	*expansion(t_list *env_list, char *str, int *i)
+char	*expansion(t_shell *sh, char *str, int *i)
 {
 	char	*key;
 	char	*new_token;
@@ -42,7 +42,7 @@ char	*expansion(t_list *env_list, char *str, int *i)
 
 	if (ft_isnumber(str[*i]) || search_char(OPERATORS_EX, str[*i]))
 	{
-		new_token = simple_expand(str[*i]);
+		new_token = simple_expand(sh, str[*i]);
 		(*i)++;
 		return (new_token);
 	}
@@ -50,7 +50,7 @@ char	*expansion(t_list *env_list, char *str, int *i)
 	while (isalnum(str[*i]) || str[*i] == '_')
 		(*i)++;
 	key = ft_substr(str, start, (*i) - start);
-	new_token = get_env(env_list, key);
+	new_token = get_env(sh->env_lst, key);
 	free(key);
 	return (new_token);
 }
@@ -74,7 +74,7 @@ void	expand_general(t_shell *sh, t_list *tkn)
 		get(tkn)->value = ft_strjoin("$", get(tkn->next)->value);
 	else
 	{
-		new_token = expansion(sh->env_lst, get(tkn->next)->value, &i);
+		new_token = expansion(sh, get(tkn->next)->value, &i);
 		get(tkn)->value = ft_strjoin(new_token, &get(tkn->next)->value[i]);
 	}
 	if (new_token)
@@ -96,7 +96,7 @@ void	expand_quotes(t_shell *sh, t_list *token)
 		{
 			i++;
 			if (check_exp(get(token)->value[i]))
-				expanded = expansion(sh->env_lst, get(token)->value, &i);
+				expanded = expansion(sh, get(token)->value, &i);
 			else
 				expanded = ft_strjoin("$", get_word(get(token)->value, &i));
 		}

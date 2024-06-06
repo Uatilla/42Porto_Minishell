@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/27 17:11:03 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:31:51 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdbool.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <unistd.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libraries/libft/libft.h"
@@ -36,12 +38,23 @@
 # define BLUE_BG "\033[38;5;159;48;5;16;1m"
 # define COLOR_RESET "\033[0m"
 
+//ERROR MESSAGES
+# define SYNTAX_PIPE "bash: syntax error near unexpected token `|'"
+
 // STRUCTURES
+
+typedef enum s_signal
+{
+	PARENT_SIG,
+	CAT_SIG,
+	HEREDOC_SIG
+}	t_signal;
+
 typedef struct s_env
 {
-	char			*key;
-	char			*value;
-	bool			visible;
+	char	*key;
+	char	*value;
+	bool	visible;
 }	t_env;
 
 typedef enum s_token_type
@@ -104,6 +117,7 @@ typedef struct s_redircmd
 	char		*file;
 	int			mode;
 	int			fd;
+	int			perm;
 }	t_redircmd;
 
 typedef struct s_pipecmd
@@ -117,6 +131,7 @@ typedef struct s_execcmd
 {
 	t_node_type	n_type;
 	t_list		*curr_tkn_pos;
+	char		*command;
 	char		**argv;
 }	t_execcmd;
 
@@ -126,7 +141,10 @@ typedef struct s_shell
 	t_list		*env_lst;
 	t_list		*token_lst;
 	t_index		*index;
+	int			pid;
 	t_cmd		*cmd;
+	char		**paths;
+	char		**envp;
 }	t_shell;
 
 // MACROS
@@ -136,12 +154,14 @@ typedef struct s_shell
 # define OPERATORS_EX "@$?*#-!"
 
 // EXITING THE GLOBAL VARIABLE
-extern int	g_signo;
+extern int g_signo;
 
 // FUNCTION PROTOTYPES
-
 //main.c
 void	sh_loop(t_shell *sh);
+int		fork1(t_shell *sh);
+void	init_shell(t_shell *sh, char **env_var);
+void	reinit_shell(t_shell *sh);
 
 // ENVIRONMENT FOLDER
 // env.c
@@ -155,8 +175,12 @@ void	clear_exit(t_shell *sh, int status);
 void	free_token_list(t_list **token_list);
 void	free_token_content(void *content);
 
+//EXEC
+//exec_tree.c
+void	exec_tree(t_shell *sh, t_cmd *cmd);
+
 //cleaning_tree.c
-void    free_tree(t_cmd *cmd);
+void	free_tree(t_cmd *cmd);
 
 // INPUT FOLDER
 // input_checker.c
@@ -177,11 +201,15 @@ bool	prt_stx_error(char *error, bool exit);
 
 // HANDLING SIGNAL
 // signals.c
-void	reset_signal(void);
+void	set_signals(void);
+void	set_child_signals(void);
 
 //TOKENIZATION
 //tokens.c
 void	fill_token_lst(t_shell *sh, char *input);
+void	end_word(t_shell *sh, char *input);
+void	get_token_state(t_token *token);
+int		get_token_type(char *token);
 
 //tokens_aux.c
 void	search_word(char *input, int *end);
@@ -191,28 +219,56 @@ int		search_char(char *str, char c);
 //rename_tkn_typ.c
 bool	chk_typ(int type, int inf, int sup);
 void	repl_tkn_typ(t_token *tkn_src, t_token *tkn_des);
+void	def_new_tkn_typ(t_list *tmp);
 void	review_tkn_typ(t_list *tkn_lst);
+
+//path.c
+char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input);
+char	*get_line(t_shell *sh);
+char	*get_path_aux(char **envp);
+void	get_paths(t_shell *sh);
+
+//path_aux.c
+char	**initialize_array(t_shell *sh, int size);
+char	*convert_content_to_string(t_shell *sh, void *content, int type);
+void	free_array_on_error(char **array, int i);
+char	**list_to_array(t_shell *sh, t_list *list, int type);
+
+//lexer.c
+void	clean_tokenlist(t_list **tkns);
+void	expander(t_shell *sh, t_list **tokens);
+void	review_tkn_list(t_list **tkn);
+void	lexer(t_shell *sh, char *input);
+
+//lexer_aux.c
+int		is_removable(int type);
+void	transform_nodes(t_list *start, int type);
+void	set_heredoc_type(t_list *start);
+
+//handle_heredoc.c
+char	*create_temp_file(void);
+void	append_doc_to_file(char *filename, char *content);
+void	update_token_to_file(t_list *token, char *filename);
+void	get_doc(t_shell *sh, t_list *tmp);
+void	handle_heredoc(t_shell *sh, t_list *tkns);
+
+//handle_heredoc_aux.c
+void	unlink_heredoc(t_list *token);
+char	*expand_heredoc(t_shell *sh, char *str);
+char	*generate_temp_filename(void);
 
 //expander.c
 void	expand_quotes(t_shell *sh, t_list *token);
 void	expand_general(t_shell *sh, t_list *tkn);
-char	*expansion(t_list *env_list, char *str, int *i);
+char	*expansion(t_shell *sh, char *str, int *i);
 char	*get_env(t_list *env_list, char *token);
 
 //expander_aux.c
 t_token	*get(t_list *token);
 void	remove_node(t_list **list, t_list *node);
-char	*simple_expand(char token);
+char	*simple_expand(t_shell *sh, char token);
 int		check_exp(char key);
 char	*get_word(char *str, int *i);
-
-//lexer.c
-void	lexer(t_shell *sh, char *input);
-
-//lexer_aux.c
-int		is_removable(int type);
-void	handle_heredoc(t_list *start);
-void	transform_nodes(t_list *start, int type);
 
 //PARSING
 //building_tree.c
@@ -224,13 +280,30 @@ t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
 t_cmd	*pipecmd(t_shell *sh, t_cmd *left, t_cmd *right);
 void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg);
 
-//EXEC
-//exec_tree.c
-void    exec_tree(t_shell *sh, t_cmd *cmd);
+//expander_aux.c
+t_token	*get(t_list *token);
+void	remove_node(t_list **list, t_list *node);
+int		check_exp(char key);
+char	*get_word(char *str, int *i);
+
+//lexer.c
+void	lexer(t_shell *sh, char *input);
+
+//lexer_aux.c
+int		is_removable(int type);
+void	transform_nodes(t_list *start, int type);
 
 //EXTRA AUXILIARS
 //print.c
 void	print_env(t_shell *sh);
 void	print_tokens(t_shell *sh);
+void	print_arrays(char **paths);
+
+/*TO BE DEFINED*/
+void	get_paths(t_shell *sh);
+char	*get_line(t_shell *sh);
+int		fork1(t_shell *sh);
+void	reinit_shell(t_shell *sh);
+void	custom_error(char *file, char *message, int error);
 
 #endif

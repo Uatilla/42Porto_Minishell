@@ -3,38 +3,101 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <uviana-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/28 19:02:59 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:21:51 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void    exec_tree(t_shell *sh, t_cmd *cmd)
+bool	is_file(char *file)
 {
-    t_execcmd   *execcmd;
-    if (!cmd)
-        clear_exit(sh, 1);
-    if (cmd->n_type == N_EXEC)
-    {
-        printf("EXEC\n");
-        execcmd = (t_execcmd *)cmd;
-        if (execcmd->argv[0] == 0)
-            exit (1);
-        //exec(execcmd->argv[0], execcmd->argv);
-    }
-    else if (cmd->n_type == N_REDIR)
-    {
-        exec_tree(sh, ((t_redircmd *)(cmd))->cmd);
-        printf("REDIR\n");
+	if (file[0] == '/' || !ft_strncmp(file, "./", 2))
+		return (true);
+	else if (ft_strnstr(file, ".sh", ft_strlen(file))
+		&& ft_strchr(file, '/'))
+		return (true);
+	return (false);
+}
 
-    }
-    else if (cmd->n_type == N_PIPE)
-    {
-        exec_tree(sh, ((t_pipecmd *)(cmd))->left);
-        exec_tree(sh, ((t_pipecmd *)(cmd))->right);
-        printf("PIPE\n");
-    }
+void	run_exec(t_shell *sh, t_cmd *cmd)
+{
+	t_execcmd	*excmd;
+
+	excmd = (t_execcmd *)cmd;
+	if (!excmd->command)
+	{
+		//ft_putstr_fd(excmd->argv[0] & "command not found\n", 2);
+		if (is_file(excmd->argv[0]))
+			custom_error(excmd->argv[0], "No such file or directory", 127);
+		else
+			custom_error(excmd->argv[0], "command not found", 1);
+		// printf("%s: command not found\n", excmd->argv[0]);//ESCERVER NO FD 2.
+		exit (g_signo);
+	}
+	else if (execve(excmd->command, excmd->argv, sh->envp) == -1)
+		perror(excmd->command);
+		// printf("execve() didn't worked.\n");//ESCERVER NO FD 2.
+	exit (g_signo); //exit para limpar a lista?
+}
+
+void	run_redir(t_shell *sh, t_cmd *cmd)
+{
+	t_redircmd	*rdcmd;
+
+	rdcmd = (t_redircmd *)cmd;
+	close(rdcmd->fd);
+	printf("PID: %d\n", sh->pid);
+	if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
+	{
+		custom_error(rdcmd->file, "No such file or directory", 1);
+		exit (g_signo); //exit para limpar a lista?
+	}
+	exec_tree(sh, rdcmd->cmd);
+}
+
+void	run_pipe(t_shell *sh, t_cmd *cmd)
+{
+	int	p[2];
+	int	status;
+
+	if (pipe(p) < 0)
+		clear_exit(sh, 1);
+	if (fork1(sh) == 0)
+	{
+		dup2(p[1], STDOUT_FILENO);
+		close(p[0]);
+		close(p[1]);
+		exec_tree(sh, ((t_pipecmd *)cmd)->left);
+	}
+	waitpid(0, &status, 0);
+	if (WIFEXITED(status))
+		g_signo = WEXITSTATUS(status);
+	if (fork1(sh) == 0)
+	{
+		dup2(p[0], STDIN_FILENO);
+		close(p[0]);
+		close(p[1]);
+		exec_tree(sh, ((t_pipecmd *)cmd)->right);
+	}
+	close(p[0]);
+	close(p[1]);
+	waitpid(0, &status, 0);
+	if (WIFEXITED(status))
+		g_signo = WEXITSTATUS(status);
+	exit(g_signo);
+}
+
+void	exec_tree(t_shell *sh, t_cmd *cmd)
+{
+	if (!cmd)
+		clear_exit(sh, 1);
+	if (cmd->n_type == N_EXEC)
+		run_exec(sh, cmd);
+	else if (cmd->n_type == N_REDIR)
+		run_redir(sh, cmd);
+	else if (cmd->n_type == N_PIPE)
+		run_pipe(sh, cmd);
 }
