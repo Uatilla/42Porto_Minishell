@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/06 18:36:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:13:20 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	expander(t_shell *sh, t_list **tokens)
 {
 	t_list	*tmp;
 	t_list	*to_exclude;
+	t_list	*next;
 
 	tmp = *tokens;
 	while (tmp)
@@ -63,10 +64,17 @@ void	expander(t_shell *sh, t_list **tokens)
 	tmp = *tokens;
 	while (tmp)
 	{
+		next = tmp->next;
 		if (get(tmp)->state == IN_DQUOTES)
-			if (get(tmp)->type != HEREDOC)
+		{
+			if (get(tmp)->type != HEREDOC && get(tmp)->value[0])
+			{
 				expand_quotes(sh, tmp);
-		tmp = tmp->next;
+				if (!*get(tmp)->value)
+					remove_node(tokens, tmp);
+			}
+		}
+		tmp = next;
 	}
 }
 

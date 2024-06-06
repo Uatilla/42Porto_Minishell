@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/06 19:54:30 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:21:51 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 
 	rdcmd = (t_redircmd *)cmd;
 	close(rdcmd->fd);
+	printf("PID: %d\n", sh->pid);
 	if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
 	{
-		printf("bash: %s: No such file or directory\n", rdcmd->file);//ESCERVER NO FD 2.
+		custom_error(rdcmd->file, "No such file or directory", 1);
 		exit (g_signo); //exit para limpar a lista?
 	}
 	exec_tree(sh, rdcmd->cmd);
