@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/05 18:57:22 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:27:46 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input)
 			break ;
 		if (join[ft_strlen(join) - 1] == '|'
 			&& join[ft_strlen(join) - 2] == '|')
-			return (free(join), custom_error(NULL, SYNTAX_PIPE, 2), NULL);
+			break ;
 	}
 	return (join);
 }
@@ -56,13 +56,6 @@ char	*get_line(t_shell *sh)
 	{
 		free(input);
 		clear_exit(sh, 1);
-	}
-	if (!ft_strcmp(input, "clear"))
-	{
-		free(input);
-		system("clear");
-		reinit_shell(sh);
-		sh_loop(sh);
 	}
 	trimmed_input = ft_strtrim(input, "\t ");
 	if (trimmed_input[ft_strlen(trimmed_input) - 1] == '|')

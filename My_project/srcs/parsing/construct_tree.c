@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:35:14 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/05 19:51:48 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:59:51 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*find_path(t_shell *sh, char *command)
 	int		i;
 
 	i = 0;
+	if (!command || !*command)
+		return (NULL);
 	if (!sh->paths)
 		return (NULL);
 	else

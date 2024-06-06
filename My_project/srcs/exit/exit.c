@@ -6,11 +6,11 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/03 20:49:59 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:47:13 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	custom_error(char *file, char *message, int error)
 {

@@ -6,11 +6,21 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/03 20:46:03 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:58:15 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+bool	is_file(char *file)
+{
+	if (file[0] == '/' || !ft_strncmp(file, "./", 2))
+		return (true);
+	else if (ft_strnstr(file, ".sh", ft_strlen(file))
+		&& ft_strchr(file, '/'))
+		return (true);
+	return (false);
+}
 
 void	run_exec(t_shell *sh, t_cmd *cmd)
 {
@@ -20,13 +30,17 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 	if (!excmd->command)
 	{
 		//ft_putstr_fd(excmd->argv[0] & "command not found\n", 2);
-		custom_error(excmd->argv[0], "command not found", 1);
+		if (is_file(excmd->argv[0]))
+			custom_error(excmd->argv[0], "No such file or directory", 127);
+		else
+			custom_error(excmd->argv[0], "command not found", 1);
 		// printf("%s: command not found\n", excmd->argv[0]);//ESCERVER NO FD 2.
-		exit (1);
+		exit (g_signo);
 	}
-	if (execve(excmd->command, excmd->argv, sh->envp) == -1)
-		printf("execve() didn't worked.\n");//ESCERVER NO FD 2.
-	exit (1); //exit para limpar a lista?
+	else if (execve(excmd->command, excmd->argv, sh->envp) == -1)
+		perror(excmd->command);
+		// printf("execve() didn't worked.\n");//ESCERVER NO FD 2.
+	exit (g_signo); //exit para limpar a lista?
 }
 
 void	run_redir(t_shell *sh, t_cmd *cmd)
@@ -38,7 +52,7 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 	if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
 	{
 		printf("bash: %s: No such file or directory\n", rdcmd->file);//ESCERVER NO FD 2.
-		exit (1); //exit para limpar a lista?
+		exit (g_signo); //exit para limpar a lista?
 	}
 	exec_tree(sh, rdcmd->cmd);
 }

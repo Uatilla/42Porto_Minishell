@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/03 20:45:40 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:56:56 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_shell
 	t_list		*env_lst;
 	t_list		*token_lst;
 	t_index		*index;
+	int			pid;
 	t_cmd		*cmd;
 	char		**paths;
 	char		**envp;
@@ -145,7 +146,7 @@ typedef struct s_shell
 # define OPERATORS_EX "@$?*#-!"
 
 // EXITING THE GLOBAL VARIABLE
-extern int	g_signo;
+extern int g_signo;
 
 // FUNCTION PROTOTYPES
 //main.c
@@ -246,13 +247,13 @@ char	*generate_temp_filename(void);
 //expander.c
 void	expand_quotes(t_shell *sh, t_list *token);
 void	expand_general(t_shell *sh, t_list *tkn);
-char	*expansion(t_list *env_list, char *str, int *i);
+char	*expansion(t_shell *sh, char *str, int *i);
 char	*get_env(t_list *env_list, char *token);
 
 //expander_aux.c
 t_token	*get(t_list *token);
 void	remove_node(t_list **list, t_list *node);
-char	*simple_expand(char token);
+char	*simple_expand(t_shell *sh, char token);
 int		check_exp(char key);
 char	*get_word(char *str, int *i);
 

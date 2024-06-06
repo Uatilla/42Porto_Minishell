@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/02 22:40:46 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:04:52 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	fork1(t_shell *sh)
 	int	pid;
 
 	pid = fork();
+	sh->pid = pid;
 	if (pid == -1)
 	{
 		printf("Fork failed\n");
@@ -54,6 +55,8 @@ variable must be used (probabily) in other functions.*/
 void	sh_loop(t_shell *sh)
 {
 	char	*prompt_input;
+	int		status;
+	int		pid;
 
 	(void) sh;
 	while (1)
@@ -64,13 +67,16 @@ void	sh_loop(t_shell *sh)
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		lexer(sh, prompt_input);
-		if (fork1(sh) == 0)
+		pid = fork1(sh);
+		printf("loop: %d\n", pid);
+		if (pid == 0)
 		{
 			parsing_tree(sh);
 			exec_tree(sh, sh->cmd);
 		}
-		wait (0);
-		// unlink_heredoc(sh->token_lst); // nao é mais necessário, fiz o unlink no reinitshell
+		waitpid(0, &status, 0);
+		if (WIFEXITED(status))
+			g_signo = WEXITSTATUS(status);
 		reinit_shell(sh);
 		free(prompt_input);
 	}

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:05:30 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/05/20 20:44:35 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:36:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_token	*get(t_list *token)
 	return ((t_token *)token->content);
 }
 
-char	*simple_expand(char token)
+char	*simple_expand(t_shell *sh, char token)
 {
 	char	*new_token;
 
@@ -47,7 +47,7 @@ char	*simple_expand(char token)
 	{
 		free(new_token);
 		if (token == '$')
-			new_token = ft_itoa(getpid());
+			new_token = ft_itoa(sh->pid);
 		else if (token == '?')
 			new_token = ft_itoa(g_signo);
 		else if (token == '0')

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:42:00 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/03 14:40:13 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:36:49 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*expand_heredoc(t_shell *sh, char *str)
 		{
 			i++;
 			if (check_exp(str[i]))
-				expanded = expansion(sh->env_lst, str, &i);
+				expanded = expansion(sh, str, &i);
 			else
 				expanded = ft_strjoin("$", get_word(str, &i));
 		}
