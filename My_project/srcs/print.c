@@ -48,3 +48,30 @@ void	print_env(t_shell *sh)
 		tmp = tmp->next;
 	}
 }
+
+void	print_tree(t_cmd *cmd)
+{
+	int			argc;
+	t_execcmd	*execcmd;
+
+	argc = 0;
+	(void)cmd;
+	if (cmd->n_type == N_PIPE)
+	{
+		print_tree(((t_pipecmd *)(cmd))->left);
+		print_tree(((t_pipecmd *)(cmd))->right);
+	}
+	else if (cmd->n_type == N_REDIR)
+	{
+		print_tree(((t_redircmd *)(cmd))->cmd);
+	}
+	else if (cmd->n_type == N_EXEC)
+	{
+		execcmd = (t_execcmd *)cmd;
+		while (execcmd->argv[argc])
+		{
+			printf("%s\n",(execcmd->argv[argc]));
+			argc++;
+		}
+	}
+}

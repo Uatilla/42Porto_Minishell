@@ -305,5 +305,6 @@ char	*get_line(t_shell *sh);
 int		fork1(t_shell *sh);
 void	reinit_shell(t_shell *sh);
 void	custom_error(char *file, char *message, int error);
+void	print_tree(t_cmd *cmd);
 
 #endif

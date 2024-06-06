@@ -82,6 +82,7 @@ int	count_args(t_shell *sh, t_list *tkn_pos)
 	int		count;
 
 	count = 0;
+	(void)sh;
 	while (tkn_pos)
 	{
 		tkn_cont = (t_token *)tkn_pos->content;
@@ -91,8 +92,6 @@ int	count_args(t_shell *sh, t_list *tkn_pos)
 			break ;
 		tkn_pos = tkn_pos->next;
 	}
-	if (count == 0)
-		clear_exit(sh, 1);
 	return (count);
 }
 
