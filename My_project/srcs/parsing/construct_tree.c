@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:35:14 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/06 19:22:50 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:19:52 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	count_args(t_shell *sh, t_list *tkn_pos)
 	int		count;
 
 	count = 0;
+	(void)sh;
 	while (tkn_pos)
 	{
 		tkn_cont = (t_token *)tkn_pos->content;
@@ -91,8 +92,8 @@ int	count_args(t_shell *sh, t_list *tkn_pos)
 			break ;
 		tkn_pos = tkn_pos->next;
 	}
-	if (count == 0)
-		clear_exit(sh, 1);
+	// if (count == 0)
+	// 	clear_exit(sh, 1);
 	return (count);
 }
 
