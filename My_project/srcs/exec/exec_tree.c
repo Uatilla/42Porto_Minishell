@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/06 19:21:02 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:54:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 void	run_pipe(t_shell *sh, t_cmd *cmd)
 {
 	int	p[2];
+	int	status;
 
 	if (pipe(p) < 0)
 		clear_exit(sh, 1);
@@ -70,6 +71,9 @@ void	run_pipe(t_shell *sh, t_cmd *cmd)
 		close(p[1]);
 		exec_tree(sh, ((t_pipecmd *)cmd)->left);
 	}
+	waitpid(0, &status, 0);
+	if (WIFEXITED(status))
+		g_signo = WEXITSTATUS(status);
 	if (fork1(sh) == 0)
 	{
 		dup2(p[0], STDIN_FILENO);
@@ -79,9 +83,10 @@ void	run_pipe(t_shell *sh, t_cmd *cmd)
 	}
 	close(p[0]);
 	close(p[1]);
-	wait(0);
-	wait(0);
-	exit(0);
+	waitpid(0, &status, 0);
+	if (WIFEXITED(status))
+		g_signo = WEXITSTATUS(status);
+	exit(g_signo);
 }
 
 void	exec_tree(t_shell *sh, t_cmd *cmd)
