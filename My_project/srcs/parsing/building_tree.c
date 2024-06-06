@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/06 19:22:17 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:23:31 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_cmd	*parse_exec(t_shell *sh, t_list *tkn_pos)
 		if (tkn_cont->type == WORD)
 			fill_execcmd(sh, ex_cmd, tkn_cont->value);
 		else if (tkn_cont->type == INFILE || tkn_cont->type == OUTFILE
-			|| tkn_cont->type == APPEND || tkn_cont->type == HEREDOC)
 			|| tkn_cont->type == APPEND || tkn_cont->type == HEREDOC)
 			ret = parse_redir(sh, ret);
 		else if (tkn_cont->type == PIPE)

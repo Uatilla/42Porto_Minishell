@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/06 19:16:10 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:31:51 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,10 @@ void	clear_exit(t_shell *sh, int status);
 void	free_token_list(t_list **token_list);
 void	free_token_content(void *content);
 
+//EXEC
+//exec_tree.c
+void	exec_tree(t_shell *sh, t_cmd *cmd);
+
 //cleaning_tree.c
 void	free_tree(t_cmd *cmd);
 
@@ -276,16 +280,9 @@ t_cmd	*redircmd(t_cmd *subcmd, char *file, int mode, int fd);
 t_cmd	*pipecmd(t_shell *sh, t_cmd *left, t_cmd *right);
 void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg);
 
-//expander.c
-void	expand_quotes(t_shell *sh, t_list *token);
-void	expand_general(t_shell *sh, t_list *tkn);
-char	*expansion(t_list *env_list, char *str, int *i);
-char	*get_env(t_list *env_list, char *token);
-
 //expander_aux.c
 t_token	*get(t_list *token);
 void	remove_node(t_list **list, t_list *node);
-char	*simple_expand(char token);
 int		check_exp(char key);
 char	*get_word(char *str, int *i);
 
@@ -294,7 +291,6 @@ void	lexer(t_shell *sh, char *input);
 
 //lexer_aux.c
 int		is_removable(int type);
-void	handle_heredoc(t_list *start);
 void	transform_nodes(t_list *start, int type);
 
 //EXTRA AUXILIARS
@@ -309,4 +305,5 @@ char	*get_line(t_shell *sh);
 int		fork1(t_shell *sh);
 void	reinit_shell(t_shell *sh);
 void	custom_error(char *file, char *message, int error);
+
 #endif
