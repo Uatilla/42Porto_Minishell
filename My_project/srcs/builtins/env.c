@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:06:41 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/07 19:22:49 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:46:11 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ t_list	*find_env_node(t_list *list, char *key)
 	{
 		content = tmp->content;
 		if (!ft_strcmp(content->key, key))
+		{
 			return (tmp);
+		}
 		tmp = tmp->next;
 	}
 	return (NULL);
@@ -58,7 +60,7 @@ t_list	*find_env_node(t_list *list, char *key)
 void	att_env(t_shell *sh, t_execcmd *cmd)
 {
 	t_env	*node_content;
-	t_env	*test_content;
+	// t_env	*test_content;
 	t_list	*to_remove;
 	int		size;
 
@@ -67,8 +69,8 @@ void	att_env(t_shell *sh, t_execcmd *cmd)
 	to_remove = find_env_node(sh->env_lst, "_");
 	if (to_remove)
 	{
-		test_content = to_remove->content;
-		printf("env to remove: %s\n", test_content->value);
+		// test_content = to_remove->content;
+		// printf("env to remove: %s\n", test_content->value);
 		remove_env_node(&sh->env_lst, to_remove);
 	}
 	node_content->key = ft_strdup("_");
@@ -77,11 +79,15 @@ void	att_env(t_shell *sh, t_execcmd *cmd)
 	free_array(sh->envp, size);
 	ft_lstadd_back(&sh->env_lst, ft_lstnew(node_content));
 	sh->envp = list_to_array(sh, sh->env_lst, 2);
+	ft_putstr_fd(sh->envp[2], 2);
+	ft_putstr_fd("\n", 2);
 	print_env(sh);
+	print_arrays(sh->envp);
 }
 
 int	env(t_shell *sh, __attribute_maybe_unused__ t_execcmd *cmd)
 {
+	// ft_putstr_fd("aaaaaaaaaaaaaaaaaaaaaaaaaaaa\n", 2);
 	print_arrays(sh->envp);
 	return (0);
 }

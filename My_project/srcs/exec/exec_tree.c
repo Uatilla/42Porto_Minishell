@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/07 18:35:44 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:44:41 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 	else if (excmd->argv[0])
 	{
 		if (execve(excmd->command, excmd->argv, sh->envp) == -1)
+		{
 			perror(excmd->command);
+		}
 	}
 	att_env(sh, excmd);
+	print_arrays(sh->envp);
 	exit (g_signo);
 }
 
