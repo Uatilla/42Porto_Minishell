@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:47:45 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/05/02 12:59:31 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:55:42 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	int		i;
 	int		j;
 
-	if (!s1 || !set)
+	if (!s1 || !*s1 || !set)
 		return (NULL);
 	i = 0;
 	while (s1[i] != '\0' && ft_setcmp(s1[i], set))

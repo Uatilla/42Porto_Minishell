@@ -203,8 +203,6 @@ bool	prt_stx_error(char *error, bool exit);
 // signals.c
 void	set_signals(void);
 void	set_child_signals(void);
-void	set_main_signal(void);
-void	set_heredoc_signal(void);
 
 //TOKENIZATION
 //tokens.c
@@ -307,6 +305,5 @@ char	*get_line(t_shell *sh);
 int		fork1(t_shell *sh);
 void	reinit_shell(t_shell *sh);
 void	custom_error(char *file, char *message, int error);
-void	print_tree(t_cmd *cmd);
 
 #endif

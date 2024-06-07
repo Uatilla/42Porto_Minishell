@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/06 19:31:29 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:20:55 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,17 @@ void	sh_loop(t_shell *sh)
 	(void) sh;
 	while (1)
 	{
-		set_signals();
 		prompt_input = get_line(sh);
 		if (!prompt_input)
 			sh_loop(sh);
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		lexer(sh, prompt_input);
-		//print_tokens(sh);
 		if (fork1(sh) == 0)
 		{
-			set_child_signals();
 			parsing_tree(sh);
-			//print_tree(sh->cmd);
 			exec_tree(sh, sh->cmd);
 		}
-		set_main_signal();
 		waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			g_signo = WEXITSTATUS(status);
@@ -90,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
+	set_signals();
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);
