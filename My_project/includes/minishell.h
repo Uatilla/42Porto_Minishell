@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/06 19:31:51 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:06:16 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ void	get_paths(t_shell *sh);
 //path_aux.c
 char	**initialize_array(t_shell *sh, int size);
 char	*convert_content_to_string(t_shell *sh, void *content, int type);
-void	free_array_on_error(char **array, int i);
+void	free_array(char **array, int size);
 char	**list_to_array(t_shell *sh, t_list *list, int type);
 
 //lexer.c
@@ -301,9 +301,11 @@ void	print_arrays(char **paths);
 
 /*TO BE DEFINED*/
 void	get_paths(t_shell *sh);
-char	*get_line(t_shell *sh);
 int		fork1(t_shell *sh);
 void	reinit_shell(t_shell *sh);
 void	custom_error(char *file, char *message, int error);
+void	att_env(t_shell *sh, t_execcmd *cmd);
+void	free_env_content(void *content);
+int	env(t_shell *sh, t_execcmd *cmd);
 
 #endif

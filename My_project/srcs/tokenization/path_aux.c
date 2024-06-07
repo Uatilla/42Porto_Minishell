@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:07:08 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/03 20:44:37 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:47:49 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ char	*convert_content_to_string(t_shell *sh, void *content, int type)
 	return (value);
 }
 
-void	free_array_on_error(char **array, int i)
+void	free_array(char **array, int size)
 {
 	int	j;
 
 	j = 0;
-	while (j < i)
+	while (j < size)
 	{
 		free(array[j]);
 		j++;
@@ -75,7 +75,7 @@ char	**list_to_array(t_shell *sh, t_list *list, int type)
 		free(value);
 		if (!array[i])
 		{
-			free_array_on_error(array, i);
+			free_array(array, i);
 			clear_exit(sh, 1);
 		}
 		list = list->next;

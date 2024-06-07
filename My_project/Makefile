@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/06 19:13:04 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/07 19:04:45 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ SRCS_DIR	=	srcs
 OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
-SUB_DIR		=	environment exit input signals tokenization parsing exec
+SUB_DIR		=	environment exit input signals tokenization parsing exec \
+builtins
 #SUB_DIR		=	environment exit input signals tokenization
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
@@ -47,7 +48,7 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
 
 # Files
 SRCS		=	main.c print.c \
-				environment/env.c \
+				environment/environment.c \
 				exit/exit.c exit/cleaning_tree.c\
 				signals/signals.c \
 				input/input_checker.c input/input_checker_utils.c \
@@ -60,7 +61,8 @@ SRCS		=	main.c print.c \
 				tokenization/lexer_aux.c tokenization/path.c \
 				tokenization/path_aux.c tokenization/handle_heredoc.c \
 				tokenization/handle_heredoc_aux.c \
-				exec/exec_tree.c 
+				exec/exec_tree.c \
+				builtins/check_builtins.c builtins/env.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 

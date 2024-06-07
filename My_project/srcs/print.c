@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:54:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/06 19:20:51 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:03:46 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ void	print_tokens(t_shell *sh)
 			printf("Type of heredoc: %d %s\n",
 				token_content->not_expand, expand[token_content->not_expand]);
 		tmp = tmp->next;
+	}
+}
+
+void	print_arrays(char **paths)
+{
+	int	i;
+
+	i = 0;
+	while (paths[i])
+	{
+		ft_putstr_fd(paths[i], ft_strlen(paths[i]));
+		i++;
 	}
 }
 

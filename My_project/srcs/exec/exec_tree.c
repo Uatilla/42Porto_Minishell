@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/07 15:03:11 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:35:44 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 		if (execve(excmd->command, excmd->argv, sh->envp) == -1)
 			perror(excmd->command);
 	}
+	att_env(sh, excmd);
 	exit (g_signo);
 }
 
@@ -74,8 +75,6 @@ void	run_pipe(t_shell *sh, t_cmd *cmd)
 		close(p[1]);
 		exec_tree(sh, ((t_pipecmd *)cmd)->left);
 	}
-	// if (WIFEXITED(status))
-	// 	g_signo = WEXITSTATUS(status);
 	pid2 = fork1(sh);
 	if (pid2== 0)
 	{

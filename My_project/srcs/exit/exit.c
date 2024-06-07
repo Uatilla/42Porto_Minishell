@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/06 19:21:19 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:49:51 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	custom_error(char *file, char *message, int error)
 	g_signo = error;
 }
 
-void	free_lst_content(void *content)
+void	free_env_content(void *content)
 {
 	t_env	*curr_cont;
 
@@ -53,7 +53,7 @@ void	free_token_content(void *content)
 
 void	free_env_list(t_list **env_lst)
 {
-	ft_lstclear(env_lst, free_lst_content);
+	ft_lstclear(env_lst, free_env_content);
 }
 
 void	free_token_list(t_list **token_list)
