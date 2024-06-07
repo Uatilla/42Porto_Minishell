@@ -203,6 +203,8 @@ bool	prt_stx_error(char *error, bool exit);
 // signals.c
 void	set_signals(void);
 void	set_child_signals(void);
+void	set_main_signal(void);
+void	set_heredoc_signal(void);
 
 //TOKENIZATION
 //tokens.c

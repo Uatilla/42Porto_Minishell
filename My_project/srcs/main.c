@@ -60,6 +60,7 @@ void	sh_loop(t_shell *sh)
 	(void) sh;
 	while (1)
 	{
+		set_signals();
 		prompt_input = get_line(sh);
 		if (!prompt_input)
 			sh_loop(sh);
@@ -69,10 +70,12 @@ void	sh_loop(t_shell *sh)
 		//print_tokens(sh);
 		if (fork1(sh) == 0)
 		{
+			set_child_signals();
 			parsing_tree(sh);
 			//print_tree(sh->cmd);
 			exec_tree(sh, sh->cmd);
 		}
+		set_main_signal();
 		waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			g_signo = WEXITSTATUS(status);
@@ -87,7 +90,6 @@ int	main(int argc, char **argv, char **envp)
 
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
-	set_signals();
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);

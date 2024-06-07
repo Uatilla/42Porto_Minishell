@@ -60,6 +60,7 @@ void	get_doc(t_shell *sh, t_list *tmp)
 		clear_exit(sh, 1);
 	while (1)
 	{
+		set_heredoc_signal();
 		ret = readline("> ");
 		if (!ret)
 			break ;
