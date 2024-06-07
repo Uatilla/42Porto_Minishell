@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:05:30 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/06 16:36:01 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:07:31 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*simple_expand(t_shell *sh, char token)
 		else if (token == '?')
 			new_token = ft_itoa(g_signo);
 		else if (token == '0')
-			new_token = ft_strdup("bash");
+			new_token = ft_strdup("./minishell");
 	}
 	return (new_token);
 }
