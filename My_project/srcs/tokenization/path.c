@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/06 19:29:44 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:06:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,12 @@ char	*get_line(t_shell *sh)
 		rl_clear_history();
 		clear_exit(sh, 1);
 	}
-	if (!ft_strncmp(input, "exit", 5))
+	else if (!*input)
+	{
+		reinit_shell(sh);
+		sh_loop(sh);
+	}
+	else if (!ft_strncmp(input, "exit", 5))
 	{
 		free(input);
 		clear_exit(sh, 1);

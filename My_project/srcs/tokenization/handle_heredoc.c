@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/02 23:13:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:50:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,16 @@ void	get_doc(t_shell *sh, t_list *tmp)
 	{
 		ret = readline("> ");
 		if (!ret)
+		{
+			printf("warning: here-document delimited by end-of-file (wanted `%s')\n", get(tmp)->value);
 			break ;
-		if (!ft_strcmp(ret, get(tmp)->value))
+		}
+		else if (!ft_strcmp(ret, get(tmp)->value))
 		{
 			free(ret);
 			break ;
 		}
-		if (!get(tmp)->not_expand)
+		else if (!get(tmp)->not_expand)
 			ret = expand_heredoc(sh, ret);
 		append_doc_to_file(filename, ret);
 		free(ret);
