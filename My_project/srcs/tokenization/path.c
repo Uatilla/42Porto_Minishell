@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/07 14:06:30 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:11:32 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input)
 		if (join[ft_strlen(join) - 1] == '|'
 			&& join[ft_strlen(join) - 2] == '|')
 			break ;
+		if (!sintax_validation(join))
+		{
+			add_history(join);
+			free(join);
+			reinit_shell(sh);
+			sh_loop(sh);
+		}
 	}
 	return (join);
 }
@@ -53,18 +60,19 @@ char	*get_line(t_shell *sh)
 		rl_clear_history();
 		clear_exit(sh, 1);
 	}
-	else if (!*input)
-	{
-		reinit_shell(sh);
-		sh_loop(sh);
-	}
 	else if (!ft_strncmp(input, "exit", 5))
 	{
 		free(input);
 		clear_exit(sh, 1);
 	}
 	trimmed_input = ft_strtrim(input, "\t ");
-	if (trimmed_input[ft_strlen(trimmed_input) - 1] == '|')
+	if (!*trimmed_input || !trimmed_input || !sintax_validation(trimmed_input))
+	{
+		add_history(input);
+		reinit_shell(sh);
+		sh_loop(sh);
+	}
+	else if (trimmed_input[ft_strlen(trimmed_input) - 1] == '|')
 	{
 		ret = open_pipe(sh, trimmed_input);
 		free(trimmed_input);
