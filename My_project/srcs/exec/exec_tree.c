@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/06 21:21:00 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:53:18 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 		if (is_file(excmd->argv[0]))
 			custom_error(excmd->argv[0], "No such file or directory", 127);
 		else
-			custom_error(excmd->argv[0], "command not found", 1);
+			custom_error(excmd->argv[0], "command not found", 127);
 		// printf("%s: command not found\n", excmd->argv[0]);//ESCERVER NO FD 2.
 		exit (g_signo);
 	}
@@ -61,20 +61,23 @@ void	run_pipe(t_shell *sh, t_cmd *cmd)
 {
 	int	p[2];
 	int	status;
+	int	pid1;
+	int pid2;
 
 	if (pipe(p) < 0)
 		clear_exit(sh, 1);
-	if (fork1(sh) == 0)
+	pid1 = fork1(sh);
+	if (pid1 == 0)
 	{
 		dup2(p[1], STDOUT_FILENO);
 		close(p[0]);
 		close(p[1]);
 		exec_tree(sh, ((t_pipecmd *)cmd)->left);
 	}
-	waitpid(0, &status, 0);
-	if (WIFEXITED(status))
-		g_signo = WEXITSTATUS(status);
-	if (fork1(sh) == 0)
+	// if (WIFEXITED(status))
+	// 	g_signo = WEXITSTATUS(status);
+	pid2 = fork1(sh);
+	if (pid2== 0)
 	{
 		dup2(p[0], STDIN_FILENO);
 		close(p[0]);
@@ -83,7 +86,10 @@ void	run_pipe(t_shell *sh, t_cmd *cmd)
 	}
 	close(p[0]);
 	close(p[1]);
-	waitpid(0, &status, 0);
+	waitpid(pid1, &status, 0);
+	// if (WIFEXITED(status))
+	// 	g_signo = WEXITSTATUS(status);
+	waitpid(pid2, &status, 0);
 	if (WIFEXITED(status))
 		g_signo = WEXITSTATUS(status);
 	exit(g_signo);
