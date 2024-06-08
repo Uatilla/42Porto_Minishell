@@ -6,13 +6,13 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/08 15:36:49 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 21:22:19 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clean_tokenlist(t_list **tkns)
+void	clean_tokenlist(t_shell *sh, t_list **tkns)
 {
 	t_list	*tmp;
 	t_list	*next;
@@ -37,6 +37,11 @@ void	clean_tokenlist(t_list **tkns)
 		next = tmp->next;
 		if (is_removable(get(tmp)->type))
 			remove_node(tkns, tmp);
+		else if (!ft_strcmp("~", get(tmp)->value))
+		{
+			free(get(tmp)->value);
+			get(tmp)->value = get_env(sh->env_lst, "HOME");
+		}
 		tmp = next;
 	}
 }
@@ -86,7 +91,7 @@ void	expander(t_shell *sh, t_list **tokens)
 }
 
 // Função principal refatorada
-void	review_tkn_list(t_list **tkn)
+void	review_tkn_list(t_shell *sh, t_list **tkn)
 {
 	t_list	*tmp;
 	int		typee;
@@ -101,6 +106,8 @@ void	review_tkn_list(t_list **tkn)
 			if (typee == HEREDOC)
 				set_heredoc_type(tmp);
 		}
+		else if(typee == PIPE)
+			sh->nbr_pipes++;
 		tmp = tmp->next;
 	}
 }
@@ -109,8 +116,12 @@ void	lexer(t_shell *sh, char *input)
 {
 	fill_token_lst(sh, input);
 	review_tkn_typ(sh->token_lst);
-	review_tkn_list(&sh->token_lst);
+	review_tkn_list(sh, &sh->token_lst);
 	expander(sh, &sh->token_lst);
-	clean_tokenlist(&sh->token_lst);
+	clean_tokenlist(sh, &sh->token_lst);
+	if (sh->nbr_pipes == 0)
+		builtins_parent(sh);
+	att_env(sh);
+	// print_env(sh);
 	// print_tokens(sh);
 }

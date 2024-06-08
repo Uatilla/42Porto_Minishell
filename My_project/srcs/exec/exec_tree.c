@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 16:50:01 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 21:51:53 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ bool	is_file(char *file)
 	return (false);
 }
 
+bool	is_directory(char	*cmd)
+{
+	struct stat path_stat;
+
+	ft_bzero(&path_stat, sizeof(struct stat));
+	stat(cmd, &path_stat);
+	if (S_ISDIR(path_stat.st_mode)) 
+		return (true);
+	return (false);
+}
+
 void	run_exec(t_shell *sh, t_cmd *cmd)
 {
 	t_execcmd	*excmd;
@@ -33,14 +44,18 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 			custom_error(excmd->argv[0], "No such file or directory", 127);
 		else
 			custom_error(excmd->argv[0], "command not found", 127);
-		// exit (g_signo);
 	}
 	else if (excmd->argv[0])
 	{
-		if (execve(excmd->command, excmd->argv, sh->envp) == -1)
+		if (is_directory(excmd->argv[0]))
+			custom_error(excmd->argv[0], "Is a directory", 126);
+		else if (isbuiltin(excmd->argv[0]))
 		{
-			perror(excmd->command);
+			printf("BUILTIIINNNNN!!\n");
+			g_signo = execute_builtin(sh, excmd);
 		}
+		else if (execve(excmd->command, excmd->argv, sh->envp) == -1)
+			perror(excmd->command);
 	}
 	exit (g_signo);
 }

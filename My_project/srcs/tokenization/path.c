@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/07 16:11:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 22:11:38 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*get_line(t_shell *sh)
 		clear_exit(sh, 1);
 	}
 	trimmed_input = ft_strtrim(input, "\t ");
-	if (!*trimmed_input || !trimmed_input || !sintax_validation(trimmed_input))
+	if (!trimmed_input || !*trimmed_input || !sintax_validation(trimmed_input))
 	{
 		add_history(input);
 		reinit_shell(sh);

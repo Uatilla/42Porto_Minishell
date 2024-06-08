@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 16:52:59 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 21:51:02 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <unistd.h>
+#include <sys/stat.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -236,9 +237,9 @@ void	free_array(char **array, int size);
 char	**list_to_array(t_shell *sh, t_list *list, int type);
 
 //lexer.c
-void	clean_tokenlist(t_list **tkns);
+void	clean_tokenlist(t_shell *sh, t_list **tkns);
 void	expander(t_shell *sh, t_list **tokens);
-void	review_tkn_list(t_list **tkn);
+void	review_tkn_list(t_shell *sh, t_list **tkn);
 void	lexer(t_shell *sh, char *input);
 
 //lexer_aux.c
@@ -274,6 +275,7 @@ char	*get_word(char *str, int *i);
 //PARSING
 //building_tree.c
 void	parsing_tree(t_shell *sh);
+t_cmd	*parse_exec(t_shell *sh, t_list *tkn_pos);
 
 //construct_tree.c
 t_cmd	*execcmd(t_shell *sh, t_list *tkn_pos);
@@ -305,8 +307,13 @@ void	get_paths(t_shell *sh);
 int		fork1(t_shell *sh);
 void	reinit_shell(t_shell *sh);
 void	custom_error(char *file, char *message, int error);
-void	att_env(t_shell *sh, t_execcmd *cmd);
+void	att_env(t_shell *sh);
 void	free_env_content(void *content);
-int	env(t_shell *sh, t_execcmd *cmd);
+int		env(t_shell *sh, t_execcmd *cmd);
+// void	builtins(t_shell *sh);
+void	builtins_parent(t_shell *sh);
+bool	isbuiltin(char *cmd);
+int		execute_builtin(t_shell *sh, t_execcmd *cmd);
+
 
 #endif
