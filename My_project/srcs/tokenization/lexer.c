@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/07 16:22:05 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:05:51 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ void	expander(t_shell *sh, t_list **tokens)
 			{
 				to_exclude = tmp;
 				expand_general(sh, to_exclude);
+				if (!get(tmp)->value || !*get(tmp)->value)
+				{
+					next = tmp->next;
+					remove_node(tokens, tmp);
+					tmp = next;
+					continue ;
+				}
 			}
 		}
 		tmp = tmp->next;
@@ -105,5 +112,6 @@ void	lexer(t_shell *sh, char *input)
 	review_tkn_list(&sh->token_lst);
 	expander(sh, &sh->token_lst);
 	clean_tokenlist(&sh->token_lst);
+	print_tokens(sh);
 	handle_heredoc(sh, sh->token_lst);
 }
