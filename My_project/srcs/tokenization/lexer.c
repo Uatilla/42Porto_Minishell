@@ -105,5 +105,4 @@ void	lexer(t_shell *sh, char *input)
 	review_tkn_list(&sh->token_lst);
 	expander(sh, &sh->token_lst);
 	clean_tokenlist(&sh->token_lst);
-	handle_heredoc(sh, sh->token_lst);
 }

@@ -12,27 +12,26 @@
 
 #include "minishell.h"
 
-
 void	sigint_child_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
 		g_signo = 130;
 		write(1, "\n", 1);
-		return ;
+		exit(g_signo);
 	}
 	else if (signo == SIGQUIT)
 	{
 		g_signo = 131;
 		write(1, "Quit (core dumped)\n", 19);
-		//printf("Quit (core dumped)\n");
+		exit(g_signo);
 	}
 }
 
 void	set_child_signals(void)
 {
-	signal(SIGINT, sigint_child_handler); //ctrl+c
-	signal(SIGQUIT, sigint_child_handler); //ctrl+\/
+	signal(SIGINT, sigint_child_handler);
+	signal(SIGQUIT, sigint_child_handler);
 }
 
 void	set_main_signal(void)
@@ -50,28 +49,11 @@ void	sigint_handler(int signo)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		//na situacao cat nao pode ter redisplay
 	}
 }
+
 void	set_signals(void)
 {
-		signal(SIGINT, sigint_handler); //ctrl+c
-		signal(SIGQUIT, SIG_IGN); //ctrl+\/
-		signal(SIGTSTP, SIG_IGN);
-}
-
-void	sigint_heredoc_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		printf("\n");
-		printf("MSG DO SIGNAL HANDLER bash: warning: here-document delimited by end-of-file\n");
-		exit(130);
-	}
-}
-
-void	set_heredoc_signal(void)
-{
-	signal(SIGINT, sigint_heredoc_handler);
+	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

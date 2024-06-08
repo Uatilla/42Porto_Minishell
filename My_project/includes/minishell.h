@@ -154,7 +154,7 @@ typedef struct s_shell
 # define OPERATORS_EX "@$?*#-!"
 
 // EXITING THE GLOBAL VARIABLE
-extern int g_signo;
+extern int	g_signo;
 
 // FUNCTION PROTOTYPES
 //main.c
@@ -204,6 +204,9 @@ bool	prt_stx_error(char *error, bool exit);
 void	set_signals(void);
 void	set_child_signals(void);
 void	set_main_signal(void);
+void	sigint_child_handler(int signo);
+
+//signals_heredoc.c
 void	set_heredoc_signal(void);
 
 //TOKENIZATION

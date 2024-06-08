@@ -69,6 +69,7 @@ void	sh_loop(t_shell *sh)
 		lexer(sh, prompt_input);
 		if (fork1(sh) == 0)
 		{
+			handle_heredoc(sh, sh->token_lst);
 			set_child_signals();
 			parsing_tree(sh);
 			exec_tree(sh, sh->cmd);
