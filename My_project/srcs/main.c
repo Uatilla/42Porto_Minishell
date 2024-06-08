@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/08 22:24:35 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:23:13 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,38 @@ void	reinit_shell(t_shell *sh)
 	if (sh->cmd)
 		free_tree(sh->cmd);
 	ft_bzero(sh->index, sizeof(t_index));
+	unlink_heredoc(sh->token_lst);
 }
 
-void	init_empty_env(sh)
-{
-	char	*sep;
-	int		pos;
-	t_env	*node_content;
-	t_list	*new_node;
+// void	init_empty_env(sh)
+// {
+// 	char	*sep;
+// 	int		pos;
+// 	t_env	*node_content;
+// 	t_list	*new_node;
 
-	pos = 0;
-			node_content = ft_calloc(1, sizeof(t_env));
+// 	pos = 0;
+// 			node_content = ft_calloc(1, sizeof(t_env));
 	
-	while (*env_var)
-	{
-		sep = ft_strchr(*env_var, '=');
-		if (sep)
-		{
-			if (!node_content)
-				clear_exit(sh, 1);
-			pos = (int)(sep - *env_var);
-			node_content->key = get_key(*env_var, pos);
-			node_content->value = get_value(*env_var, pos);
-			node_content->visible = true;
-			if (!(node_content->key) || !(node_content->value))
-				clear_exit(sh, 1);
-			new_node = ft_lstnew(node_content);
-			ft_lstadd_back(&sh->env_lst, new_node);
-		}
-		env_var++;
-	}
-}
+// 	while (*env_var)
+// 	{
+// 		sep = ft_strchr(*env_var, '=');
+// 		if (sep)
+// 		{
+// 			if (!node_content)
+// 				clear_exit(sh, 1);
+// 			pos = (int)(sep - *env_var);
+// 			node_content->key = get_key(*env_var, pos);
+// 			node_content->value = get_value(*env_var, pos);
+// 			node_content->visible = true;
+// 			if (!(node_content->key) || !(node_content->value))
+// 				clear_exit(sh, 1);
+// 			new_node = ft_lstnew(node_content);
+// 			ft_lstadd_back(&sh->env_lst, new_node);
+// 		}
+// 		env_var++;
+// 	}
+// }
 
 void	init_shell(t_shell *sh, char **env_var)
 {
@@ -67,8 +68,8 @@ void	init_shell(t_shell *sh, char **env_var)
 		fill_env(sh, env_var);
 		get_paths(sh);
 	}
-	else
-		init_empty_env(sh);
+	// else
+	// 	init_empty_env(sh);
 }
 
 int	fork1(t_shell *sh)
@@ -101,9 +102,10 @@ void	sh_loop(t_shell *sh)
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		lexer(sh, prompt_input);
+		handle_heredoc(sh, &sh->token_lst);
 		if (fork1(sh) == 0)
 		{
-			handle_heredoc(sh, sh->token_lst);
+			set_child_signals();
 			parsing_tree(sh);
 			exec_tree(sh, sh->cmd);
 		}
@@ -119,6 +121,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
 
+	// chg_dir(&sh);
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
 	set_signals();

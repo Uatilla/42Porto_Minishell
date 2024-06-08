@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 21:51:02 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:26:10 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,18 @@
 # define SYNTAX_PIPE "bash: syntax error near unexpected token `|'"
 
 // STRUCTURES
+
+typedef enum s_folder
+{
+	FOLDER_NAME,
+	PARENT_FOLDER,
+	NOTHING
+}	t_folder;
+typedef	struct s_cd
+{
+	t_folder 	*type;
+}	t_cd;
+
 
 typedef enum s_signal
 {
@@ -156,7 +168,7 @@ typedef struct s_shell
 # define OPERATORS_EX "@$?*#-!"
 
 // EXITING THE GLOBAL VARIABLE
-extern int g_signo;
+extern int	g_signo;
 
 // FUNCTION PROTOTYPES
 //main.c
@@ -205,6 +217,11 @@ bool	prt_stx_error(char *error, bool exit);
 // signals.c
 void	set_signals(void);
 void	set_child_signals(void);
+void	set_main_signal(void);
+void	sigint_child_handler(int signo);
+
+//signals_heredoc.c
+void	set_heredoc_signal(void);
 
 //TOKENIZATION
 //tokens.c
@@ -251,8 +268,8 @@ void	set_heredoc_type(t_list *start);
 char	*create_temp_file(void);
 void	append_doc_to_file(char *filename, char *content);
 void	update_token_to_file(t_list *token, char *filename);
-void	get_doc(t_shell *sh, t_list *tmp);
-void	handle_heredoc(t_shell *sh, t_list *tkns);
+char	*get_doc(t_shell *sh, t_list *tmp);
+void	handle_heredoc(t_shell *sh, t_list **tkns);
 
 //handle_heredoc_aux.c
 void	unlink_heredoc(t_list *token);
@@ -315,5 +332,6 @@ void	builtins_parent(t_shell *sh);
 bool	isbuiltin(char *cmd);
 int		execute_builtin(t_shell *sh, t_execcmd *cmd);
 
+void    chg_dir(t_shell *sh);
 
 #endif

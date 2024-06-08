@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/08 12:21:58 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:29:42 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	update_token_to_file(t_list *token, char *filename)
 	get(token)->value = ft_strdup(filename);
 }
 
-void	get_doc(t_shell *sh, t_list *tmp)
+char	*get_doc(t_shell *sh, t_list *tmp)
 {
 	char	*ret;
 	char	*filename;
@@ -76,19 +76,26 @@ void	get_doc(t_shell *sh, t_list *tmp)
 		append_doc_to_file(filename, ret);
 		free(ret);
 	}
-	update_token_to_file(tmp, filename);
-	free(filename);
+	// update_token_to_file(tmp, filename);
+	return (filename);
 }
 
-void	handle_heredoc(t_shell *sh, t_list *tkns)
+void	handle_heredoc(t_shell *sh, t_list **tkns)
 {
 	t_list	*tmp;
+	char *filename;
 
-	tmp = tkns;
+	// set_heredoc_signal();
+	tmp = *tkns;
+	filename = NULL;
 	while (tmp)
 	{
 		if (get(tmp)->type == HEREDOC)
-			get_doc(sh, tmp);
+		{
+			filename = get_doc(sh, tmp);
+			update_token_to_file(tmp, filename);
+			free(filename);
+		}
 		tmp = tmp->next;
 	}
 }

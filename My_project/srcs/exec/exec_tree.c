@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 21:51:53 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:09:09 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ bool	is_directory(char	*cmd)
 void	run_exec(t_shell *sh, t_cmd *cmd)
 {
 	t_execcmd	*excmd;
+	int	status;
 
 	excmd = (t_execcmd *)cmd;
 	if (!excmd->command && excmd->argv[0])
@@ -54,8 +55,14 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 			printf("BUILTIIINNNNN!!\n");
 			g_signo = execute_builtin(sh, excmd);
 		}
-		else if (execve(excmd->command, excmd->argv, sh->envp) == -1)
-			perror(excmd->command);
+		else if (fork1(sh) == 0)
+		{
+			if (execve(excmd->command, excmd->argv, sh->envp) == -1)
+				perror(excmd->command);
+		}
+		waitpid(0, &status, 0);
+		if (WIFEXITED(status))
+			g_signo = WEXITSTATUS(status);
 	}
 	exit (g_signo);
 }
@@ -68,7 +75,7 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 	close(rdcmd->fd);
 	if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
 	{
-		custom_error(rdcmd->file, "No such file or directory", 1);
+		custom_error(rdcmd->file, "No such file or directory", 1); //MUDAR A MENSAGEM DE ERRO PARA QUANDO EH OUTFILE
 		exit (g_signo);
 	}
 	exec_tree(sh, rdcmd->cmd);

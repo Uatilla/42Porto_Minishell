@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/07 19:04:45 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/08 23:06:14 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,10 +47,10 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
 #MK_FLAG		= --no-print-directory
 
 # Files
-SRCS		=	main.c print.c \
+SRCS		=	main.c print.c chdir.c\
 				environment/environment.c \
 				exit/exit.c exit/cleaning_tree.c\
-				signals/signals.c \
+				signals/signals.c signals/signals_heredoc.c \
 				input/input_checker.c input/input_checker_utils.c \
 				input/sintax_valid.c \
 				tokenization/tokens.c tokenization/tokens_aux.c \
@@ -94,7 +94,7 @@ $(LIBFT):
 
 clean:
 	$(RM) $(OBJS_DIR)
-	printf "clean FdF files		$(CYAN)[OK]$(RESET)\n"
+	printf "clean Minishell files		$(CYAN)[OK]$(RESET)\n"
 	$(MAKE) $(MK_FLAG) clean -sC $(LIBFT_DIR)
 
 fclean: clean
