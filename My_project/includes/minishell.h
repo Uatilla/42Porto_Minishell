@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 16:52:04 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:52:59 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ typedef struct s_shell
 	t_list		*token_lst;
 	t_index		*index;
 	int			pid;
+	int			nbr_pipes;
 	t_cmd		*cmd;
 	char		**paths;
 	char		**envp;

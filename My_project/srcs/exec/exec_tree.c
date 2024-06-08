@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/07 19:44:41 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:50:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 			perror(excmd->command);
 		}
 	}
-	att_env(sh, excmd);
-	print_arrays(sh->envp);
 	exit (g_signo);
 }
 
