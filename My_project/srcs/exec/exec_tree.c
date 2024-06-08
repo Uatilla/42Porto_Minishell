@@ -22,27 +22,6 @@ bool	is_file(char *file)
 	return (false);
 }
 
-/*void	run_exec(t_shell *sh, t_cmd *cmd)
-{
-	t_execcmd	*excmd;
-
-	excmd = (t_execcmd *)cmd;
-	if (!excmd->command && excmd->argv[0])
-	{
-		if (is_file(excmd->argv[0]))
-			custom_error(excmd->argv[0], "No such file or directory", 127);
-		else
-			custom_error(excmd->argv[0], "command not found", 127);
-		// exit (g_signo);
-	}
-	else if (excmd->argv[0])
-	{
-		if (execve(excmd->command, excmd->argv, sh->envp) == -1)
-			perror(excmd->command);
-	}
-	exit (g_signo);
-}*/
-
 void	run_exec(t_shell *sh, t_cmd *cmd)
 {
 	t_execcmd	*excmd;

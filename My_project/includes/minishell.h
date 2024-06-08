@@ -43,6 +43,18 @@
 
 // STRUCTURES
 
+typedef enum s_folder
+{
+	FOLDER_NAME,
+	PARENT_FOLDER,
+	NOTHING
+}	t_folder;
+typedef	struct s_cd
+{
+	t_folder 	*type;
+}	t_cd;
+
+
 typedef enum s_signal
 {
 	PARENT_SIG,
@@ -310,5 +322,6 @@ char	*get_line(t_shell *sh);
 int		fork1(t_shell *sh);
 void	reinit_shell(t_shell *sh);
 void	custom_error(char *file, char *message, int error);
+void    chg_dir(t_shell *sh);
 
 #endif

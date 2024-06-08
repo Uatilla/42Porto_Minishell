@@ -46,7 +46,7 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
 #MK_FLAG		= --no-print-directory
 
 # Files
-SRCS		=	main.c print.c \
+SRCS		=	main.c print.c chdir.c\
 				environment/env.c \
 				exit/exit.c exit/cleaning_tree.c\
 				signals/signals.c signals/signals_heredoc.c \
