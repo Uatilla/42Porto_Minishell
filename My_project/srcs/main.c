@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/08 12:20:17 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:45:47 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	sh_loop(t_shell *sh)
 		{
 			parsing_tree(sh);
 			exec_tree(sh, sh->cmd);
+			handle_heredoc(sh, sh->token_lst);
 		}
 		waitpid(0, &status, 0);
 		if (WIFEXITED(status))
