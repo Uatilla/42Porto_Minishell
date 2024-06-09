@@ -95,7 +95,7 @@ $(LIBFT):
 
 clean:
 	$(RM) $(OBJS_DIR)
-	printf "clean Minishell files		$(CYAN)[OK]$(RESET)\n"
+	printf "clean Minishell files	$(CYAN)[OK]$(RESET)\n"
 	$(MAKE) $(MK_FLAG) clean -sC $(LIBFT_DIR)
 
 fclean: clean

@@ -15,17 +15,22 @@
 bool	check_dots(char *input)
 {
 	int	count;
+	int	i;
 
 	count = 0;
-	while (*input)
+	i = 0;
+	while (input[i])
 	{
-		if (*input == '.')
+		if (input[i] == '.')
 			count++;
 		else
 			count = 0;
 		if (count >= 3)
+		{
+			printf("bash: cd: %s: No such file or directory\n", input);
 			return (false);
-		input++;
+		}
+		i++;
 	}
 	return (true);
 }
@@ -35,28 +40,39 @@ bool	check_option(char *input)
 	while (*input)
 	{
 		if (*input == '-')
+		{
+			printf("cd: '-' out of scope\n");
 			return (false);
+		}
 		input++;
+	}
+	return (true);
+}
+
+bool	check_args(char **input)
+{
+	int	argc;
+
+	argc = 1;
+	while (input[argc])
+	{
+		if (argc > 2)
+		{
+			printf("cd: too many arguments\n");
+			return (false);
+		}
+		argc++;
 	}
 	return (true);
 }
 
 bool	sintax_valid_cd(char *cmd, char **argv, t_shell *sh)
 {
-	int	argc;
-
 	(void)sh;
 	(void)cmd;
 	if (!argv[1])
 		return (true);
-	argc = 0;
-	while (argv[argc])
-	{
-		if (argc > 1)
-			return (false);
-		argc++;
-	}
-	if (!check_dots(argv[1]) || !check_option(argv[1]))
+	if (!check_args(argv) || !check_dots(argv[1]) || !check_option(argv[1]))
 		return (false);
 	return (true);
 }
