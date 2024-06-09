@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 15:25:01 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 22:03:39 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 09:28:56 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ bool	is_a_smaller(char c)
 	return (c == '<');
 }
 
-void	input_check(int argc, char **argv, __attribute_maybe_unused__ char **envp)
+void	input_check(int argc, char **argv, char **envp)
 {
+	(void)envp;
 	if (argc != 1 || argv[1])
 	{
 		ft_putstr_fd("ERROR: MINISHELL can't receive inputs.\n", 2);

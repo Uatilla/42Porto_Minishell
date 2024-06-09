@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:42:00 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/06 16:36:49 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:35:37 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ void	unlink_heredoc(t_list *token)
 	t_list	*tkn;
 
 	tkn = token;
+	printf("HEEEERE\n");
 	while (tkn)
 	{
-		if (get(tkn)->type == HEREDOC)
-			unlink(get(tkn)->value);
+		printf("%s\n", (char *)tkn->content);
+		unlink((char *)tkn->content);
+		free((char *)tkn->content);
 		tkn = tkn->next;
 	}
 }

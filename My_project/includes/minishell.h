@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 23:26:10 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:05:07 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ typedef struct s_shell
 {
 	t_list		*env_lst;
 	t_list		*token_lst;
+	t_list		*heredocs;
 	t_index		*index;
 	int			pid;
 	int			nbr_pipes;
@@ -268,7 +269,7 @@ void	set_heredoc_type(t_list *start);
 char	*create_temp_file(void);
 void	append_doc_to_file(char *filename, char *content);
 void	update_token_to_file(t_list *token, char *filename);
-char	*get_doc(t_shell *sh, t_list *tmp);
+void	get_doc(t_shell *sh, t_list *tmp);
 void	handle_heredoc(t_shell *sh, t_list **tkns);
 
 //handle_heredoc_aux.c

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:18:48 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 12:21:26 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:34:35 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	sigint_handler(int signo)
 	if (signo == SIGINT)
 	{
 		g_signo = 130;
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		// write(1, "\n", 1);
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
+		// rl_redisplay();
 	}
 }
 

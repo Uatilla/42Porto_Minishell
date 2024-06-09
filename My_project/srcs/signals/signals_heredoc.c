@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:18:30 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 19:18:33 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:32:09 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void	sigint_heredoc_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		printf("\n");
+		// printf("\n");
 		g_signo = 130;
+		rl_replace_line("", 0);
+		// rl_on_new_line();
 		exit(g_signo);
 	}
 }

@@ -6,17 +6,18 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/08 21:59:48 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 09:29:22 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*is_builtin(__attribute_maybe_unused__ t_shell *sh, t_execcmd *cmd)
+char	*is_builtin(t_shell *sh, t_execcmd *cmd)
 {
-	char	*cmd_str;
+	// char	*cmd_str;
 
-	cmd_str = cmd->argv[0];
+	(void)sh;
+	// cmd_str = cmd->argv[0];
 	if (ft_strcmp(cmd->argv[0], "env"))
 		return ("builtin_env");
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/08 23:29:42 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:32:31 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	update_token_to_file(t_list *token, char *filename)
 	get(token)->value = ft_strdup(filename);
 }
 
-char	*get_doc(t_shell *sh, t_list *tmp)
+void	get_doc(t_shell *sh, t_list *tmp)
 {
 	char	*ret;
 	char	*filename;
@@ -58,6 +58,7 @@ char	*get_doc(t_shell *sh, t_list *tmp)
 	filename = create_temp_file();
 	if (!filename)
 		clear_exit(sh, 1);
+	ft_lstadd_back(&sh->heredocs, ft_lstnew(filename));
 	while (1)
 	{
 		ret = readline("> ");
@@ -76,25 +77,22 @@ char	*get_doc(t_shell *sh, t_list *tmp)
 		append_doc_to_file(filename, ret);
 		free(ret);
 	}
-	// update_token_to_file(tmp, filename);
-	return (filename);
+	update_token_to_file(tmp, filename);
 }
 
 void	handle_heredoc(t_shell *sh, t_list **tkns)
 {
 	t_list	*tmp;
-	char *filename;
+	// char *filename;
 
-	// set_heredoc_signal();
+	// filename = NULL;
 	tmp = *tkns;
-	filename = NULL;
+	set_heredoc_signal();
 	while (tmp)
 	{
 		if (get(tmp)->type == HEREDOC)
 		{
-			filename = get_doc(sh, tmp);
-			update_token_to_file(tmp, filename);
-			free(filename);
+			get_doc(sh, tmp);
 		}
 		tmp = tmp->next;
 	}
