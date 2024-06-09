@@ -124,6 +124,7 @@ int	main(int argc, char **argv, char **envp)
 
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
+	chg_dir(&sh);
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);
