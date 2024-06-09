@@ -6,16 +6,50 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:56 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 17:05:19 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*expand_home(t_shell *sh, t_list *tmp)
+{
+	char	*temp;
+	char	*ret;
+	char	*expand;
+	
+	temp = get_env(sh->env_lst, "HOME");
+	if (!ft_strcmp("~", get(tmp)->value))
+		ret = ft_strdup(temp);
+	else
+	{
+		expand = ft_strdup(&get(tmp)->value[1]);
+		if (!expand)
+			clear_exit(sh, 1);
+		ret = ft_strjoin(temp, expand);
+		if (!ret)
+			clear_exit(sh, 1);
+		free(get(tmp)->value);
+		free(expand);
+	}
+	free(temp);
+	return (ret);
+}
+
+bool	is_home(t_list *tmp)
+{
+	if (!ft_strcmp("~", get(tmp)->value) ||
+		!ft_strncmp("~/", get(tmp)->value, 2))
+		return (true);
+	return (false);
+		
+}
+
 void	clean_tokenlist(t_shell *sh, t_list **tkns)
 {
 	t_list	*tmp;
 	t_list	*next;
+
 
 	tmp = *tkns;
 	while (tmp && tmp->next)
@@ -37,11 +71,8 @@ void	clean_tokenlist(t_shell *sh, t_list **tkns)
 		next = tmp->next;
 		if (is_removable(get(tmp)->type))
 			remove_node(tkns, tmp);
-		else if (!ft_strcmp("~", get(tmp)->value))
-		{
-			free(get(tmp)->value);
-			get(tmp)->value = get_env(sh->env_lst, "HOME");
-		}
+		else if (is_home(tmp))
+			get(tmp)->value = expand_home(sh, tmp);
 		tmp = next;
 	}
 }
