@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 11:32:31 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:48:29 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,46 @@ void	get_doc(t_shell *sh, t_list *tmp)
 {
 	char	*ret;
 	char	*filename;
+	int		status;
 
 	ret = NULL;
+	status = 0;
 	filename = create_temp_file();
 	if (!filename)
 		clear_exit(sh, 1);
 	ft_lstadd_back(&sh->heredocs, ft_lstnew(filename));
-	while (1)
+	if (fork1(sh) == 0)
 	{
-		ret = readline("> ");
-		if (!ret)
+		set_heredoc_signal();
+		while (1)
 		{
-			printf("warning: here-document delimited by end-of-file (wanted `%s')\n", get(tmp)->value);
-			break ;
-		}
-		else if (!ft_strcmp(ret, get(tmp)->value))
-		{
+			ret = readline("> ");
+			if (!ret)
+			{
+				printf("warning: here-document delimited by end-of-file (wanted `%s')\n", get(tmp)->value);
+				exit (g_signo);
+			}
+			else if (!ft_strcmp(ret, get(tmp)->value))
+			{
+				free(ret);
+				break ;
+			}
+			else if (!get(tmp)->not_expand)
+				ret = expand_heredoc(sh, ret);
+			append_doc_to_file(filename, ret);
 			free(ret);
-			break ;
 		}
-		else if (!get(tmp)->not_expand)
-			ret = expand_heredoc(sh, ret);
-		append_doc_to_file(filename, ret);
-		free(ret);
 	}
+	waitpid(0, &status, 0);
 	update_token_to_file(tmp, filename);
+	if (WIFEXITED(status))
+		g_signo = WEXITSTATUS(status);
+	set_signals();
+	if (g_signo == 130)
+	{
+		reinit_shell(sh);
+		sh_loop(sh);
+	}
 }
 
 void	handle_heredoc(t_shell *sh, t_list **tkns)
@@ -87,7 +102,6 @@ void	handle_heredoc(t_shell *sh, t_list **tkns)
 
 	// filename = NULL;
 	tmp = *tkns;
-	set_heredoc_signal();
 	while (tmp)
 	{
 		if (get(tmp)->type == HEREDOC)
@@ -96,4 +110,5 @@ void	handle_heredoc(t_shell *sh, t_list **tkns)
 		}
 		tmp = tmp->next;
 	}
+
 }

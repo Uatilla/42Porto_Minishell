@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 11:36:52 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:58:15 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	reinit_shell(t_shell *sh)
 	if (sh->cmd)
 		free_tree(sh->cmd);
 	ft_bzero(sh->index, sizeof(t_index));
-	printf("%s\n\n", (char *)sh->heredocs);
-	unlink_heredoc(sh->heredocs);
+	// unlink_heredoc(sh->heredocs);
 }
 
 // void	init_empty_env(sh)
@@ -104,9 +103,9 @@ void	sh_loop(t_shell *sh)
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
 		lexer(sh, prompt_input);
+		handle_heredoc(sh, &sh->token_lst);
 		if (fork1(sh) == 0)
 		{
-			handle_heredoc(sh, &sh->token_lst);
 			set_child_signals();
 			parsing_tree(sh);
 			exec_tree(sh, sh->cmd);
