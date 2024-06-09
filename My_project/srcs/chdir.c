@@ -17,6 +17,7 @@ bool    check_dots(char *input)
     int count;
 
     count = 0;
+
     while (*input)
     {
         if (*input == '.')
@@ -30,6 +31,18 @@ bool    check_dots(char *input)
     return (true);
 }
 
+bool    check_option(char *input)
+{
+    while (*input)
+    {
+        if (*input == '-')
+            return (false);
+        input++;
+    }
+    return (true);
+
+}
+
 bool    sintax_valid_cd(char *cmd, char **argv, t_shell *sh)
 {
     int argc;
@@ -37,9 +50,11 @@ bool    sintax_valid_cd(char *cmd, char **argv, t_shell *sh)
     (void)sh;
     (void)cmd;
     
+    //Check if there is not argv[1]
     if (!argv[1])
-        return (false);
-    //count how many args we have.
+        return (true);
+
+    //count how many args we have, returns if more than 2 args
     argc = 0;
     while (argv[argc])
     {
@@ -48,59 +63,70 @@ bool    sintax_valid_cd(char *cmd, char **argv, t_shell *sh)
         argc++;
     }
     //look for more than 2 dots in sequence.
-    if (!check_dots(argv[1]))
+    if (!check_dots(argv[1]) || !check_option(argv[1]))
         return (false);
     return (true);
 }
 
-/*void    token_cd_lst(char *input, t_shell *sh)
+void    cd_others(char *dest_folder)
 {
-    t_cd    *cd_node;
-    char    *sep;
-
-    input++;
-    while (*input)
+    g_signo = chdir(dest_folder);
+    if (g_signo != 0)
     {
-        sep = ft_strchr(*input, '/');
-        if (sep)
-        {
-
-        }
-        input++;
+        printf("error\n");
+        g_signo = 1;
     }
-}*/
+}
+
+void    cd_home(t_shell *sh)
+{
+    //char    str[PATH_MAX];
+    char    *value;
+
+    value = get_env(sh->env_lst, "HOME");
+    if (value)
+    {
+        g_signo = chdir(value);
+        if (g_signo != 0)
+            printf("Error in changing directory\n"); //PUT THIS INTO FD2.
+    }
+    else
+        printf("Minishell: cd: HOME not set\n"); //PUT THIS INTO FD2.
+}
+
+void    exec_cd(t_shell *sh, char **argv)
+{
+    if ((!argv[1]))
+        cd_home(sh);
+    else
+        cd_others(argv[1]);
+}
 
 void    chg_dir(t_shell *sh)
 {
     char **argv;
-    char **input_splitted;
     int     i;
+    
     (void)sh;
     //allocating memory to use in the structure
     i = 0;
     argv = ft_calloc(4, sizeof(char **));
     if (!argv)
         return ;
-    argv[3] = 0;
+    argv[2] = 0;
 
     //adding information into the structure.
     argv[0] = "cd";
     //argv[1] = NULL;
-    argv[1] = "../../../Documents/";
-    //printf("Cmd: [%s], Arg: [%s]\n", argv[0], argv[1]);
+    argv[1] = "../../../";
+  
+
+    //Analysis of syntax
     if (!sintax_valid_cd(argv[0], argv, sh))
         exit(1);
         //clear_exit(sh, 1);
-
-    //Tokenize cd input
-    //token_cd_lst(argv[1], sh);
-    input_splitted = ft_split(argv[1], '/');
-    i = 0;
-    while (input_splitted[i])
-    {
-        printf("[%d] %s\n", i, input_splitted[i]);
-        i++;
-    }
+    
+    exec_cd(sh, argv);
     
     
 

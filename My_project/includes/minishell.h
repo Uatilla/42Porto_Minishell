@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <limits.h>
 # include <time.h>
 # include <stdio.h>
 # include <stdbool.h>
