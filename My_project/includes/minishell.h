@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/09 11:05:07 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:28:16 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,7 +325,7 @@ void	get_paths(t_shell *sh);
 int		fork1(t_shell *sh);
 void	reinit_shell(t_shell *sh);
 void	custom_error(char *file, char *message, int error);
-void	att_env(t_shell *sh);
+void	att_env(t_shell *sh, char *key, char *new_value);
 void	free_env_content(void *content);
 int		env(t_shell *sh, t_execcmd *cmd);
 // void	builtins(t_shell *sh);
