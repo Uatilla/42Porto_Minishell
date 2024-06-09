@@ -23,14 +23,20 @@ char	*is_builtin(t_shell *sh, t_execcmd *cmd)
 	return (NULL);
 }
 
-int	execute_builtin(t_shell *sh, t_execcmd *cmd)
+int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 {
 	int	ret;
 
 	ret = 0;
 	if (!ft_strcmp(cmd->argv[0], "env"))
 		ret = env(sh, cmd);
-	
+	else if (!ft_strcmp(cmd->argv[0], "cd"))
+	{
+		if (procs == PARENT)
+			ret = change_dir(sh, cmd);
+		else
+			ret = g_signo;
+	}
 	return (ret);
 }
 
@@ -58,14 +64,14 @@ bool isbuiltin(char *cmd)
 		return(true);
 	else if(ft_strncmp(cmd, "cd", 2) == 0)
 		return(true);
-	else if(ft_strncmp(cmd, "pwd", 3) == 0)
-		return(true);
+	/*else if(ft_strncmp(cmd, "pwd", 3) == 0)
+		return(true);*/
 	return(false);
 }
 
 bool	isbuiltin_parent(char *cmd)
 {
-	if (!ft_strncmp(cmd, "cd", 2) || !ft_strncmp(cmd, "export", 6) || !ft_strncmp(cmd, "unset", 5) /* || !ft_strncmp(cmd, "env", 5) */)
+	if (!ft_strcmp(cmd, "cd") || !ft_strncmp(cmd, "export", 6) || !ft_strncmp(cmd, "unset", 5) /* || !ft_strncmp(cmd, "env", 5) */)
 		return (true);
 	return (false);
 }
@@ -87,7 +93,7 @@ void	builtins_parent(t_shell *sh)
 		{
 			execcmd = get_exec_node(sh, tmp);
 			if (isbuiltin_parent(get(tmp)->value))
-				execute_builtin(sh, execcmd);
+				execute_builtin(sh, execcmd, PARENT);
 			while(execcmd->argv[i])
 				free(execcmd->argv[i++]);
 			free(execcmd->argv);

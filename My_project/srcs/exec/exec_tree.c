@@ -40,7 +40,7 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 
 	status = 0;
 	excmd = (t_execcmd *)cmd;
-	if (!excmd->command && excmd->argv[0])
+	if (!excmd->command && excmd->argv[0] && !isbuiltin(excmd->argv[0]))
 	{
 		if (is_file(excmd->argv[0]))
 			custom_error(excmd->argv[0], "No such file or directory", 127);
@@ -52,14 +52,13 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 		if (is_directory(excmd->argv[0]))
 			custom_error(excmd->argv[0], "Is a directory", 126);
 		else if (isbuiltin(excmd->argv[0]))
-			g_signo = execute_builtin(sh, excmd);
+			g_signo = execute_builtin(sh, excmd, TREE);
 		else if (fork1(sh) == 0)
 		{
 			if (execve(excmd->command, excmd->argv, sh->envp) == -1)
 				perror(excmd->command);
 		}
-		waitpid(0, &status, 0);
-		if (WIFEXITED(status))
+		if (WIFEXITED(status) && waitpid(0, &status, 0) != -1)
 			g_signo = WEXITSTATUS(status);
 	}
 	exit (g_signo);

@@ -19,7 +19,8 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <unistd.h>
-#include <sys/stat.h>
+# include <limits.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -43,6 +44,12 @@
 # define SYNTAX_PIPE "bash: syntax error near unexpected token `|'"
 
 // STRUCTURES
+
+typedef enum s_proc
+{
+	PARENT,
+	TREE
+}	t_proc;
 
 typedef enum s_folder
 {
@@ -331,8 +338,9 @@ int		env(t_shell *sh, t_execcmd *cmd);
 // void	builtins(t_shell *sh);
 void	builtins_parent(t_shell *sh);
 bool	isbuiltin(char *cmd);
-int		execute_builtin(t_shell *sh, t_execcmd *cmd);
+int		execute_builtin(t_shell *sh, t_execcmd *cmd, int procs);
+int		change_dir(t_shell *sh, t_execcmd *cmd);
+bool	sintax_valid_cd(char *cmd, char **argv, t_shell *sh);
 
-void    chg_dir(t_shell *sh);
 
 #endif
