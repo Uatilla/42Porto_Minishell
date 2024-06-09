@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 15:58:15 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:15:03 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int	main(int argc, char **argv, char **envp)
 	// chg_dir(&sh);
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
-	set_signals();
 	sh_loop(&sh);
 	clear_exit(&sh, 0);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:06:41 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 09:30:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:13:07 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ void att_env(t_shell *sh)
 
 int	env(t_shell *sh, t_execcmd *cmd)
 {
+	if (!sh->env_lst)
+		return (1);
 	if (cmd)
 		print_env(sh);
 	return (0);

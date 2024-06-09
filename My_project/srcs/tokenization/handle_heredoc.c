@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 15:48:29 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:19:53 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	get_doc(t_shell *sh, t_list *tmp)
 			else if (!ft_strcmp(ret, get(tmp)->value))
 			{
 				free(ret);
-				break ;
+				exit (g_signo);
 			}
 			else if (!get(tmp)->not_expand)
 				ret = expand_heredoc(sh, ret);
@@ -87,7 +87,6 @@ void	get_doc(t_shell *sh, t_list *tmp)
 	update_token_to_file(tmp, filename);
 	if (WIFEXITED(status))
 		g_signo = WEXITSTATUS(status);
-	set_signals();
 	if (g_signo == 130)
 	{
 		reinit_shell(sh);
