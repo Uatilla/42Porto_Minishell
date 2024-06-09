@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/09 16:12:25 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 17:11:53 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 bool	is_file(char *file)
 {
-	if (file[0] == '/' || !ft_strncmp(file, "./", 2))
-		return (true);
-	else if (ft_strnstr(file, ".sh", ft_strlen(file))
-		&& ft_strchr(file, '/'))
+	if (ft_strchr(file, '/'))
 		return (true);
 	return (false);
 }
