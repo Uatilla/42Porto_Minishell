@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/09 14:38:32 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/09 20:49:16 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,8 @@ SRCS		=	main.c print.c chdir.c\
 				tokenization/path_aux.c tokenization/handle_heredoc.c \
 				tokenization/handle_heredoc_aux.c \
 				exec/exec_tree.c \
-				builtins/check_builtins.c builtins/env.c
+				builtins/check_builtins.c builtins/env.c builtins/export.c \
+				builtins/export_aux.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 

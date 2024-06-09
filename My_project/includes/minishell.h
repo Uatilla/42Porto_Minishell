@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/09 16:28:16 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:49:05 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,8 +331,12 @@ int		env(t_shell *sh, t_execcmd *cmd);
 // void	builtins(t_shell *sh);
 void	builtins_parent(t_shell *sh);
 bool	isbuiltin(char *cmd);
-int		execute_builtin(t_shell *sh, t_execcmd *cmd);
+int		execute_builtin(t_shell *sh, t_execcmd *cmd, bool tree);
 
+t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node);
+int	export_parent(t_shell *sh, t_cmd *cmd);
 void    chg_dir(t_shell *sh);
+int	export(t_shell *sh, t_execcmd *execcmd, bool tree);
+void	print_export(t_shell *sh);
 
 #endif

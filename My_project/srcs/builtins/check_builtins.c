@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 09:29:22 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:08:29 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,24 @@ char	*is_builtin(t_shell *sh, t_execcmd *cmd)
 	return (NULL);
 }
 
-int	execute_builtin(t_shell *sh, t_execcmd *cmd)
+int	execute_builtin(t_shell *sh, t_execcmd *cmd, bool tree)
 {
 	int	ret;
 
 	ret = 0;
 	if (!ft_strcmp(cmd->argv[0], "env"))
 		ret = env(sh, cmd);
-	
+	if (!ft_strcmp(cmd->argv[0], "export"))
+		ret = export(sh, cmd, tree);
 	return (ret);
 }
 
-t_execcmd	*get_exec_node(t_shell *sh, t_list *tokens)
+t_execcmd	*get_exec_node(__attribute_maybe_unused__ t_shell *sh, t_cmd *node)
 {
-	t_cmd	*node;
+	// t_cmd	*node;
 	t_execcmd *execnode;
 
-	node = parse_exec(sh, tokens);
+	// node = parse_exec(sh, tokens);
 	if (node->n_type == N_REDIR)
 	{
 		execnode = (t_execcmd *)((t_redircmd *)node)->cmd;
@@ -58,7 +59,7 @@ bool isbuiltin(char *cmd)
 		return(true);
 	else if(ft_strncmp(cmd, "cd", 2) == 0)
 		return(true);
-	else if(ft_strncmp(cmd, "pwd", 3) == 0)
+	else if(ft_strncmp(cmd, "export", 7) == 0)
 		return(true);
 	return(false);
 }
@@ -72,27 +73,32 @@ bool	isbuiltin_parent(char *cmd)
 
 void	builtins_parent(t_shell *sh)
 {
-	t_list	*tmp;
-	bool	builtin;
-	t_execcmd *execcmd;
-	int i;
+	t_list		*tmp;
+	bool		builtin;
+	t_execcmd	*execcmd;
+	int			i;
+	t_cmd		*cmd;
 
 	execcmd = NULL;
 	tmp = sh->token_lst;
 	i = 0;
 	while (tmp)
 	{
-		builtin = isbuiltin(get(tmp)->value);
+		builtin = isbuiltin_parent(get(tmp)->value);
 		if (builtin)
 		{
-			execcmd = get_exec_node(sh, tmp);
-			if (isbuiltin_parent(get(tmp)->value))
-				execute_builtin(sh, execcmd);
-			while(execcmd->argv[i])
-				free(execcmd->argv[i++]);
-			free(execcmd->argv);
-			free(execcmd->command);
-			free(execcmd);
+			cmd = parse_exec(sh, tmp);
+			execcmd = get_exec_node(sh, cmd);
+			// if (isbuiltin_parent(get(tmp)->value))
+			if (ft_strcmp(execcmd->argv[0], "export"))
+				export_parent(sh, cmd);
+			else
+				execute_builtin(sh, execcmd, false);
+			// while(execcmd->argv[i])
+			// 	free(execcmd->argv[i++]);
+			// free(execcmd->argv);
+			// free(execcmd->command);
+			// free(execcmd);
 			return ;
 		}
 		tmp = tmp->next;

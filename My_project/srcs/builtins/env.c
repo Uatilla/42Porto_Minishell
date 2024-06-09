@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:06:41 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 16:27:27 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:12:22 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void att_env(t_shell *sh, char *key, char *new_value)
     t_env *node_content;
 
     last = find_last_word(sh->token_lst);
-
     if (ft_strcmp(key, "_") == 0)
     {
         if (!last)
