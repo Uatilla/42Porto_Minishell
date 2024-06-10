@@ -189,6 +189,7 @@ void	reinit_shell(t_shell *sh);
 // ENVIRONMENT FOLDER
 // env.c
 void	fill_env(t_shell *sh, char **env_var);
+t_list	*find_env_node(t_list *list, char *key);
 
 // EXIT FOLDER
 //exit.c
@@ -335,6 +336,12 @@ bool	sintax_valid_cd(char *cmd, char **argv, t_shell *sh);
 
 //pwd.c
 int		pwd(t_shell *sh, t_execcmd *cmd);
+
+//echo.c
+int		echo(t_shell *sh, t_execcmd *cmd);
+
+//unset.c
+int	unset(t_shell *sh, t_execcmd *cmd);
 
 //EXTRA AUXILIARS
 //print.c

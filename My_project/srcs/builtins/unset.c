@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_aux.c                                     :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 14:09:29 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 14:09:30 by uviana-a         ###   ########.fr       */
+/*   Created: 2024/06/10 17:20:22 by uviana-a          #+#    #+#             */
+/*   Updated: 2024/06/10 17:20:23 by uviana-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-bool	check_args(char **input)
+int	unset(t_shell *sh, t_execcmd *cmd)
 {
-	int	argc;
+	int		argc;
+	t_list	*node;
+	t_env	*env_node;
 
-	argc = 1;
-	while (input[argc])
+	argc = 0;
+	while (cmd->argv[argc])
 	{
-		if (argc >= 2 && !ft_strcmp(input[0], "cd"))
+		if (cmd->argv[argc][0] == '-')
+			return (0);
+		else
 		{
-			custom_error("bash: cd", "too many arguments", g_signo);
-			return (false);
-		}
-		else if (argc >= 1 && !ft_strcmp(input[0], "pwd"))
-		{
-			return (false);
+			node = find_env_node(sh->env_lst, cmd->argv[argc]);
+			if (node != NULL)
+			{
+				env_node = ((t_env *)(node->content));
+				env_node->visible = false;
+			}
 		}
 		argc++;
 	}
-	return (true);
+	return (0);
 }

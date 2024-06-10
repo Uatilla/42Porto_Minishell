@@ -41,6 +41,8 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 		ret = pwd(sh, cmd);
 	else if (!ft_strcmp(cmd->argv[0], "echo"))
 		ret = echo(sh, cmd);
+	else if (!ft_strcmp(cmd->argv[0], "unset"))
+		ret = unset(sh, cmd);
 	return (ret);
 }
 
@@ -72,12 +74,14 @@ bool isbuiltin(char *cmd)
 		return(true);
 	else if(ft_strncmp(cmd, "echo", 4) == 0)
 		return(true);
+	else if (ft_strncmp(cmd, "unset", 5) == 0)
+		return (true);
 	return(false);
 }
 
 bool	isbuiltin_parent(char *cmd)
 {
-	if (!ft_strcmp(cmd, "cd") || !ft_strncmp(cmd, "export", 6) || !ft_strncmp(cmd, "unset", 5) /* || !ft_strncmp(cmd, "env", 5) */)
+	if (!ft_strcmp(cmd, "cd") || !ft_strncmp(cmd, "export", 6) || !ft_strncmp(cmd, "unset", 5)  || !ft_strncmp(cmd, "cd", 2))
 		return (true);
 	return (false);
 }
