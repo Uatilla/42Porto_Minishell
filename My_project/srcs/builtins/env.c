@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:06:41 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 20:12:22 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:00:33 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,9 +149,14 @@ t_list *find_last_word(t_list *token_lst)
 
 t_env *create_env_node(char *key, char *value)
 {
-    t_env *node_content = ft_calloc(1, sizeof(t_env));
+    t_env *node_content;
+    
+    node_content = ft_calloc(1, sizeof(t_env));
     node_content->key = ft_strdup(key);
-    node_content->value = ft_strdup(value);
+    if (value)
+        node_content->value = ft_strdup(value);
+    else
+        node_content->value = NULL;
     node_content->visible = true;
     return node_content;
 }
