@@ -122,7 +122,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
 
-	// chg_dir(&sh);
 	input_check(argc, argv, envp);
 	init_shell(&sh, envp);
 	sh_loop(&sh);

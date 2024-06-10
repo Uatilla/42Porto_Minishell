@@ -6,20 +6,22 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/09 20:49:05 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:03:00 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <limits.h>
 # include <time.h>
 # include <stdio.h>
 # include <stdbool.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <unistd.h>
-#include <sys/stat.h>
+# include <limits.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -43,6 +45,12 @@
 # define SYNTAX_PIPE "bash: syntax error near unexpected token `|'"
 
 // STRUCTURES
+
+typedef enum s_proc
+{
+	PARENT,
+	TREE
+}	t_proc;
 
 typedef enum s_folder
 {
@@ -331,12 +339,9 @@ int		env(t_shell *sh, t_execcmd *cmd);
 // void	builtins(t_shell *sh);
 void	builtins_parent(t_shell *sh);
 bool	isbuiltin(char *cmd);
-int		execute_builtin(t_shell *sh, t_execcmd *cmd, bool tree);
+int		execute_builtin(t_shell *sh, t_execcmd *cmd, int procs);
+int		change_dir(t_shell *sh, t_execcmd *cmd);
+bool	sintax_valid_cd(char *cmd, char **argv, t_shell *sh);
 
-t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node);
-int	export_parent(t_shell *sh, t_cmd *cmd);
-void    chg_dir(t_shell *sh);
-int	export(t_shell *sh, t_execcmd *execcmd, bool tree);
-void	print_export(t_shell *sh);
 
 #endif

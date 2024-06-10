@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 12:28:24 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:04:24 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,20 @@ char	*is_builtin(t_shell *sh, t_execcmd *cmd)
 	return (NULL);
 }
 
-int	execute_builtin(t_shell *sh, t_execcmd *cmd, bool tree)
+int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 {
 	int	ret;
 
 	ret = 0;
 	if (!ft_strcmp(cmd->argv[0], "env"))
 		ret = env(sh, cmd);
+	else if (!ft_strcmp(cmd->argv[0], "cd"))
+	{
+		if (procs == PARENT)
+			ret = change_dir(sh, cmd);
+		else
+			ret = g_signo;
+	}
 	if (!ft_strcmp(cmd->argv[0], "export"))
 		ret = export(sh, cmd, tree);
 	return (ret);
@@ -67,7 +74,7 @@ bool isbuiltin(char *cmd)
 
 bool	isbuiltin_parent(char *cmd)
 {
-	if (!ft_strncmp(cmd, "cd", 2) || !ft_strncmp(cmd, "export", 6) || !ft_strncmp(cmd, "unset", 5) /* || !ft_strncmp(cmd, "env", 5) */)
+	if (!ft_strcmp(cmd, "cd") || !ft_strncmp(cmd, "export", 6) || !ft_strncmp(cmd, "unset", 5) /* || !ft_strncmp(cmd, "env", 5) */)
 		return (true);
 	return (false);
 }

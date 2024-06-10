@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/09 20:07:41 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:05:46 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,13 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 		if (is_directory(excmd->argv[0]))
 			custom_error(excmd->argv[0], "Is a directory", 126);
 		else if (isbuiltin(excmd->argv[0]))
-			g_signo = execute_builtin(sh, excmd, true);
+			g_signo = execute_builtin(sh, excmd, TREE);
 		else if (fork1(sh) == 0)
 		{
 			if (execve(excmd->command, excmd->argv, sh->envp) == -1)
 				perror(excmd->command);
 		}
-		waitpid(0, &status, 0);
-		if (WIFEXITED(status))
+		if (WIFEXITED(status) && waitpid(0, &status, 0) != -1)
 			g_signo = WEXITSTATUS(status);
 	}
 	exit (g_signo);

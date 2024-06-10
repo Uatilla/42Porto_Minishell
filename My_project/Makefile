@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/10 12:14:38 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/10 13:02:10 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRCS_DIR	=	srcs
 OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
-SUB_DIR		=	environment exit input signals tokenization parsing exec \
+SUB_DIR		=	environment exit input signals tokenization parsing exec builtins\
 builtins
 #SUB_DIR		=	environment exit input signals tokenization
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
@@ -47,7 +47,7 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0 -fsanitize=address
 #MK_FLAG		= --no-print-directory
 
 # Files
-SRCS		=	main.c print.c chdir.c\
+SRCS		=	main.c print.c \
 				environment/environment.c \
 				exit/exit.c exit/cleaning_tree.c\
 				signals/signals.c signals/signals_heredoc.c \
@@ -62,7 +62,8 @@ SRCS		=	main.c print.c chdir.c\
 				tokenization/path_aux.c tokenization/handle_heredoc.c \
 				tokenization/handle_heredoc_aux.c \
 				exec/exec_tree.c \
-				builtins/check_builtins.c builtins/env.c builtins/export.c \
+				builtins/check_builtins.c builtins/env.c builtins/chdir.c \
+				builtins/chdir_aux.c builtins/export.c \
 				builtins/export_aux.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
@@ -95,7 +96,7 @@ $(LIBFT):
 
 clean:
 	$(RM) $(OBJS_DIR)
-	printf "clean Minishell files		$(CYAN)[OK]$(RESET)\n"
+	printf "clean Minishell files	$(CYAN)[OK]$(RESET)\n"
 	$(MAKE) $(MK_FLAG) clean -sC $(LIBFT_DIR)
 
 fclean: clean
