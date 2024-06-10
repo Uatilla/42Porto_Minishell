@@ -322,6 +322,20 @@ void	lexer(t_shell *sh, char *input);
 int		is_removable(int type);
 void	transform_nodes(t_list *start, int type);
 
+//BUILTINS
+
+//builtins_aux.c
+bool	check_args(char **input);
+
+//chdir.c
+int		change_dir(t_shell *sh, t_execcmd *cmd);
+
+//chdir_aux.c
+bool	sintax_valid_cd(char *cmd, char **argv, t_shell *sh);
+
+//pwd.c
+int		pwd(t_shell *sh, t_execcmd *cmd);
+
 //EXTRA AUXILIARS
 //print.c
 void	print_env(t_shell *sh);
@@ -340,8 +354,7 @@ int		env(t_shell *sh, t_execcmd *cmd);
 void	builtins_parent(t_shell *sh);
 bool	isbuiltin(char *cmd);
 int		execute_builtin(t_shell *sh, t_execcmd *cmd, int procs);
-int		change_dir(t_shell *sh, t_execcmd *cmd);
-bool	sintax_valid_cd(char *cmd, char **argv, t_shell *sh);
+
 
 
 #endif

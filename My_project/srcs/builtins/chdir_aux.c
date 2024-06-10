@@ -27,7 +27,7 @@ bool	check_dots(char *input)
 			count = 0;
 		if (count >= 3)
 		{
-			printf("bash: cd: %s: No such file or directory\n", input);
+			printf("bash: cd: %s: No such file or directory\n", input);//HOW WRITE ON FD2
 			return (false);
 		}
 		i++;
@@ -41,27 +41,10 @@ bool	check_option(char *input)
 	{
 		if (*input == '-')
 		{
-			printf("cd: '-' out of scope\n");
+			printf("cd: '-' out of scope\n");//HOW WRITE ON FD2
 			return (false);
 		}
 		input++;
-	}
-	return (true);
-}
-
-bool	check_args(char **input)
-{
-	int	argc;
-
-	argc = 1;
-	while (input[argc])
-	{
-		if (argc > 2)
-		{
-			printf("cd: too many arguments\n");
-			return (false);
-		}
-		argc++;
 	}
 	return (true);
 }

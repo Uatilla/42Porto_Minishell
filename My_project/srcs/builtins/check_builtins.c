@@ -37,6 +37,8 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 		else
 			ret = g_signo;
 	}
+	else if (!ft_strcmp(cmd->argv[0], "pwd"))
+		ret = pwd(sh, cmd);
 	return (ret);
 }
 
@@ -64,8 +66,8 @@ bool isbuiltin(char *cmd)
 		return(true);
 	else if(ft_strncmp(cmd, "cd", 2) == 0)
 		return(true);
-	/*else if(ft_strncmp(cmd, "pwd", 3) == 0)
-		return(true);*/
+	else if(ft_strncmp(cmd, "pwd", 3) == 0)
+		return(true);
 	return(false);
 }
 

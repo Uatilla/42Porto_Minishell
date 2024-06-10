@@ -45,7 +45,7 @@ void	cd_home(t_shell *sh)
 		getcwd(old_pwd, sizeof(old_pwd));
 		g_signo = chdir(home_path);
 		if (g_signo != 0)
-			printf("Error in changing directory\n"); //PUT THIS INTO FD2.
+			custom_error("bash: cd", "Error in changing directory", g_signo);
 		else
 		{
 			att_env(sh, "OLDPWD", old_pwd);
@@ -53,7 +53,7 @@ void	cd_home(t_shell *sh)
 		}
 	}
 	else
-		printf("Minishell: cd: HOME not set\n"); //PUT THIS INTO FD2.
+		custom_error("bash: cd", "HOME not set", 1);
 	free(home_path);
 }
 
