@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/09 20:49:16 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/10 12:14:38 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ builtins
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
-CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -g -O0 -fsanitize=address
 #LFLAGS		=	-L ${LIBFT_PATH} -lft -lreadline
 #MK_FLAG		= --no-print-directory
 

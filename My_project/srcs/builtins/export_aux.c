@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:13:17 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 21:15:58 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:26:34 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**list_to_array_export(t_list *env)
 	i = 0;
 	tmp = env;
 	size = ft_lstsize(env);
-	array = (char **)malloc(sizeof(char *) * size);
+	array = (char **)malloc(sizeof(char *) * (size + 1));
 	temp[0] = NULL;
 	temp[1] = NULL;
 	while (i < size)
@@ -49,12 +49,41 @@ char	**list_to_array_export(t_list *env)
 	return (array);
 }
 
+void swap(char **x, char **y) 
+{
+	char *temp;
+	
+	temp = *x;
+	*x = *y;
+	*y = temp;
+}
+
+void bubble_sort_recursive(char **array, int start, int end) 
+{
+	if (start >= end)
+		return ;
+	if (strcmp(array[start], array[start + 1]) > 0) 
+	{
+		swap(&array[start], &array[start + 1]);
+		bubble_sort_recursive(array, start + 1, end);
+	}
+	bubble_sort_recursive(array, start + 1, end);
+}
+
+void bubble_sort(char **array, int size) 
+{
+	bubble_sort_recursive(array, 0, size - 1);
+}
+
 char	**ordenate_envp(t_list *env_lst)
 {
 	char **array;
-	
+	int i = 0;
+
 	array = list_to_array_export(env_lst);
-	
+	while (array[i])
+		i++;
+	bubble_sort(array, i);
 	return (array);
 }
 
@@ -62,9 +91,14 @@ char	**ordenate_envp(t_list *env_lst)
 void	print_export(t_shell *sh)
 {
 	char **env_ascii;
-	// int	i;
+	int	i = 0;
 
 	env_ascii = ordenate_envp(sh->env_lst);
-	// while(env_ascii[i++])
-	// 	printf("%s\n", env_ascii);
+	while(env_ascii[i])
+	{
+		if (*env_ascii[i])
+			printf("declare -x %s\n", env_ascii[i]);
+		i++;
+	}
+	free_array(env_ascii, i);
 }

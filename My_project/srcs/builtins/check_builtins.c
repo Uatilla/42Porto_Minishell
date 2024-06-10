@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 20:08:29 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:28:24 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,17 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, bool tree)
 	return (ret);
 }
 
-t_execcmd	*get_exec_node(__attribute_maybe_unused__ t_shell *sh, t_cmd *node)
+t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node)
 {
 	// t_cmd	*node;
 	t_execcmd *execnode;
 
+	(void)sh;
 	// node = parse_exec(sh, tokens);
 	if (node->n_type == N_REDIR)
 	{
 		execnode = (t_execcmd *)((t_redircmd *)node)->cmd;
-		free(((t_redircmd *)node)->file);
+		// free(((t_redircmd *)node)->file);
 	}
 	else
 		execnode = (t_execcmd *)node;
@@ -76,12 +77,12 @@ void	builtins_parent(t_shell *sh)
 	t_list		*tmp;
 	bool		builtin;
 	t_execcmd	*execcmd;
-	int			i;
+	// int			i;
 	t_cmd		*cmd;
 
 	execcmd = NULL;
 	tmp = sh->token_lst;
-	i = 0;
+	// i = 0;
 	while (tmp)
 	{
 		builtin = isbuiltin_parent(get(tmp)->value);
@@ -89,16 +90,11 @@ void	builtins_parent(t_shell *sh)
 		{
 			cmd = parse_exec(sh, tmp);
 			execcmd = get_exec_node(sh, cmd);
-			// if (isbuiltin_parent(get(tmp)->value))
 			if (ft_strcmp(execcmd->argv[0], "export"))
 				export_parent(sh, cmd);
 			else
 				execute_builtin(sh, execcmd, false);
-			// while(execcmd->argv[i])
-			// 	free(execcmd->argv[i++]);
-			// free(execcmd->argv);
-			// free(execcmd->command);
-			// free(execcmd);
+			free_tree(cmd);
 			return ;
 		}
 		tmp = tmp->next;
