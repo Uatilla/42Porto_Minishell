@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 13:03:00 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:12:02 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,9 @@ bool	isbuiltin(char *cmd);
 int		execute_builtin(t_shell *sh, t_execcmd *cmd, int procs);
 int		change_dir(t_shell *sh, t_execcmd *cmd);
 bool	sintax_valid_cd(char *cmd, char **argv, t_shell *sh);
-
+int		export_parent(t_shell *sh, t_cmd *cmd);
+int export(t_shell *sh, t_execcmd *execcmd, int procs);
+void	print_export(t_shell *sh);
+t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node);
 
 #endif

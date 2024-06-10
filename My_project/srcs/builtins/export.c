@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 19:08:50 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 12:44:14 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:09:56 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	export_parent(t_shell *sh, t_cmd *cmd)
 	if (cmd->n_type == N_REDIR)
 	{
 		if (exec->argv[1])
-			ret = export(sh, exec, false);
+			ret = export(sh, exec, PARENT);
 		else
 			return (40);
 	}
 	else
-		ret = export(sh, exec, false);
+		ret = export(sh, exec, PARENT);
 	return (ret);
 }
 
@@ -73,7 +73,7 @@ void extract_key_value(const char *input, char **key, char **value) {
     }
 }
 
-int export(t_shell *sh, t_execcmd *execcmd, bool tree) 
+int export(t_shell *sh, t_execcmd *execcmd, int procs) 
 {
     char *key;
     char *value;
@@ -85,10 +85,10 @@ int export(t_shell *sh, t_execcmd *execcmd, bool tree)
     if (execcmd->argv[1]) 
 	{
         extract_key_value(execcmd->argv[1], &key, &value);
-        if (!tree)
+        if (procs == TREE)
             att_env(sh, key, value);
     }
-	else if (tree) 
+	else if (procs == TREE)
 	{
         print_export(sh);
     }

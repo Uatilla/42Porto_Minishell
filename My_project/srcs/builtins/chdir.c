@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chdir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:31:02 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/08 19:31:07 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:14:35 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	change_dir(t_shell *sh, t_execcmd *cmd)
 {
 	(void)sh;
 	g_signo = 0;
+	printf("oiiii\n");
 	if (!sintax_valid_cd(cmd->argv[0], cmd->argv, sh))
 		g_signo = 1;
 	else

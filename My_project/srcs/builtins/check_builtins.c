@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 13:04:24 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:24:49 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 			ret = g_signo;
 	}
 	if (!ft_strcmp(cmd->argv[0], "export"))
-		ret = export(sh, cmd, tree);
+		ret = export(sh, cmd, procs);
 	return (ret);
 }
 
@@ -61,13 +61,13 @@ t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node)
 
 bool isbuiltin(char *cmd)
 {
-	if(ft_strncmp(cmd, "env", 5) == 0)
+	if(ft_strcmp(cmd, "env") == 0)
 		return(true);
-	else if(ft_strncmp(cmd, "exit", 4) == 0)
+	else if(ft_strcmp(cmd, "exit") == 0)
 		return(true);
-	else if(ft_strncmp(cmd, "cd", 2) == 0)
+	else if(ft_strcmp(cmd, "cd") == 0)
 		return(true);
-	else if(ft_strncmp(cmd, "export", 7) == 0)
+	else if(ft_strcmp(cmd, "export") == 0)
 		return(true);
 	return(false);
 }
@@ -97,13 +97,29 @@ void	builtins_parent(t_shell *sh)
 		{
 			cmd = parse_exec(sh, tmp);
 			execcmd = get_exec_node(sh, cmd);
-			if (ft_strcmp(execcmd->argv[0], "export"))
+			if (!ft_strcmp(execcmd->argv[0], "export"))
 				export_parent(sh, cmd);
 			else
-				execute_builtin(sh, execcmd, false);
+				execute_builtin(sh, execcmd, PARENT);
 			free_tree(cmd);
 			return ;
 		}
 		tmp = tmp->next;
 	}
 }
+
+// bash-3.2$ export 1=leila
+// bash: export: `1=leila': not a valid identifier
+// bash-3.2$ echo $?
+// 1
+// bash-3.2$ export MINHA-VARIAVEL=leila
+// bash: export: `MINHA-VARIAVEL=leila': not a valid identifier
+// bash-3.2$ echo $?
+// 1
+// bash-3.2$ export =valor
+// bash: export: `=valor': not a valid identifier
+// bash-3.2$ echo $?
+// 1
+// bash-3.2$ export variavel = valor
+// bash: export: `=': not a valid identifier
+// bash-3.2$ 
