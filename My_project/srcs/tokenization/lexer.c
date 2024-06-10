@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 17:54:39 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:51:43 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,19 @@ void expand_general_tokens(t_shell *sh, t_list **tokens)
 
 	while (tmp)
 	{
-		if (get(tmp)->value[0] == '$' && get(tmp)->state == GENERAL && tmp->next)
+		if (get(tmp)->value[0] == '$' && get(tmp)->state == GENERAL &&
+			tmp->next)
 		{
 			if (get(tmp->next)->type != E_SPACE)
 			{
 				to_exclude = tmp;
 				expand_general(sh, to_exclude);
-				if (!get(tmp)->value || !*get(tmp)->value)
+				if ((!get(tmp)->value || !*get(tmp)->value) && ((get(tmp)->type != INFILE && get(tmp)->type != OUTFILE && get(tmp)->type != APPEND)))
 				{
 					next = tmp->next;
 					remove_node(tokens, tmp);
 					tmp = next;
-					continue;
+					continue ;
 				}
 			}
 		}

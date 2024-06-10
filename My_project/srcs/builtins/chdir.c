@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:31:02 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 13:14:35 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:35:45 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	cd_home(t_shell *sh)
 		getcwd(old_pwd, sizeof(old_pwd));
 		g_signo = chdir(home_path);
 		if (g_signo != 0)
-			printf("Error in changing directory\n"); //PUT THIS INTO FD2.
+			printf("Error in changing directory\n");
 		else
 		{
 			att_env(sh, "OLDPWD", old_pwd);
@@ -53,7 +53,7 @@ void	cd_home(t_shell *sh)
 		}
 	}
 	else
-		printf("Minishell: cd: HOME not set\n"); //PUT THIS INTO FD2.
+		printf("Minishell: cd: HOME not set\n");
 	free(home_path);
 }
 

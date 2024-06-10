@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 18:37:08 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:42:24 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,5 +346,6 @@ int		export_parent(t_shell *sh, t_cmd *cmd);
 int export(t_shell *sh, t_execcmd *execcmd, int procs);
 void	print_export(t_shell *sh);
 t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node);
+char	*expand_home(t_shell *sh, t_list *tmp);
 
 #endif

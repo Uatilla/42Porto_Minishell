@@ -6,22 +6,11 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 17:34:22 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:52:28 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*is_builtin(t_shell *sh, t_execcmd *cmd)
-{
-	// char	*cmd_str;
-
-	(void)sh;
-	// cmd_str = cmd->argv[0];
-	if (ft_strcmp(cmd->argv[0], "env"))
-		return ("builtin_env");
-	return (NULL);
-}
 
 int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 {
@@ -42,14 +31,11 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 	return (ret);
 }
 
-t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node)
+t_execcmd	*get_exec_node(__attribute_maybe_unused__ t_shell *sh, t_cmd *node)
 {
-	// t_cmd	*node;
-	t_execcmd *execnode;
+	t_execcmd	*execnode;
 
-	(void)sh;
 	execnode = NULL;
-	// node = parse_exec(sh, tokens);
 	while (node->n_type == N_REDIR)
 		node = ((t_redircmd *)node)->cmd;
 	if (node->n_type == N_EXEC)
@@ -57,22 +43,23 @@ t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node)
 	return (execnode);
 }
 
-bool isbuiltin(char *cmd)
+bool	isbuiltin(char *cmd)
 {
-	if(ft_strcmp(cmd, "env") == 0)
-		return(true);
-	else if(ft_strcmp(cmd, "exit") == 0)
-		return(true);
-	else if(ft_strcmp(cmd, "cd") == 0)
-		return(true);
-	else if(ft_strcmp(cmd, "export") == 0)
-		return(true);
-	return(false);
+	if (ft_strcmp(cmd, "env") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "cd") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (true);
+	return (false);
 }
 
 bool	isbuiltin_parent(char *cmd)
 {
-	if (!ft_strcmp(cmd, "cd") || !ft_strncmp(cmd, "export", 6) || !ft_strncmp(cmd, "unset", 5) /* || !ft_strncmp(cmd, "env", 5) */)
+	if (!ft_strcmp(cmd, "cd") || !ft_strncmp(cmd, "export", 6)
+		|| !ft_strncmp(cmd, "unset", 5))
 		return (true);
 	return (false);
 }
@@ -104,19 +91,3 @@ void	builtins_parent(t_shell *sh)
 		tmp = tmp->next;
 	}
 }
-
-// bash-3.2$ export 1=leila
-// bash: export: `1=leila': not a valid identifier
-// bash-3.2$ echo $?
-// 1
-// bash-3.2$ export MINHA-VARIAVEL=leila
-// bash: export: `MINHA-VARIAVEL=leila': not a valid identifier
-// bash-3.2$ echo $?
-// 1
-// bash-3.2$ export =valor
-// bash: export: `=valor': not a valid identifier
-// bash-3.2$ echo $?
-// 1
-// bash-3.2$ export variavel = valor
-// bash: export: `=': not a valid identifier
-// bash-3.2$ 

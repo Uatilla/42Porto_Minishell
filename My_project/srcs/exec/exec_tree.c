@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 13:05:46 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:27:53 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 
 	rdcmd = (t_redircmd *)cmd;
 	close(rdcmd->fd);
+	if (rdcmd->file[0] == '$')
+	{
+		custom_error(rdcmd->file, "ambigous redirec", 1);
+		exit (g_signo);
+	}
 	if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
 	{
 		custom_error(rdcmd->file, "No such file or directory", 1); //MUDAR A MENSAGEM DE ERRO PARA QUANDO EH OUTFILE

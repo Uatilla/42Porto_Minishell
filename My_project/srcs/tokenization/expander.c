@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 17:52:37 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:51:23 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ char	*get_env(t_list *env_list, char *token)
 	while (env)
 	{
 		key = ((t_env *)env->content)->key;
+		if (!ft_strcmp(token, "~"))
+		{
+			free(expansion);
+			expansion = ft_strdup(((t_env *)env->content)->value);
+			break ;
+		}
 		if (!ft_strcmp(token, key) && ((t_env *)env->content)->visible)
 		{
 			free(expansion);
@@ -64,21 +70,39 @@ void	expand_general(t_shell *sh, t_list *tkn)
 	new_token = NULL;
 	if (get(tkn->next)->type >= 2 && get(tkn->next)->type <= 6)
 		return ;
-	free(get(tkn)->value);
 	if (get(tkn->next)->state != GENERAL)
 	{
+		free(get(tkn)->value);
 		get(tkn)->value = ft_strdup(get(tkn->next)->value);
 		get(tkn)->state = get(tkn->next)->state;
 	}
 	else if (get(tkn)->type == HEREDOC)
+	{
+		free(get(tkn)->value);
 		get(tkn)->value = ft_strjoin("$", get(tkn->next)->value);
+	}
+	else if (get(tkn)->type != WORD)
+	{
+		new_token = expansion(sh, get(tkn->next)->value, &i);
+		new_token = ft_strjoin_mod(new_token, &get(tkn->next)->value[i]);
+		if (!new_token || !*new_token)
+		{
+			if (!*new_token)
+				free(new_token);
+			return ;
+		}
+	}
 	else
 	{
 		new_token = expansion(sh, get(tkn->next)->value, &i);
-		get(tkn)->value = ft_strjoin(new_token, &get(tkn->next)->value[i]);
+		new_token = ft_strjoin_mod(new_token, &get(tkn->next)->value[i]);
 	}
 	if (new_token)
+	{
+		free(get(tkn)->value);
+		get(tkn)->value = ft_strdup(new_token);
 		free(new_token);
+	}
 	remove_node(&sh->token_lst, tkn->next);
 }
 
