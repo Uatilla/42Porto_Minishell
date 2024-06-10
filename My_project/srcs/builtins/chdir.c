@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:31:02 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 20:35:45 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:57:51 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	cd_home(t_shell *sh)
 		getcwd(old_pwd, sizeof(old_pwd));
 		g_signo = chdir(home_path);
 		if (g_signo != 0)
-			printf("Error in changing directory\n");
+			custom_error("bash: cd", "Error in changing directory", g_signo);
 		else
 		{
 			att_env(sh, "OLDPWD", old_pwd);
@@ -53,13 +53,13 @@ void	cd_home(t_shell *sh)
 		}
 	}
 	else
-		printf("Minishell: cd: HOME not set\n");
+		custom_error("bash: cd", "HOME not set", 1);
 	free(home_path);
 }
 
 void	exec_cd(t_shell *sh, char **argv)
 {
-	if ((!argv[1]))
+	if (!argv[1])
 		cd_home(sh);
 	else
 		cd_others(sh, argv[1]);
@@ -68,6 +68,7 @@ void	exec_cd(t_shell *sh, char **argv)
 int	change_dir(t_shell *sh, t_execcmd *cmd)
 {
 	(void)sh;
+	(void)cmd;
 	g_signo = 0;
 	printf("oiiii\n");
 	if (!sintax_valid_cd(cmd->argv[0], cmd->argv, sh))

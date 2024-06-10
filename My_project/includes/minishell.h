@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 20:42:24 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:57:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ void	reinit_shell(t_shell *sh);
 // ENVIRONMENT FOLDER
 // env.c
 void	fill_env(t_shell *sh, char **env_var);
+t_list	*find_env_node(t_list *list, char *key);
 
 // EXIT FOLDER
 //exit.c
@@ -322,6 +323,26 @@ void	lexer(t_shell *sh, char *input);
 int		is_removable(int type);
 void	transform_nodes(t_list *start, int type);
 
+//BUILTINS
+
+//builtins_aux.c
+bool	check_args(char **input);
+
+//chdir.c
+int		change_dir(t_shell *sh, t_execcmd *cmd);
+
+//chdir_aux.c
+bool	sintax_valid_cd(char *cmd, char **argv, t_shell *sh);
+
+//pwd.c
+int		pwd(t_shell *sh, t_execcmd *cmd);
+
+//echo.c
+int		echo(t_shell *sh, t_execcmd *cmd);
+
+//unset.c
+int	unset(t_shell *sh, t_execcmd *cmd);
+
 //EXTRA AUXILIARS
 //print.c
 void	print_env(t_shell *sh);
@@ -340,8 +361,7 @@ int		env(t_shell *sh, t_execcmd *cmd);
 void	builtins_parent(t_shell *sh);
 bool	isbuiltin(char *cmd);
 int		execute_builtin(t_shell *sh, t_execcmd *cmd, int procs);
-int		change_dir(t_shell *sh, t_execcmd *cmd);
-bool	sintax_valid_cd(char *cmd, char **argv, t_shell *sh);
+
 int		export_parent(t_shell *sh, t_cmd *cmd);
 int export(t_shell *sh, t_execcmd *execcmd, int procs);
 void	print_export(t_shell *sh);

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 20:52:28 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:58:32 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 		else
 			ret = g_signo;
 	}
+	else if (!ft_strcmp(cmd->argv[0], "pwd"))
+		ret = pwd(sh, cmd);
+	else if (!ft_strcmp(cmd->argv[0], "echo"))
+		ret = echo(sh, cmd);
+	else if (!ft_strcmp(cmd->argv[0], "unset"))
+		ret = unset(sh, cmd);
 	if (!ft_strcmp(cmd->argv[0], "export"))
 		ret = export(sh, cmd, procs);
 	return (ret);
