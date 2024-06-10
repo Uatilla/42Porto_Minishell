@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:06:41 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 13:00:33 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:26:41 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,12 +163,13 @@ t_env *create_env_node(char *key, char *value)
 
 void update_env_list(t_shell *sh, t_env *node_content)
 {
-    t_list *to_remove = find_env_node(sh->env_lst, node_content->key);
-    int size = ft_lstsize(sh->env_lst);
-
+    t_list *to_remove;
+    int size;
+    
+    to_remove = find_env_node(sh->env_lst, node_content->key);
+    size = ft_lstsize(sh->env_lst);
     if (to_remove)
         remove_env_node(&sh->env_lst, to_remove);
-
     free_array(sh->envp, size);
     ft_lstadd_back(&sh->env_lst, ft_lstnew(node_content));
     sh->envp = list_to_array(sh, sh->env_lst, 2);
@@ -216,7 +217,6 @@ void update_env_list(t_shell *sh, t_env *node_content)
 //     ft_lstadd_back(&sh->env_lst, ft_lstnew(node_content));
 //     sh->envp = list_to_array(sh, sh->env_lst, 2);
 // }
-
 
 int	env(t_shell *sh, t_execcmd *cmd)
 {

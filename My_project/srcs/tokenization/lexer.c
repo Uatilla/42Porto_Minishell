@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 18:41:13 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:54:39 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*expand_home(t_shell *sh, t_list *tmp)
 	char	*ret;
 	char	*expand;
 	
+	expand = ft_strdup("");
 	temp = get_env(sh->env_lst, "HOME");
 	if (!ft_strcmp("~", get(tmp)->value))
 		ret = ft_strdup(temp);
@@ -29,9 +30,9 @@ char	*expand_home(t_shell *sh, t_list *tmp)
 		ret = ft_strjoin(temp, expand);
 		if (!ret)
 			clear_exit(sh, 1);
-		free(get(tmp)->value);
-		free(expand);
 	}
+	free(get(tmp)->value);
+	free(expand);
 	free(temp);
 	return (ret);
 }
@@ -170,6 +171,7 @@ void	lexer(t_shell *sh, char *input)
 	review_tkn_list(sh, &sh->token_lst);
 	expander(sh, &sh->token_lst);
 	clean_tokenlist(sh, &sh->token_lst);
+	handle_heredoc(sh, &sh->token_lst);
 	if (sh->nbr_pipes == 0)
 		builtins_parent(sh);
 	att_env(sh, "_", NULL);

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 13:24:49 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:34:22 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node)
 	t_execcmd *execnode;
 
 	(void)sh;
+	execnode = NULL;
 	// node = parse_exec(sh, tokens);
-	if (node->n_type == N_REDIR)
-	{
-		execnode = (t_execcmd *)((t_redircmd *)node)->cmd;
-		// free(((t_redircmd *)node)->file);
-	}
-	else
+	while (node->n_type == N_REDIR)
+		node = ((t_redircmd *)node)->cmd;
+	if (node->n_type == N_EXEC)
 		execnode = (t_execcmd *)node;
 	return (execnode);
 }
@@ -84,18 +82,17 @@ void	builtins_parent(t_shell *sh)
 	t_list		*tmp;
 	bool		builtin;
 	t_execcmd	*execcmd;
-	// int			i;
 	t_cmd		*cmd;
 
 	execcmd = NULL;
 	tmp = sh->token_lst;
-	// i = 0;
 	while (tmp)
 	{
 		builtin = isbuiltin_parent(get(tmp)->value);
 		if (builtin)
 		{
 			cmd = parse_exec(sh, tmp);
+			printf("type: %d\n", cmd->n_type);
 			execcmd = get_exec_node(sh, cmd);
 			if (!ft_strcmp(execcmd->argv[0], "export"))
 				export_parent(sh, cmd);

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:13:17 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 12:26:34 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:24:32 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,23 @@ char	**list_to_array_export(t_list *env)
 		content = tmp->content;
 		if (content->visible)
 		{
-			temp[0] = ft_strjoin("\"", content->value);
-			temp[1] = ft_strjoin(temp[0], "\"");
-			free(temp[0]);
+			if (!content->value)
+				temp[1] = NULL;
+			else
+			{
+				temp[0] = ft_strjoin("\"", content->value);
+				temp[1] = ft_strjoin(temp[0], "\"");
+				free(temp[0]);
+			}
 			temp[0] = ft_strjoin(content->key, "=");
 			array[i] = ft_strjoin(temp[0], temp[1]);
-			free(temp[0]);
-			free(temp[1]);
 		}
 		else
 			array[i] = ft_strdup("");
 		i++;
 		tmp = tmp->next;
+		free(temp[0]);
+		free(temp[1]);
 	}
 	array[i] = NULL;
 	return (array);

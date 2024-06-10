@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 13:12:02 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:37:08 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ typedef struct s_shell
 // MACROS
 # define PROMPT "MINISHELL ➜ "
 # define OPERATOR "|<>"
-# define OUTOFSCOPE "()*;&"
+# define OUTOFSCOPE "!()*;&"
 # define OPERATORS_EX "@$?*#-!"
 
 // EXITING THE GLOBAL VARIABLE
