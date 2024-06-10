@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 20:57:30 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:03:23 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ void	free_tree(t_cmd *cmd);
 
 // INPUT FOLDER
 // input_checker.c
-void	input_check(int argc, char **argv, char **envp);
+void	input_check(int argc, char **argv);
 bool	sintax_validation(char *input);
 
 // input_checker_utils.c
@@ -275,16 +275,16 @@ void	transform_nodes(t_list *start, int type);
 void	set_heredoc_type(t_list *start);
 
 //handle_heredoc.c
-char	*create_temp_file(void);
+char	*create_temp_file(t_shell *sh, char *file, int i);
 void	append_doc_to_file(char *filename, char *content);
 void	update_token_to_file(t_list *token, char *filename);
-void	get_doc(t_shell *sh, t_list *tmp);
+void	get_doc(t_shell *sh, t_list *tmp, int i);
 void	handle_heredoc(t_shell *sh, t_list **tkns);
 
 //handle_heredoc_aux.c
 void	unlink_heredoc(t_list *token);
 char	*expand_heredoc(t_shell *sh, char *str);
-char	*generate_temp_filename(void);
+char	*generate_temp_filename(t_shell *sh, char *file, int i);
 
 //expander.c
 void	expand_quotes(t_shell *sh, t_list *token);
@@ -367,5 +367,6 @@ int export(t_shell *sh, t_execcmd *execcmd, int procs);
 void	print_export(t_shell *sh);
 t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node);
 char	*expand_home(t_shell *sh, t_list *tmp);
+bool	is_home(t_list *tmp);
 
 #endif

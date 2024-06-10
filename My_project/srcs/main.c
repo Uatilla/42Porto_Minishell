@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 17:24:16 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:15:20 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	reinit_shell(t_shell *sh)
 	if (sh->cmd)
 		free_tree(sh->cmd);
 	ft_bzero(sh->index, sizeof(t_index));
-	// unlink_heredoc(sh->heredocs);
 }
 
 // void	init_empty_env(sh)
@@ -32,7 +31,7 @@ void	reinit_shell(t_shell *sh)
 
 // 	pos = 0;
 // 			node_content = ft_calloc(1, sizeof(t_env));
-	
+
 // 	while (*env_var)
 // 	{
 // 		sep = ft_strchr(*env_var, '=');
@@ -53,6 +52,17 @@ void	reinit_shell(t_shell *sh)
 // 	}
 // }
 
+void	init_empty_env(t_shell *sh)
+{
+	char *pwd;
+
+	pwd = NULL;
+	pwd = getcwd(pwd, 0);
+	att_env(sh, "SHLVL", "1");
+	att_env(sh, "PWD", pwd);
+	att_env(sh, "OLDPWD", NULL);
+}
+
 void	init_shell(t_shell *sh, char **env_var)
 {
 	ft_bzero(sh, sizeof(t_shell));
@@ -63,13 +73,13 @@ void	init_shell(t_shell *sh, char **env_var)
 		clear_exit(sh, 1);
 	}
 	ft_bzero(sh->index, sizeof(t_index));
+	if (!env_var[0])
+		init_empty_env(sh);
 	if (env_var)
 	{
 		fill_env(sh, env_var);
 		get_paths(sh);
 	}
-	// else
-	// 	init_empty_env(sh);
 }
 
 int	fork1(t_shell *sh)
@@ -121,7 +131,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	sh;
 
-	input_check(argc, argv, envp);
+	input_check(argc, argv);
 	init_shell(&sh, envp);
 	sh_loop(&sh);
 	clear_exit(&sh, 0);

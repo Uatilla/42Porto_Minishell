@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:06:41 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 20:37:31 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:05:43 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void update_env_list(t_shell *sh, t_env *node_content)
 {
 	t_list *to_remove;
 	int size;
-	
+
 	to_remove = find_env_node(sh->env_lst, node_content->key);
 	size = ft_lstsize(sh->env_lst);
 	if (to_remove)

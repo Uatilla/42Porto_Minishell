@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 20:58:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:04:02 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ bool	isbuiltin(char *cmd)
 	else if (ft_strcmp(cmd, "cd") == 0)
 		return (true);
 	else if (ft_strcmp(cmd, "export") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "unset") == 0)
 		return (true);
 	return (false);
 }

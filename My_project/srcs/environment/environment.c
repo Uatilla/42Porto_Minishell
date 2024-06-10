@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:38:27 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/04/13 15:38:29 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:14:20 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	fill_env(t_shell *sh, char **env_var)
 	int		pos;
 	t_env	*node_content;
 	t_list	*new_node;
+	// int		nbr;
 
 	pos = 0;
 	while (*env_var)
@@ -64,4 +65,6 @@ void	fill_env(t_shell *sh, char **env_var)
 		}
 		env_var++;
 	}
+	// nbr = ft_atoi(get_env(sh->env_lst, "SHLVL")) + 1;
+	// att_env(sh, "SHLVL", ft_itoa(nbr));
 }

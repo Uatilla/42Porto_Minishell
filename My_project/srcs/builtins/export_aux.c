@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:13:17 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 16:24:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:26:07 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void bubble_sort_recursive(char **array, int start, int end)
 {
 	if (start >= end)
 		return ;
-	if (strcmp(array[start], array[start + 1]) > 0) 
+	if (ft_strcmp(array[start], array[start + 1]) > 0) 
 	{
 		swap(&array[start], &array[start + 1]);
 		bubble_sort_recursive(array, start + 1, end);

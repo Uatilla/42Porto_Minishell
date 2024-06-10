@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 20:51:43 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:11:03 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*expand_home(t_shell *sh, t_list *tmp)
 	char	*temp;
 	char	*ret;
 	char	*expand;
-	
+
 	expand = ft_strdup("");
 	temp = get_env(sh->env_lst, "HOME");
 	if (!ft_strcmp("~", get(tmp)->value))
@@ -66,7 +66,7 @@ void join_non_removable_nodes(t_list **tkns)
 	}
 }
 
-void remove_removable_nodes_and_expand_home(t_shell *sh, t_list **tkns)
+void remove_removable_nodes_and_expand_home(__attribute_maybe_unused__ t_shell *sh, t_list **tkns)
 {
 	t_list *tmp = *tkns;
 	t_list *next;
