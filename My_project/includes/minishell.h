@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 22:03:23 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:40:07 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,5 +368,6 @@ void	print_export(t_shell *sh);
 t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node);
 char	*expand_home(t_shell *sh, t_list *tmp);
 bool	is_home(t_list *tmp);
+int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs);
 
 #endif

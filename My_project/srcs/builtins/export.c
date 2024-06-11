@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 19:08:50 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 18:40:54 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:18:12 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	export_parent(t_shell *sh, t_cmd *cmd)
 
 	exec = get_exec_node(sh, cmd);
 	ret = 0;
+	printf("Export PID: %d\n", getpid());
 	if (cmd->n_type == N_REDIR)
 	{
 		if (exec->argv[1])

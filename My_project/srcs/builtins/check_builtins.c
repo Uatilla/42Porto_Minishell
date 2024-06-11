@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 21:04:02 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:19:05 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 		ret = echo(sh, cmd);
 	else if (!ft_strcmp(cmd->argv[0], "unset"))
 		ret = unset(sh, cmd);
-	if (!ft_strcmp(cmd->argv[0], "export"))
+	else if (!ft_strcmp(cmd->argv[0], "export"))
 		ret = export(sh, cmd, procs);
+	else if (!ft_strcmp(cmd->argv[0], "exit"))
+		ret = exit_bin(sh, cmd, procs);
 	return (ret);
 }
 
@@ -66,8 +68,8 @@ bool	isbuiltin(char *cmd)
 
 bool	isbuiltin_parent(char *cmd)
 {
-	if (!ft_strcmp(cmd, "cd") || !ft_strncmp(cmd, "export", 6)
-		|| !ft_strncmp(cmd, "unset", 5))
+	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "export")
+		|| !ft_strncmp(cmd, "unset", 5) || !ft_strcmp(cmd, "exit"))
 		return (true);
 	return (false);
 }
@@ -87,8 +89,8 @@ void	builtins_parent(t_shell *sh)
 		if (builtin)
 		{
 			cmd = parse_exec(sh, tmp);
-			printf("type: %d\n", cmd->n_type);
 			execcmd = get_exec_node(sh, cmd);
+			
 			if (!ft_strcmp(execcmd->argv[0], "export"))
 				export_parent(sh, cmd);
 			else

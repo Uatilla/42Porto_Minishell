@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 22:15:20 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:25:20 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	reinit_shell(t_shell *sh)
 	if (sh->cmd)
 		free_tree(sh->cmd);
 	ft_bzero(sh->index, sizeof(t_index));
+	sh->nbr_pipes = 0;
 }
 
 // void	init_empty_env(sh)
@@ -122,8 +123,8 @@ void	sh_loop(t_shell *sh)
 		waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			g_signo = WEXITSTATUS(status);
-		reinit_shell(sh);
 		free(prompt_input);
+		reinit_shell(sh);
 	}
 }
 
