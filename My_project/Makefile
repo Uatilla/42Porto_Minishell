@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/11 10:46:01 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/11 19:45:48 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,8 @@ SRCS		=	main.c print.c \
 				builtins/check_builtins.c builtins/env.c builtins/chdir.c \
 				builtins/chdir_aux.c builtins/pwd.c builtins/builtins_aux.c \
 				builtins/echo.c builtins/unset.c builtins/export.c \
-				builtins/export_aux.c builtins/exit.c
+				builtins/export_aux.c builtins/exit.c /builtins/env_aux.c \
+				builtins/export_aux2.c exit_files/exit_aux.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 

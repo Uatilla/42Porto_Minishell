@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 13:40:07 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:45:28 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,11 +363,23 @@ bool	isbuiltin(char *cmd);
 int		execute_builtin(t_shell *sh, t_execcmd *cmd, int procs);
 
 int		export_parent(t_shell *sh, t_cmd *cmd);
-int export(t_shell *sh, t_execcmd *execcmd, int procs);
+int		export(t_shell *sh, t_execcmd *execcmd, int procs);
 void	print_export(t_shell *sh);
 t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node);
 char	*expand_home(t_shell *sh, t_list *tmp);
 bool	is_home(t_list *tmp);
 int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs);
+
+void update_or_add_env(t_shell *sh, char *key, char *value);
+t_list *find_last_word(t_list *token_lst);
+t_env *create_env_node(char *key, char *value);
+void update_env_list(t_shell *sh, t_env *node_content);
+void	remove_env_node(t_list **list, t_list *node);
+char	**ordenate_envp(t_list *env_lst);
+
+char	**list_to_array_export(t_list *env);
+int	export_parent(t_shell *sh, t_cmd *cmd);
+void	extract_key_value(const char *input, char **key, char **value);
+void	clear_exit(t_shell *sh, int status);
 
 #endif
