@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:18:48 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 22:37:31 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:37:39 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,6 @@ void	set_child_signals(void)
 	signal(SIGINT, sigint_child_handler);
 	signal(SIGQUIT, sigint_child_handler);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 void	sigint_handler(int signo)
 {
