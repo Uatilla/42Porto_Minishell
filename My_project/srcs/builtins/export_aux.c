@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:13:17 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 19:37:48 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:22:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	swap(char **x, char **y)
 	*x = *y;
 	*y = temp;
 }
-
 
 void	bubble_sort_recursive(char **array, int size)
 {
@@ -48,7 +47,7 @@ char	**ordenate_envp(t_list *env_lst)
 	char	**array;
 	int		i;
 
-	i  = 0;
+	i = 0;
 	array = list_to_array_export(env_lst);
 	while (array[i])
 		i++;

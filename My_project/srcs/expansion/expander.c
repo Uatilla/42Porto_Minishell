@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:48:12 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 20:52:45 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:00:38 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*handle_word_type(t_shell *sh, t_list *tkn, int *i)
 	return (new_token);
 }
 
-void update_token_value(t_list *tkn, char *new_token)
+void	update_token_value(t_list *tkn, char *new_token)
 {
 	if (new_token)
 	{
@@ -31,7 +31,7 @@ void update_token_value(t_list *tkn, char *new_token)
 	}
 }
 
-void	expand_general(t_shell *sh, t_list *tkn) 
+void	expand_general(t_shell *sh, t_list *tkn)
 {
 	int		i;
 	char	*new_token;

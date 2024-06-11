@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 19:08:50 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 19:43:27 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:27:47 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	free_key_value(char *key, char *value)
 		free(value);
 }
 
-
 int	handle_invalid_identifier(char *arg, int procs)
 {
 	if (procs == TREE)
@@ -50,7 +49,6 @@ int	handle_invalid_identifier(char *arg, int procs)
 	}
 	return (1);
 }
-
 
 int	process_arguments(t_shell *sh, t_execcmd *execcmd, int procs)
 {

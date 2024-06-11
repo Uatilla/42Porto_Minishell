@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:09:29 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 19:43:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:21:19 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	check_args(char **input)
 int	export_parent(t_shell *sh, t_cmd *cmd)
 {
 	t_execcmd	*exec;
-	int         ret;
+	int			ret;
 
 	exec = get_exec_node(sh, cmd);
 	ret = 0;

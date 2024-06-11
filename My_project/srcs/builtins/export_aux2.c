@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 19:37:50 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 19:38:03 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:22:41 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	process_element(char **array, t_env *content, int index)
 	else
 		array[index] = ft_strdup("");
 }
-
-
 
 void	populate_array(char **array, t_list *env, int size)
 {

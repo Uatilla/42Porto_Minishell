@@ -6,59 +6,39 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 15:31:12 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:41:02 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	is_file(char *file)
+void	execute_command(t_shell *sh, t_execcmd *excmd)
 {
-	if (ft_strchr(file, '/'))
-		return (true);
-	return (false);
-}
+	int	status;
 
-bool	is_directory(char	*cmd)
-{
-	struct stat path_stat;
-
-	ft_bzero(&path_stat, sizeof(struct stat));
-	stat(cmd, &path_stat);
-	if (S_ISDIR(path_stat.st_mode)) 
-		return (true);
-	return (false);
+	status = 0;
+	if (isbuiltin(excmd->argv[0]))
+		g_signo = execute_builtin(sh, excmd, TREE);
+	else if (fork1(sh) == 0)
+	{
+		if (execve(excmd->command, excmd->argv, sh->envp) == -1)
+			perror(excmd->command);
+	}
+	if (WIFEXITED(status) && waitpid(0, &status, 0) != -1)
+		g_signo = WEXITSTATUS(status);
 }
 
 void	run_exec(t_shell *sh, t_cmd *cmd)
 {
 	t_execcmd	*excmd;
-	int	status;
 
-	status = 0;
 	excmd = (t_execcmd *)cmd;
-	if (!excmd->command && excmd->argv[0] && !isbuiltin(excmd->argv[0]))
+	if (handle_command_errors(excmd))
 	{
-		if (is_file(excmd->argv[0]))
-			custom_error(excmd->argv[0], "No such file or directory", 127);
-		else
-			custom_error(excmd->argv[0], "command not found", 127);
+		if (excmd->argv[0] && !is_directory(excmd->argv[0]))
+			execute_command(sh, excmd);
 	}
-	else if (excmd->argv[0])
-	{
-		if (is_directory(excmd->argv[0]))
-			custom_error(excmd->argv[0], "Is a directory", 126);
-		else if (isbuiltin(excmd->argv[0]))
-			g_signo = execute_builtin(sh, excmd, TREE);
-		else if (fork1(sh) == 0)
-		{
-			if (execve(excmd->command, excmd->argv, sh->envp) == -1)
-				perror(excmd->command);
-		}
-		if (WIFEXITED(status) && waitpid(0, &status, 0) != -1)
-			g_signo = WEXITSTATUS(status);
-	}
-	exit (g_signo);
+	exit(g_signo);
 }
 
 void	run_redir(t_shell *sh, t_cmd *cmd)
@@ -74,7 +54,7 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 	}
 	if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
 	{
-		custom_error(rdcmd->file, "No such file or directory", 1); //MUDAR A MENSAGEM DE ERRO PARA QUANDO EH OUTFILE
+		custom_error(rdcmd->file, "No such file or directory", 1);
 		exit (g_signo);
 	}
 	exec_tree(sh, rdcmd->cmd);
@@ -85,26 +65,15 @@ void	run_pipe(t_shell *sh, t_cmd *cmd)
 	int	p[2];
 	int	status;
 	int	pid1;
-	int pid2;
+	int	pid2;
 
-	if (pipe(p) < 0)
-		clear_exit(sh, 1);
+	create_pipe(p, sh);
 	pid1 = fork1(sh);
 	if (pid1 == 0)
-	{
-		dup2(p[1], STDOUT_FILENO);
-		close(p[0]);
-		close(p[1]);
-		exec_tree(sh, ((t_pipecmd *)cmd)->left);
-	}
+		run_pipe_child(sh, cmd, p, 1);
 	pid2 = fork1(sh);
-	if (pid2== 0)
-	{
-		dup2(p[0], STDIN_FILENO);
-		close(p[0]);
-		close(p[1]);
-		exec_tree(sh, ((t_pipecmd *)cmd)->right);
-	}
+	if (pid2 == 0)
+		run_pipe_child(sh, cmd, p, 2);
 	close(p[0]);
 	close(p[1]);
 	waitpid(pid1, &status, 0);

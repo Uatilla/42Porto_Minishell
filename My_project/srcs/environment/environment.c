@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:38:27 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 20:01:09 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:20:21 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ char	*get_key(char *env_var, int pos)
 		return (NULL);
 	ft_strlcpy(key, &env_var[0], pos + 1);
 	return (key);
+}
+
+void	get_paths(t_shell *sh)
+{
+	char	*path_aux;
+
+	sh->envp = list_to_array(sh, sh->env_lst, 2);
+	path_aux = get_path_aux(sh->envp);
+	if (path_aux)
+		sh->paths = ft_split(path_aux, ':');
+	free(path_aux);
 }
 
 /*Put the environment variables in a linked list.*/

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:06:41 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 19:14:56 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:22:59 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_env	*create_env_node(char *key, char *value)
 	else
 		node_content->value = NULL;
 	node_content->visible = true;
-	return node_content;
+	return (node_content);
 }
 
 void	update_env_list(t_shell *sh, t_env *node_content)

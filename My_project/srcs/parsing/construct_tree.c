@@ -6,57 +6,11 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:35:14 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/10 20:25:16 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:46:14 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_check_command_location(t_shell *sh, char *command, char *path_i)
-{
-	char	*path_aux;
-	char	*path_command;
-
-	path_command = NULL;
-	path_aux = ft_strjoin(path_i, "/");
-	if (command[0] == '/' || (ft_strncmp(command, "./", 2) == 0))
-		path_command = ft_strdup(command);
-	else if (ft_strnstr(command, ".sh", ft_strlen(command))
-		&& ft_strchr(command, '/'))
-		path_command = ft_strdup(command);
-	else
-		path_command = ft_strjoin(path_aux, command);
-	free(path_aux);
-	if (!path_command)
-		clear_exit(sh, 1);
-	if (access(path_command, F_OK) == 0)
-		return (path_command);
-	free(path_command);
-	return (NULL);
-}
-
-char	*find_path(t_shell *sh, char *command)
-{
-	char	*path_command;
-	int		i;
-
-	i = 0;
-	if (!command || !*command)
-		return (NULL);
-	if (!sh->paths)
-		return (NULL);
-	else
-	{
-		while (sh->paths[i])
-		{
-			path_command = ft_check_command_location(sh, command, sh->paths[i]);
-			if (path_command != NULL)
-				return (path_command);
-			i++;
-		}
-	}
-	return (NULL);
-}
 
 void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg)
 {
@@ -65,36 +19,11 @@ void	fill_execcmd(t_shell *sh, t_execcmd *cmd, char *arg)
 	argc = 0;
 	while (cmd->argv[argc])
 		argc++;
-	// printf("CMD[%d]: %s \n", argc, arg);
 	cmd->argv[argc] = ft_strdup(arg);
 	if (!cmd->argv[argc])
 		clear_exit(sh, 1);
 	if (argc == 0)
-	{
 		cmd->command = find_path(sh, cmd->argv[0]);
-		// printf("\nPATH_CMD: %s\n\n", cmd->command);
-	}
-}
-
-int	count_args(t_shell *sh, t_list *tkn_pos)
-{
-	t_token	*tkn_cont;
-	int		count;
-
-	count = 0;
-	(void)sh;
-	while (tkn_pos)
-	{
-		tkn_cont = (t_token *)tkn_pos->content;
-		if (tkn_cont->type == WORD)
-			count++;
-		else if (tkn_cont->type == PIPE)
-			break ;
-		tkn_pos = tkn_pos->next;
-	}
-	// if (count == 0)
-	// 	clear_exit(sh, 1);
-	return (count);
 }
 
 /*Construct the exec structure.*/

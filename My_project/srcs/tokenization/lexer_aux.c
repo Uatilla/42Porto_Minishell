@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:25:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/02 17:53:27 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:06:04 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,43 @@ void	set_heredoc_type(t_list *start)
 			break ;
 		}
 		inner_tmp = inner_tmp->next;
+	}
+}
+
+void	join_non_removable_nodes(t_shell *sh, t_list **tkns)
+{
+	t_list	*tmp;
+	t_list	*next;
+
+	tmp = *tkns;
+	while (tmp && tmp->next)
+	{
+		if (!is_removable(get(tmp->next)->type) && !is_removable(get(tmp)->type)
+			&& get(tmp)->type != PIPE && get(tmp->next)->type != PIPE)
+		{
+			next = tmp->next;
+			get(tmp)->value = ft_strjoin_mod(get(tmp)->value,
+				get(tmp->next)->value);
+			if (!get(tmp)->value)
+				clear_exit(sh, 1);
+			remove_node(tkns, next);
+		}
+		else
+			tmp = tmp->next;
+	}
+}
+
+void	remove_removable_nodes(t_list **tkns)
+{
+	t_list	*tmp;
+	t_list	*next;
+
+	tmp = *tkns;
+	while (tmp)
+	{
+		next = tmp->next;
+		if (is_removable(get(tmp)->type))
+			remove_node(tkns, tmp);
+		tmp = next;
 	}
 }

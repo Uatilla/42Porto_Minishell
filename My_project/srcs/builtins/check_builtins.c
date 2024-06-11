@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 17:49:24 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:22:20 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	builtins_parent(t_shell *sh)
 		{
 			cmd = parse_exec(sh, tmp);
 			execcmd = get_exec_node(sh, cmd);
-			
 			if (!ft_strcmp(execcmd->argv[0], "export"))
 				export_parent(sh, cmd);
 			else
