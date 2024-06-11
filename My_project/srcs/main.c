@@ -64,21 +64,22 @@ void	sh_loop(t_shell *sh)
 	int		status;
 
 	(void) sh;
+	set_signals();
 	while (1)
 	{
-		set_signals();
 		prompt_input = get_line(sh);
 		if (!prompt_input)
 			sh_loop(sh);
 		if (!sintax_validation(prompt_input))
 			sh_loop(sh);
+		set_main_signal();
 		lexer(sh, prompt_input);
 		if (fork1(sh) == 0)
 		{
-			set_child_signals();
 			parsing_tree(sh);
 			exec_tree(sh, sh->cmd);
 		}
+		set_main_signal();
 		waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			g_signo = WEXITSTATUS(status);
