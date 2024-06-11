@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/09 17:05:19 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:48:37 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ char	*expand_home(t_shell *sh, t_list *tmp)
 	char	*temp;
 	char	*ret;
 	char	*expand;
-	
+
+	expand = ft_strdup("");
 	temp = get_env(sh->env_lst, "HOME");
 	if (!ft_strcmp("~", get(tmp)->value))
 		ret = ft_strdup(temp);
@@ -29,9 +30,9 @@ char	*expand_home(t_shell *sh, t_list *tmp)
 		ret = ft_strjoin(temp, expand);
 		if (!ret)
 			clear_exit(sh, 1);
-		free(get(tmp)->value);
-		free(expand);
 	}
+	free(get(tmp)->value);
+	free(expand);
 	free(temp);
 	return (ret);
 }
@@ -45,13 +46,11 @@ bool	is_home(t_list *tmp)
 		
 }
 
-void	clean_tokenlist(t_shell *sh, t_list **tkns)
+void join_non_removable_nodes(t_list **tkns)
 {
-	t_list	*tmp;
-	t_list	*next;
+	t_list *tmp = *tkns;
+	t_list *next;
 
-
-	tmp = *tkns;
 	while (tmp && tmp->next)
 	{
 		if (!is_removable(get(tmp->next)->type) && !is_removable(get(tmp)->type)
@@ -65,35 +64,51 @@ void	clean_tokenlist(t_shell *sh, t_list **tkns)
 		else
 			tmp = tmp->next;
 	}
-	tmp = *tkns;
+}
+
+void remove_removable_nodes_and_expand_home(t_shell *sh, t_list **tkns)
+{
+	t_list *tmp = *tkns;
+	t_list *next;
+
+	(void)sh;
 	while (tmp)
 	{
 		next = tmp->next;
 		if (is_removable(get(tmp)->type))
 			remove_node(tkns, tmp);
-		else if (is_home(tmp))
-			get(tmp)->value = expand_home(sh, tmp);
+		// else if (is_home(tmp))
+		// 	get(tmp)->value = expand_home(sh, tmp);
 		tmp = next;
 	}
 }
 
-void	expander(t_shell *sh, t_list **tokens)
+void clean_tokenlist(t_shell *sh, t_list **tkns)
 {
-	t_list	*tmp;
-	t_list	*to_exclude;
-	t_list	*next;
+	join_non_removable_nodes(tkns);
+	remove_removable_nodes_and_expand_home(sh, tkns);
+}
 
-	tmp = *tokens;
+void expand_general_tokens(t_shell *sh, t_list **tokens)
+{
+	t_list *tmp = *tokens;
+	t_list *to_exclude;
+	t_list *next;
+
 	while (tmp)
 	{
-		if (get(tmp)->value[0] == '$' && get(tmp)->state == GENERAL
-			&& tmp->next)
+		if (get(tmp)->value[0] == '$' && get(tmp)->state == GENERAL &&
+			tmp->next)
 		{
 			if (get(tmp->next)->type != E_SPACE)
 			{
 				to_exclude = tmp;
 				expand_general(sh, to_exclude);
-				if (!get(tmp)->value || !*get(tmp)->value)
+				// if (search_char(get(tmp)->value, " \t") && ((get(tmp)->type != INFILE && get(tmp)->type != OUTFILE && get(tmp)->type != APPEND)))
+				// {
+					
+				// }
+				if ((!get(tmp)->value || !*get(tmp)->value))
 				{
 					next = tmp->next;
 					remove_node(tokens, tmp);
@@ -104,7 +119,13 @@ void	expander(t_shell *sh, t_list **tokens)
 		}
 		tmp = tmp->next;
 	}
-	tmp = *tokens;
+}
+
+void expand_quote_tokens(t_shell *sh, t_list **tokens)
+{
+	t_list *tmp = *tokens;
+	t_list *next;
+
 	while (tmp)
 	{
 		next = tmp->next;
@@ -113,12 +134,18 @@ void	expander(t_shell *sh, t_list **tokens)
 			if (get(tmp)->type != HEREDOC && get(tmp)->value[0])
 			{
 				expand_quotes(sh, tmp);
-				if (!*get(tmp)->value)
+				if (!*get(tmp)->value && ((get(tmp)->type != INFILE && get(tmp)->type != OUTFILE && get(tmp)->type != APPEND)))
 					remove_node(tokens, tmp);
 			}
 		}
 		tmp = next;
 	}
+}
+
+void expander(t_shell *sh, t_list **tokens)
+{
+	expand_general_tokens(sh, tokens);
+	expand_quote_tokens(sh, tokens);
 }
 
 // Função principal refatorada
@@ -149,10 +176,10 @@ void	lexer(t_shell *sh, char *input)
 	review_tkn_typ(sh->token_lst);
 	review_tkn_list(sh, &sh->token_lst);
 	expander(sh, &sh->token_lst);
+	// print_tokens(sh);
 	clean_tokenlist(sh, &sh->token_lst);
+	handle_heredoc(sh, &sh->token_lst);
 	if (sh->nbr_pipes == 0)
 		builtins_parent(sh);
-	att_env(sh, "_", NULL);
-	// print_env(sh);
-	// print_tokens(sh);
+	// att_env(sh, "_", NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:54:33 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/08 21:01:46 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:26:59 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	print_env(t_shell *sh)
 	while (tmp)
 	{
 		env_content = tmp->content;
-		if (env_content->visible == true)
+		if (env_content->visible == true && env_content->value)
 			printf("%s=%s\n", env_content->key, env_content->value);
 		tmp = tmp->next;
 	}

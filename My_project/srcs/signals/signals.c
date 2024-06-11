@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:18:48 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/09 15:56:47 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:03:03 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ void	sigint_child_handler(int signo)
 	if (signo == SIGINT)
 	{
 		g_signo = 130;
-		write(1, "\n", 1);
+		write(2, "\n", 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
 		exit(g_signo);
 	}
 	else if (signo == SIGQUIT)
 	{
 		g_signo = 131;
-		write(1, "Quit (core dumped)\n", 19);
+		write(2, "Quit (core dumped)\n", 19);
 		exit(g_signo);
 	}
 }
@@ -34,19 +36,25 @@ void	set_child_signals(void)
 	signal(SIGQUIT, sigint_child_handler);
 }
 
-void	set_main_signal(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
+
+
+
+
+
+
+
+
+
+
+
 
 void	sigint_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		g_signo = 130;
-		write(1, "\n", 1);
 		rl_replace_line("", 0);
+		g_signo = 130;
+		write(2, "\n", 1);
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -55,5 +63,13 @@ void	sigint_handler(int signo)
 void	set_signals(void)
 {
 	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+}
+
+
+void	set_main_signal(void)
+{
+	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
