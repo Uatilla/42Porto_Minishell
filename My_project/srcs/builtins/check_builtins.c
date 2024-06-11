@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 15:19:05 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:49:24 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 	return (ret);
 }
 
-t_execcmd	*get_exec_node(__attribute_maybe_unused__ t_shell *sh, t_cmd *node)
+t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node)
 {
 	t_execcmd	*execnode;
 
+	(void)sh;
 	execnode = NULL;
 	while (node->n_type == N_REDIR)
 		node = ((t_redircmd *)node)->cmd;

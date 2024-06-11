@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 15:04:45 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:48:37 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,12 @@ void join_non_removable_nodes(t_list **tkns)
 	}
 }
 
-void remove_removable_nodes_and_expand_home(__attribute_maybe_unused__ t_shell *sh, t_list **tkns)
+void remove_removable_nodes_and_expand_home(t_shell *sh, t_list **tkns)
 {
 	t_list *tmp = *tkns;
 	t_list *next;
 
+	(void)sh;
 	while (tmp)
 	{
 		next = tmp->next;
