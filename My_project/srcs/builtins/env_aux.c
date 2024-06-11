@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 19:10:11 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 19:10:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:20:03 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,5 @@ void	att_env(t_shell *sh, char *key, char *new_value)
 		node_content = create_env_node(key, new_value);
 	}
 	update_env_list(sh, node_content);
+	get_paths(sh);
 }

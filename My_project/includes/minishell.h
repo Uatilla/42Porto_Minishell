@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 19:45:28 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:53:16 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ typedef enum s_folder
 	PARENT_FOLDER,
 	NOTHING
 }	t_folder;
-typedef	struct s_cd
-{
-	t_folder 	*type;
-}	t_cd;
 
+typedef struct s_cd
+{
+	t_folder	*type;
+}	t_cd;
 
 typedef enum s_signal
 {
@@ -282,10 +282,10 @@ void	get_doc(t_shell *sh, t_list *tmp, int i);
 void	handle_heredoc(t_shell *sh, t_list **tkns);
 
 //handle_heredoc_aux.c
-void	unlink_heredoc(t_list *token);
 char	*expand_heredoc(t_shell *sh, char *str);
 char	*generate_temp_filename(t_shell *sh, char *file, int i);
-
+void	append_doc_to_file(char *filename, char *content);
+char	*create_temp_file(t_shell *sh, char *file, int i);
 //expander.c
 void	expand_quotes(t_shell *sh, t_list *token);
 void	expand_general(t_shell *sh, t_list *tkn);
@@ -362,13 +362,13 @@ void	builtins_parent(t_shell *sh);
 bool	isbuiltin(char *cmd);
 int		execute_builtin(t_shell *sh, t_execcmd *cmd, int procs);
 
-int		export_parent(t_shell *sh, t_cmd *cmd);
-int		export(t_shell *sh, t_execcmd *execcmd, int procs);
-void	print_export(t_shell *sh);
+int			export_parent(t_shell *sh, t_cmd *cmd);
+int			export(t_shell *sh, t_execcmd *execcmd, int procs);
+void		print_export(t_shell *sh);
 t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node);
-char	*expand_home(t_shell *sh, t_list *tmp);
-bool	is_home(t_list *tmp);
-int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs);
+char		*expand_home(t_shell *sh, t_list *tmp);
+bool		is_home(t_list *tmp);
+int			exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs);
 
 void update_or_add_env(t_shell *sh, char *key, char *value);
 t_list *find_last_word(t_list *token_lst);
@@ -381,5 +381,9 @@ char	**list_to_array_export(t_list *env);
 int	export_parent(t_shell *sh, t_cmd *cmd);
 void	extract_key_value(const char *input, char **key, char **value);
 void	clear_exit(t_shell *sh, int status);
+void	init_empty_env(t_shell *sh);
+void	handle_non_general_state(t_list *tkn);
+void	handle_heredoc_type(t_list *tkn);
+
 
 #endif

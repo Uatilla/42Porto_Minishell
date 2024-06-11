@@ -6,11 +6,22 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:38:27 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 19:44:12 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:01:09 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_empty_env(t_shell *sh)
+{
+	char	*pwd;
+
+	pwd = NULL;
+	pwd = getcwd(pwd, 0);
+	att_env(sh, "SHLVL", "1");
+	att_env(sh, "PWD", pwd);
+	att_env(sh, "OLDPWD", NULL);
+}
 
 char	*get_value(char *env_var, int pos)
 {

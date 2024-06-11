@@ -6,25 +6,11 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:42:00 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/10 21:44:28 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:21:21 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	unlink_heredoc(t_list *token)
-{
-	t_list	*tkn;
-
-	tkn = token;
-	while (tkn)
-	{
-		// printf("%s\n", (char *)tkn->content);
-		unlink((char *)tkn->content);
-		free((char *)tkn->content);
-		tkn = tkn->next;
-	}
-}
 
 char	*expand_heredoc(t_shell *sh, char *str)
 {
@@ -69,4 +55,34 @@ char	*generate_temp_filename(t_shell *sh, char *file, int nbr)
 	free(file_aux);
 	free(num);
 	return (filename);
+}
+
+char	*create_temp_file(t_shell *sh, char *file, int i)
+{
+	char	*filename;
+	int		fd;
+
+	filename = generate_temp_filename(sh, file, i);
+	if (!filename)
+		return (NULL);
+	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
+	if (fd == -1)
+	{
+		free(filename);
+		return (NULL);
+	}
+	close(fd);
+	return (filename);
+}
+
+void	append_doc_to_file(char *filename, char *content)
+{
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_APPEND);
+	if (fd == -1)
+		return ;
+	write(fd, content, ft_strlen(content));
+	write(fd, "\n", 1);
+	close(fd);
 }
