@@ -36,20 +36,26 @@ void	set_child_signals(void)
 	signal(SIGQUIT, sigint_child_handler);
 }
 
-void	set_main_signal(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
+
+
+
+
+
+
+
+
+
+
+
 
 void	sigint_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		g_signo = 130;
-		rl_on_new_line();
-		write(2, "\n", 1);
 		rl_replace_line("", 0);
+		g_signo = 130;
+		write(2, "\n", 1);
+		rl_on_new_line();
 		rl_redisplay();
 	}
 }
@@ -57,5 +63,13 @@ void	sigint_handler(int signo)
 void	set_signals(void)
 {
 	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+}
+
+
+void	set_main_signal(void)
+{
+	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }

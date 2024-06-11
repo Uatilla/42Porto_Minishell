@@ -61,7 +61,7 @@ void	free_token_list(t_list **token_list)
 	ft_lstclear(token_list, free_token_content);
 }
 
-void	clear_exit(t_shell *sh, int status)
+/*void	clear_exit(t_shell *sh, int status)
 {
 	int	i;
 
@@ -87,4 +87,4 @@ void	clear_exit(t_shell *sh, int status)
 	}
 	rl_clear_history();
 	exit(status);
-}
+}*/

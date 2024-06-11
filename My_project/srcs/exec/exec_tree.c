@@ -52,9 +52,11 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 			g_signo = execute_builtin(sh, excmd, TREE);
 		else if (fork1(sh) == 0)
 		{
+			set_child_signals();
 			if (execve(excmd->command, excmd->argv, sh->envp) == -1)
 				perror(excmd->command);
 		}
+		set_main_signal();
 		if (WIFEXITED(status) && waitpid(0, &status, 0) != -1)
 			g_signo = WEXITSTATUS(status);
 	}
