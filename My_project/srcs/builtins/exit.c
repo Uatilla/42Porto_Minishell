@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:50:18 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 19:27:17 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:21:56 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,27 @@ long long	check_digits(t_execcmd *exc, int *j)
 	return (i);
 }
 
+// long long	is_exit_code(t_execcmd *exc)
+// {
+// 	long long	i;
+// 	int			j;
+
+// 	j = 0;
+// 	i = check_first_char(exc, &j);
+// 	if (i != -1)
+// 		i = check_digits(exc, &j);
+// 	if (i != -1)
+// 	{
+// 		i = ft_atol(exc->argv[1]);
+// 		if (i <= LONG_MAX && i >= LONG_MIN)
+// 		{
+// 			return ((unsigned long long)i);
+// 		}
+// 	}
+// 	return (-1);
+// }
+
+
 int	is_exit_code(t_execcmd *exc)
 {
 	long long	i;
@@ -83,7 +104,7 @@ int	is_exit_code(t_execcmd *exc)
 	if (i != -1)
 	{
 		i = ft_atol(exc->argv[1]);
-		if (i > INT_MAX || i < INT_MIN)
+		if (i > LONG_MAX || i < LONG_MIN)
 			return (-1);
 		return ((unsigned int)i % 256);
 	}
@@ -93,28 +114,36 @@ int	is_exit_code(t_execcmd *exc)
 int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs)
 {
 	int	ret;
-	int	exit_code;
+	long long	exit_code;
+	int nbr_args;
 
+	nbr_args = 0;
 	ret = 0;
 	exit_code = 0;
-	g_signo = 0;
+	while (exit_cmd->argv[nbr_args])
+		nbr_args++;
 	if (exit_cmd->argv[1])
+	{
 		exit_code = is_exit_code(exit_cmd);
-	if (exit_code >= 0)
-		g_signo = exit_code;
-	if (g_signo >= 0)
+		if (exit_code == -1)
+		{
+			if (procs == TREE)
+			{
+				write(2, "exit: bash: ", 13);
+				custom_error(NULL, exit_cmd->argv[1],
+						"numeric argument required", 2);
+			}
+			exit_code = 2;
+		}
+	}
+	if (nbr_args > 2)
 	{
 		if (procs == PARENT)
-			printf("exit\n");
-		if (exit_code < 0 && exit_cmd->argv[1])
-		{
-			write(2, "exit: ", 7);
-			custom_error(exit_cmd->argv[1],
-				"numeric argument required", ((unsigned int)exit_code % 256));
-		}
-		clear_exit(sh, (unsigned int)g_signo % 256);
+			custom_error("bash: ", exit_cmd->argv[0], "too many arguments", 1);
+		return (g_signo);
 	}
-	else
-		ret = g_signo;
-	return (ret);
+	g_signo = exit_code % 256;
+	if (procs == PARENT)
+		clear_exit(sh, g_signo);
+	return (g_signo);
 }

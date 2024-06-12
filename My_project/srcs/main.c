@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 10:18:51 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:44:52 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_shell(t_shell *sh, char **env_var)
 	if (env_var)
 	{
 		fill_env(sh, env_var);
+		sh->envp = list_to_array(sh, sh->env_lst, 2);
 		get_paths(sh);
 	}
 }
@@ -63,7 +64,6 @@ void	sh_loop(t_shell *sh)
 	char	*prompt_input;
 	int		status;
 
-	(void) sh;
 	set_signals();
 	while (1)
 	{
@@ -76,6 +76,7 @@ void	sh_loop(t_shell *sh)
 		lexer(sh, prompt_input);
 		if (fork1(sh) == 0)
 		{
+			set_child_signals();
 			parsing_tree(sh);
 			exec_tree(sh, sh->cmd);
 		}
@@ -83,6 +84,8 @@ void	sh_loop(t_shell *sh)
 		waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			g_signo = WEXITSTATUS(status);
+		if (sh->nbr_pipes == 0 && g_signo == 0)
+			builtins_parent(sh);
 		free(prompt_input);
 		reinit_shell(sh);
 	}

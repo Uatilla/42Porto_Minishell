@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 10:21:27 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:42:44 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	execute_command(t_shell *sh, t_execcmd *excmd)
 	else if (fork1(sh) == 0)
 	{
 		if (execve(excmd->command, excmd->argv, sh->envp) == -1)
+		{
 			perror(excmd->command);
+			if (access(excmd->argv[0], X_OK))
+				exit (126);
+		}
 	}
 	if (WIFEXITED(status) && waitpid(0, &status, 0) != -1)
 		g_signo = WEXITSTATUS(status);
@@ -38,6 +42,8 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 		if (excmd->argv[0] && !is_directory(excmd->argv[0]))
 			execute_command(sh, excmd);
 	}
+	if (!ft_strcmp(excmd->argv[0], "exit") && sh->nbr_pipes == 0)
+		g_signo = 0;
 	exit(g_signo);
 }
 
@@ -49,17 +55,18 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 	close(rdcmd->fd);
 	if (rdcmd->file[0] == '$')
 	{
-		custom_error(rdcmd->file, "ambigous redirec", 1);
+		custom_error("bash: ", rdcmd->file, "ambigous redirec", 1);
 		exit (g_signo);
 	}
 	if (rdcmd->file[0] == '$')
 	{
-		custom_error(rdcmd->file, "ambigous redirec", 1);
+		custom_error("bash: ", rdcmd->file, "ambigous redirec", 1);
 		exit (g_signo);
 	}
 	if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
 	{
-		custom_error(rdcmd->file, "No such file or directory", 1);
+		perror(rdcmd->file);
+		g_signo = 1;
 		exit (g_signo);
 	}
 	exec_tree(sh, rdcmd->cmd);

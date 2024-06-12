@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:35:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 21:41:19 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:41:22 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,21 @@ bool	handle_command_errors(t_execcmd *excmd)
 	bool	ret;
 
 	ret = true;
-	if (!excmd->command && excmd->argv[0] && !isbuiltin(excmd->argv[0]))
+	if (!excmd->command)
 	{
-		if (is_file(excmd->argv[0]))
-			custom_error(excmd->argv[0], "No such file or directory", 127);
-		else
-			custom_error(excmd->argv[0], "command not found", 127);
-		ret = false;
-	}
-	else if (excmd->argv[0] && is_directory(excmd->argv[0]))
-	{
-		custom_error(excmd->argv[0], "Is a directory", 126);
-		ret = false;
+		if (!excmd->command && excmd->argv[0] && !isbuiltin(excmd->argv[0]))
+		{
+			if (is_file(excmd->argv[0]))
+				custom_error("bash: ", excmd->argv[0], "No such file or directory", 127);
+			else
+				custom_error("bash: ", excmd->argv[0], "command not found", 127);
+			ret = false;
+		}
+		else if (!access(excmd->argv[0], X_OK) || (excmd->argv[0] && is_directory(excmd->argv[0])))
+		{
+			custom_error("bash: ", excmd->argv[0], "Is a directory", 126);
+			ret = false;
+		}
 	}
 	return (ret);
 }

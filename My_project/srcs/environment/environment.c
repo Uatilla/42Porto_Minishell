@@ -6,21 +6,41 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:38:27 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 10:21:19 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:53:33 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_env	*get_content(t_shell *sh, char *key, char *value, bool visible)
+{
+	t_env *content;
+
+	content = NULL;
+	ft_bzero(content, sizeof(t_env));
+	if (!content)
+		clear_exit(sh, 1);
+	content->key = ft_strdup(key);
+	if (value)
+		content->value = ft_strdup(value);
+	content->visible = visible;
+	return (content);
+}
 void	init_empty_env(t_shell *sh)
 {
 	char	*pwd;
+	t_env	*pwd_node;
+	t_env	*shell_level;
+	t_env	*old_pwd;
 
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
-	att_env(sh, "SHLVL", "1");
-	att_env(sh, "PWD", pwd);
-	att_env(sh, "OLDPWD", NULL);
+	pwd_node = get_content(sh, "PWD", pwd, true);
+	shell_level = get_content(sh, "SHLVL", "1", true);
+	old_pwd = get_content(sh, "OLDPWD", NULL, true);
+	ft_lstadd_back(&sh->env_lst, ft_lstnew(shell_level));
+	ft_lstadd_back(&sh->env_lst, ft_lstnew(pwd_node));
+	ft_lstadd_back(&sh->env_lst, ft_lstnew(old_pwd));
 }
 
 char	*get_value(char *env_var, int pos)
@@ -47,11 +67,22 @@ char	*get_key(char *env_var, int pos)
 	return (key);
 }
 
+void	free_path(char **array)
+{
+	int i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+}
+
 void	get_paths(t_shell *sh)
 {
 	char	*path_aux;
 
-	sh->envp = list_to_array(sh, sh->env_lst, 2);
+	if (sh->paths)
+		free_path(sh->paths);
 	path_aux = get_path_aux(sh->envp);
 	if (path_aux)
 		sh->paths = ft_split(path_aux, ':');

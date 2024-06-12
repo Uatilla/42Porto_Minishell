@@ -6,13 +6,9 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/12 10:11:31 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/12 17:38:43 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-
-
-.SILENT:
 
 # Colors
 RESET 		=	\033[0m	
@@ -77,16 +73,16 @@ LIBFT		=	./libraries/libft/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
-	printf "Compiling		$(GREEN)[OK]$(RESET)\n"
+	@ $(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
+	@ printf "Compiling		$(GREEN)[OK]$(RESET)\n"
 
 $(OBJS_DIR):
-	mkdir -p $(OBJS_DIR) $(ALL_OBJS_DIR)
-	printf "Objects directories  	$(YELLOW)[OK]$(RESET)\n"
+	@ mkdir -p $(OBJS_DIR) $(ALL_OBJS_DIR)
+	@ printf "Objects directories  	$(YELLOW)[OK]$(RESET)\n"
 
 $(OBJS): $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c | $(OBJS_DIR)
-	$(CC) -I $(INCLUDES) $(CFLAGS) -c $< -o $@
-	printf "Making binary files	$(YELLOW)[OK]$(RESET)\n"
+	@ $(CC) -I $(INCLUDES) $(CFLAGS) -c $< -o $@
+	@ printf "Making binary files	$(YELLOW)[OK]$(RESET)\n"
 
 #$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c 
 #	mkdir -p $(@D)
@@ -95,18 +91,18 @@ $(OBJS): $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c | $(OBJS_DIR)
 
 
 $(LIBFT):
-	printf "Making Libft		$(YELLOW)[OK]$(RESET)\n"
-	$(MAKE)  -sC $(LIBFT_DIR)
+	@ printf "Making Libft		$(YELLOW)[OK]$(RESET)\n"
+	@ $(MAKE)  -sC $(LIBFT_DIR)
 
 clean:
-	$(RM) $(OBJS_DIR)
-	printf "clean Minishell files	$(CYAN)[OK]$(RESET)\n"
-	$(MAKE) $(MK_FLAG) clean -sC $(LIBFT_DIR)
+	@ $(RM) $(OBJS_DIR)
+	@ printf "clean Minishell files	$(CYAN)[OK]$(RESET)\n"
+	@ $(MAKE) $(MK_FLAG) clean -sC $(LIBFT_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) $(MK_FLAG) fclean -sC $(LIBFT_DIR)
-	printf "fclean			$(CYAN)[OK]$(RESET)\n"
+	@ $(RM) $(NAME)
+	@ $(MAKE) $(MK_FLAG) fclean -sC $(LIBFT_DIR)
+	@ printf "fclean			$(CYAN)[OK]$(RESET)\n"
 
 leaks: readline.supp
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --log-file=output.log ./minishell

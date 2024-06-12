@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 10:12:01 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:06:19 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ int	unset(t_shell *sh, t_execcmd *cmd);
 void	init_empty_env(t_shell *sh);
 char	*get_value(char *env_var, int pos);
 char	*get_key(char *env_var, int pos);
+void	free_path(char **array);
 void	get_paths(t_shell *sh);
 void	fill_env(t_shell *sh, char **env_var);
 
@@ -283,7 +284,7 @@ void	free_token_list(t_list **token_list);
 void	free_env_list(t_list **env_lst);
 void	free_token_content(void *content);
 void	free_env_content(void *content);
-void	custom_error(char *file, char *message, int error);
+void	custom_error(char *bash, char *file, char *message, int error);
 
 //EXPANSION FOLDER
 //expander.c
@@ -364,7 +365,7 @@ int		is_removable(int type);
 void	transform_nodes(t_list *start, int type);
 void	set_heredoc_type(t_list *start);
 void	join_non_removable_nodes(t_shell *sh, t_list **tkns);
-void	remove_removable_nodes(t_list **tkns);
+void	remove_removable_nodes(t_shell *sh, t_list **tkns);
 //lexer.c
 void	clean_tokenlist(t_shell *sh, t_list **tkns);
 void	expand_general_tokens(t_shell *sh, t_list **tokens);

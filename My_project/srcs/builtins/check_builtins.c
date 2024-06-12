@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 10:20:45 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:42:05 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,16 @@ bool	isbuiltin(char *cmd)
 	else if (ft_strcmp(cmd, "export") == 0)
 		return (true);
 	else if (ft_strcmp(cmd, "unset") == 0)
-	if (ft_strcmp(cmd, "env") == 0)
 		return (true);
-	else if (ft_strcmp(cmd, "exit") == 0)
+	else if (ft_strcmp(cmd, "echo") == 0)
 		return (true);
-	else if (ft_strcmp(cmd, "cd") == 0)
+	else if (ft_strcmp(cmd, "pwd") == 0)
 		return (true);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (true);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		return (true);
-	return (false);
 	return (false);
 }
 
 bool	isbuiltin_parent(char *cmd)
 {
-	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "export")
-		|| !ft_strncmp(cmd, "unset", 5) || !ft_strcmp(cmd, "exit"))
 	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "export")
 		|| !ft_strncmp(cmd, "unset", 5) || !ft_strcmp(cmd, "exit"))
 		return (true);
@@ -97,16 +89,11 @@ void	builtins_parent(t_shell *sh)
 	bool		builtin;
 	t_execcmd	*execcmd;
 	t_cmd		*cmd;
-	t_list		*tmp;
-	bool		builtin;
-	t_execcmd	*execcmd;
-	t_cmd		*cmd;
 
 	execcmd = NULL;
 	tmp = sh->token_lst;
 	while (tmp)
 	{
-		builtin = isbuiltin_parent(get(tmp)->value);
 		builtin = isbuiltin_parent(get(tmp)->value);
 		if (builtin)
 		{
@@ -117,9 +104,15 @@ void	builtins_parent(t_shell *sh)
 			else
 				execute_builtin(sh, execcmd, PARENT);
 			free_tree(cmd);
-			free_tree(cmd);
 			return ;
 		}
 		tmp = tmp->next;
 	}
 }
+
+
+// exit 
+// mensagem e numero de erro dos arquivos 
+// funcoes de execucao somente no parent: 
+// - cd 
+// - 

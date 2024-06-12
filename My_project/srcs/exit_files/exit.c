@@ -6,16 +6,17 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 10:21:35 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:37:52 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	custom_error(char *file, char *message, int error)
+void	custom_error(char *bash, char *file, char *message, int error)
 {
-	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd("bash: ", 2);
+	// ft_putstr_fd("bash: ", 2);
+	if (bash)
+		ft_putstr_fd(bash, 2);
 	if (file)
 	{
 		ft_putstr_fd(file, 2);

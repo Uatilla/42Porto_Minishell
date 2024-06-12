@@ -6,13 +6,13 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 10:22:00 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:04:51 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void join_non_removable_nodes(t_list **tkns)
+void	clean_tokenlist(t_shell *sh, t_list **tkns)
 {
 	join_non_removable_nodes(sh, tkns);
 	remove_removable_nodes(tkns);
@@ -107,8 +107,6 @@ void	lexer(t_shell *sh, char *input)
 	expand_quote_tokens(sh, &sh->token_lst);
 	clean_tokenlist(sh, &sh->token_lst);
 	handle_heredoc(sh, &sh->token_lst);
-	handle_heredoc(sh, &sh->token_lst);
 	if (sh->nbr_pipes == 0)
-		builtins_parent(sh);
-	att_env(sh, "_", NULL);
+		att_env(sh, "_", NULL);
 }
