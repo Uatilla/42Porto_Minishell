@@ -64,9 +64,9 @@ void	sh_loop(t_shell *sh)
 	char	*prompt_input;
 	int		status;
 
-	set_signals();
 	while (1)
 	{
+		set_signals();
 		prompt_input = get_line(sh);
 		if (!prompt_input)
 			sh_loop(sh);
