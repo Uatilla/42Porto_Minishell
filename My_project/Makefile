@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/12 17:38:43 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/12 19:53:50 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
 
 # Files
 SRCS		=	main.c print.c \
-				environment/environment.c environment/environment_path.c\
+				environment/environment.c \
 				exit_files/exit.c exit_files/cleaning_tree.c\
 				signals/signals.c signals/signals_heredoc.c \
 				input/input_checker.c input/input_checker_utils.c \
@@ -53,8 +53,8 @@ SRCS		=	main.c print.c \
 				tokenization/rename_tkn_typ.c \
 				parsing/building_tree.c parsing/construct_tree.c \
 				expansion/expander.c \
-				expansion/expander_aux.c tokenization/lexer.c tokenization/lexer_expander.c\
-				tokenization/lexer_aux.c tokenization/path.c tokenization/lexer_home.c\
+				expansion/expander_aux.c tokenization/lexer.c \
+				tokenization/lexer_aux.c tokenization/path.c \
 				tokenization/path_aux.c tokenization/handle_heredoc.c \
 				tokenization/handle_heredoc_aux.c \
 				exec/exec_tree.c \
@@ -64,7 +64,7 @@ SRCS		=	main.c print.c \
 				builtins/export_aux.c builtins/exit.c /builtins/env_aux.c \
 				builtins/export_aux2.c exit_files/exit_aux.c \
 				expansion/expander_aux2.c exec/exec_tree_aux.c \
-				parsing/path_functions.c
+				parsing/path_functions.c environment/environment_path.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
