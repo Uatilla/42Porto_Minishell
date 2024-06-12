@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 18:04:51 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:50:55 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,68 @@ void	clean_tokenlist(t_shell *sh, t_list **tkns)
 {
 	join_non_removable_nodes(sh, tkns);
 	remove_removable_nodes(sh, tkns);
+}
+
+void	expand_general_tokens(t_shell *sh, t_list **tokens)
+{
+	t_list *tmp = *tokens;
+	t_list *to_exclude;
+	t_list *next;
+
+	while (tmp)
+	{
+		if (is_home(tmp) && get(tmp)->state == GENERAL)
+		{
+			get(tmp)->value = expand_home(sh, tmp);
+		}
+		else if (get(tmp)->value[0] == '$' && get(tmp)->state == GENERAL &&
+			tmp->next)
+		{
+			if (get(tmp->next)->type != E_SPACE)
+			{
+				to_exclude = tmp;
+				expand_general(sh, to_exclude);
+				if ((!get(tmp)->value || !*get(tmp)->value))
+				{
+					next = tmp->next;
+					remove_node(tokens, tmp);
+					tmp = next;
+					continue ;
+				}
+			}
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	expand_quote_tokens(t_shell *sh, t_list **tokens)
+{
+	t_list	*tmp;
+	t_list	*next;
+
+	tmp = *tokens;
+	while (tmp)
+	{
+		next = tmp->next;
+		if (get(tmp)->state == IN_DQUOTES)
+		{
+			if (get(tmp)->type != HEREDOC && get(tmp)->value[0])
+			{
+				expand_quotes(sh, tmp);
+				if (!*get(tmp)->value && ((get(tmp)->type != INFILE
+							&& get(tmp)->type != OUTFILE
+							&&get(tmp)->type != APPEND)))
+					remove_node(tokens, tmp);
+			}
+		}
+		tmp = next;
+	}
+}
+
+void expander(t_shell *sh, t_list **tokens)
+{
+	expand_general_tokens(sh, tokens);
+	expand_quote_tokens(sh, tokens);
 }
 
 // Função principal refatorada

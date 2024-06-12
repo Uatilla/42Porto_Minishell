@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 20:52:00 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 18:22:11 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:59:53 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_env(t_list *env_list, char *token)
 	while (env)
 	{
 		key = ((t_env *)env->content)->key;
-		if (!ft_strcmp(key, "HOME") && !ft_strcmp(token, "~"))
+		if (!ft_strcmp(key, "HOME") && !ft_strcmp("HOME", token))
 		{
 			free(expansion);
 			expansion = ft_strdup(((t_env *)env->content)->value);

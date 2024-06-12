@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 17:44:52 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:34:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	sh_loop(t_shell *sh)
 		reinit_shell(sh);
 	}
 }
+
 
 int	main(int argc, char **argv, char **envp)
 {

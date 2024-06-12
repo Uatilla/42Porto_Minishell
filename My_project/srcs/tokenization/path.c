@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 12:21:57 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:09:50 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*get_line(t_shell *sh)
 {
 	char	*input;
 
-	input = readline(PROMPT);
+	input = readline(ROSE_2 PROMPT COLOR_RESET);
 	if (!input)
 	{
 		write(1, "exit\n", 5);

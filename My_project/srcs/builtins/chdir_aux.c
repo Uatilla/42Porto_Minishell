@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:46:39 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 13:38:27 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:22:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	check_dots(char *input)
 			count = 0;
 		if (count >= 3)
 		{
-			perror("bash: cd");
+			perror("minishell: cd");
 			return (false);
 		}
 		i++;
@@ -39,7 +39,7 @@ bool	check_option(char *input)
 {
 	if (*input == '-')
 	{
-		custom_error("bash: ", "cd", "'-' out of scope", 0);
+		custom_error("minishell: ", "cd", "'-' out of scope", 0);
 		return (false);
 	}
 	input++;

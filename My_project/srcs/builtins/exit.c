@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:50:18 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 17:21:56 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:22:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs)
 		{
 			if (procs == TREE)
 			{
-				write(2, "exit: bash: ", 13);
+				write(2, "exit: minishell: ", 13);
 				custom_error(NULL, exit_cmd->argv[1],
 					"numeric argument required", 2);
 			}
@@ -138,7 +138,7 @@ int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs)
 	if (nbr_args > 2)
 	{
 		if (procs == PARENT)
-			custom_error("bash: ", exit_cmd->argv[0], "too many arguments", 1);
+			custom_error("minishell: ", exit_cmd->argv[0], "too many arguments", 1);
 		return (g_signo);
 	}
 	g_signo = exit_code % 256;

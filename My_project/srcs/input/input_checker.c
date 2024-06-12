@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 20:32:43 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 20:04:02 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:22:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	prt_stx_error(char *error, bool exit)
 {
-	printf("bash: syntax error near unexpected token `%s'\n", error);
+	printf("minishell: syntax error near unexpected token `%s'\n", error);
 	return (exit);
 }
 
@@ -26,7 +26,7 @@ int	search_c_quote(char *input, int i, char search)
 		if (input[i] == search)
 			return (i);
 	}
-	printf("bash: syntax error quote unclosed `%c'\n", search);
+	printf("minishell: syntax error quote unclosed `%c'\n", search);
 	return (i);
 }
 

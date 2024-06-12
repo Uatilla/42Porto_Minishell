@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 18:06:19 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:22:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define COLOR_RESET "\033[0m"
 
 //ERROR MESSAGES
-# define SYNTAX_PIPE "bash: syntax error near unexpected token `|'"
+# define SYNTAX_PIPE "minishell: syntax error near unexpected token `|'"
 
 // STRUCTURES
 typedef enum s_proc
@@ -406,5 +406,10 @@ int		search_char(char *str, char c);
 //print.c
 void	print_env(t_shell *sh);
 void	print_arrays(char **paths);
+
+
+bool	is_home(t_list *tmp);
+char	*expand_home(t_shell *sh, t_list *tmp);
+void	print_tokens(t_shell *sh);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:09:29 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 17:30:12 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:22:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	check_args(char **input)
 	{
 		if (argc >= 2 && !ft_strcmp(input[0], "cd"))
 		{
-			custom_error("bash: ", "cd", "too many arguments", g_signo);
+			custom_error("minishell: ", "cd", "too many arguments", g_signo);
 			return (false);
 		}
 		else if (argc >= 1 && !ft_strcmp(input[0], "pwd"))
