@@ -6,13 +6,13 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 21:08:25 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 10:22:00 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clean_tokenlist(t_shell *sh, t_list **tkns)
+void join_non_removable_nodes(t_list **tkns)
 {
 	join_non_removable_nodes(sh, tkns);
 	remove_removable_nodes(tkns);
@@ -20,15 +20,14 @@ void	clean_tokenlist(t_shell *sh, t_list **tkns)
 
 void	expand_general_tokens(t_shell *sh, t_list **tokens)
 {
-	t_list	*tmp;
-	t_list	*to_exclude;
-	t_list	*next;
+	t_list *tmp = *tokens;
+	t_list *to_exclude;
+	t_list *next;
 
-	tmp = *tokens;
 	while (tmp)
 	{
-		if (get(tmp)->value[0] == '$' && get(tmp)->state == GENERAL
-			&& tmp->next)
+		if (get(tmp)->value[0] == '$' && get(tmp)->state == GENERAL &&
+			tmp->next)
 		{
 			if (get(tmp->next)->type != E_SPACE)
 			{
@@ -71,6 +70,12 @@ void	expand_quote_tokens(t_shell *sh, t_list **tokens)
 	}
 }
 
+void expander(t_shell *sh, t_list **tokens)
+{
+	expand_general_tokens(sh, tokens);
+	expand_quote_tokens(sh, tokens);
+}
+
 // Função principal refatorada
 void	review_tkn_list(t_shell *sh, t_list **tkn)
 {
@@ -101,6 +106,7 @@ void	lexer(t_shell *sh, char *input)
 	expand_general_tokens(sh, &sh->token_lst);
 	expand_quote_tokens(sh, &sh->token_lst);
 	clean_tokenlist(sh, &sh->token_lst);
+	handle_heredoc(sh, &sh->token_lst);
 	handle_heredoc(sh, &sh->token_lst);
 	if (sh->nbr_pipes == 0)
 		builtins_parent(sh);

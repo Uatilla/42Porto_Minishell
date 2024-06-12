@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 22:36:39 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 10:21:27 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 
 	rdcmd = (t_redircmd *)cmd;
 	close(rdcmd->fd);
+	if (rdcmd->file[0] == '$')
+	{
+		custom_error(rdcmd->file, "ambigous redirec", 1);
+		exit (g_signo);
+	}
 	if (rdcmd->file[0] == '$')
 	{
 		custom_error(rdcmd->file, "ambigous redirec", 1);

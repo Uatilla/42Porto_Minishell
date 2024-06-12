@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 22:37:05 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 10:21:35 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	custom_error(char *file, char *message, int error)
 {
+	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd("bash: ", 2);
 	if (file)
 	{

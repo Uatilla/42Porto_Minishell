@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 21:20:59 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 10:22:04 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*handle_input(t_shell *sh, char *input)
 	if (!trimmed_input || !*trimmed_input || !sintax_validation(trimmed_input))
 	{
 		add_history(input);
+		free(input);
 		free(input);
 		reinit_shell(sh);
 		sh_loop(sh);

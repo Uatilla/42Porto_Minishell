@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:42:00 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 20:21:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 10:21:52 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	*expand_heredoc(t_shell *sh, char *str)
 }
 
 char	*generate_temp_filename(t_shell *sh, char *file, int nbr)
+char	*generate_temp_filename(t_shell *sh, char *file, int nbr)
 {
 	char	*filename;
 	char	*file_aux;
@@ -48,6 +49,7 @@ char	*generate_temp_filename(t_shell *sh, char *file, int nbr)
 	int		random_number;
 
 	filename = NULL;
+	random_number = (sh->pid + (int)file[0] + ft_strlen(file)) * nbr;
 	random_number = (sh->pid + (int)file[0] + ft_strlen(file)) * nbr;
 	file_aux = ft_strdup(".tmp_heredoc_");
 	num = ft_itoa(random_number);

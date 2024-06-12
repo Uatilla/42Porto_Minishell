@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 21:08:49 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 10:21:56 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	get_doc(t_shell *sh, t_list *tmp, int i)
 
 	status = 0;
 	filename = create_temp_file(sh, get(tmp)->value, i);
+	filename = create_temp_file(sh, get(tmp)->value, i);
 	if (!filename)
 		clear_exit(sh, 1);
 	ft_lstadd_back(&sh->heredocs, ft_lstnew(filename));
@@ -71,10 +72,12 @@ void	handle_heredoc(t_shell *sh, t_list **tkns)
 
 	tmp = *tkns;
 	i = 13;
+	i = 13;
 	while (tmp)
 	{
 		if (get(tmp)->type == HEREDOC)
 		{
+			get_doc(sh, tmp, i++);
 			get_doc(sh, tmp, i++);
 		}
 		tmp = tmp->next;
