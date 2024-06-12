@@ -57,7 +57,6 @@ t_list	*find_env_node(t_list *list, char *key)
 	return (NULL);
 }
 
-
 void	att_env(t_shell *sh, char *key, char *new_value)
 {
 	t_list	*last;

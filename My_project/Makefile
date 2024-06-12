@@ -44,7 +44,7 @@ CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
 
 # Files
 SRCS		=	main.c print.c \
-				environment/environment.c \
+				environment/environment.c environment/environment_path.c\
 				exit_files/exit.c exit_files/cleaning_tree.c\
 				signals/signals.c signals/signals_heredoc.c \
 				input/input_checker.c input/input_checker_utils.c \
@@ -53,8 +53,8 @@ SRCS		=	main.c print.c \
 				tokenization/rename_tkn_typ.c \
 				parsing/building_tree.c parsing/construct_tree.c \
 				expansion/expander.c \
-				expansion/expander_aux.c tokenization/lexer.c \
-				tokenization/lexer_aux.c tokenization/path.c \
+				expansion/expander_aux.c tokenization/lexer.c tokenization/lexer_expander.c\
+				tokenization/lexer_aux.c tokenization/path.c tokenization/lexer_home.c\
 				tokenization/path_aux.c tokenization/handle_heredoc.c \
 				tokenization/handle_heredoc_aux.c \
 				exec/exec_tree.c \

@@ -14,7 +14,7 @@
 
 t_env	*get_content(t_shell *sh, char *key, char *value, bool visible)
 {
-	t_env *content;
+	t_env	*content;
 
 	content = NULL;
 	ft_bzero(content, sizeof(t_env));
@@ -26,6 +26,7 @@ t_env	*get_content(t_shell *sh, char *key, char *value, bool visible)
 	content->visible = visible;
 	return (content);
 }
+
 void	init_empty_env(t_shell *sh)
 {
 	char	*pwd;
@@ -65,28 +66,6 @@ char	*get_key(char *env_var, int pos)
 		return (NULL);
 	ft_strlcpy(key, &env_var[0], pos + 1);
 	return (key);
-}
-
-void	free_path(char **array)
-{
-	int i;
-
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
-
-void	get_paths(t_shell *sh)
-{
-	char	*path_aux;
-
-	if (sh->paths)
-		free_path(sh->paths);
-	path_aux = get_path_aux(sh->envp);
-	if (path_aux)
-		sh->paths = ft_split(path_aux, ':');
-	free(path_aux);
 }
 
 /*Put the environment variables in a linked list.*/

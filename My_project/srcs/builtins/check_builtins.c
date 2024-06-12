@@ -109,10 +109,3 @@ void	builtins_parent(t_shell *sh)
 		tmp = tmp->next;
 	}
 }
-
-
-// exit 
-// mensagem e numero de erro dos arquivos 
-// funcoes de execucao somente no parent: 
-// - cd 
-// - 

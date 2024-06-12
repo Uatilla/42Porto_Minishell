@@ -45,7 +45,8 @@ void	cd_home(t_shell *sh)
 		getcwd(old_pwd, sizeof(old_pwd));
 		g_signo = chdir(home_path);
 		if (g_signo != 0)
-			custom_error("bash: ", "cd", "Error in changing directory", g_signo);
+			custom_error("bash: ", "cd", \
+				"Error in changing directory", g_signo);
 		else
 		{
 			att_env(sh, "OLDPWD", old_pwd);

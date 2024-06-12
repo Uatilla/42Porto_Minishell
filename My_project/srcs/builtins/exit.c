@@ -91,7 +91,6 @@ long long	check_digits(t_execcmd *exc, int *j)
 // 	return (-1);
 // }
 
-
 int	is_exit_code(t_execcmd *exc)
 {
 	long long	i;
@@ -113,9 +112,9 @@ int	is_exit_code(t_execcmd *exc)
 
 int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs)
 {
-	int	ret;
 	long long	exit_code;
-	int nbr_args;
+	int			ret;
+	int			nbr_args;
 
 	nbr_args = 0;
 	ret = 0;
@@ -131,7 +130,7 @@ int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs)
 			{
 				write(2, "exit: bash: ", 13);
 				custom_error(NULL, exit_cmd->argv[1],
-						"numeric argument required", 2);
+					"numeric argument required", 2);
 			}
 			exit_code = 2;
 		}

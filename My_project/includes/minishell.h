@@ -207,11 +207,11 @@ bool	isbuiltin(char *cmd);
 bool	isbuiltin_parent(char *cmd);
 void	builtins_parent(t_shell *sh);
 //echo.c
-t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node);
-bool		check_word(char *word);
-int			check_flag(char **argv);
-void		exec_echo(char **argv, int argc);
-int			echo(t_shell *sh, t_execcmd *cmd);
+bool	check_word(char *word);
+void	exec_echo(char **argv, int argc);
+int		check_flag(char **argv);
+int		echo(t_shell *sh, t_execcmd *cmd);
+t_execcmd					*get_exec_node(t_shell *sh, t_cmd *node);
 //env_aux.c
 void	remove_env_node(t_list **list, t_list *node);
 t_list	*find_env_node(t_list *list, char *key);
@@ -222,11 +222,11 @@ t_env	*create_env_node(char *key, char *value);
 void	update_env_list(t_shell *sh, t_env *node_content);
 int		env(t_shell *sh, t_execcmd *cmd);
 //exit.c
-int			exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs);
-int			is_exit_code(t_execcmd *exc);
-long long	check_digits(t_execcmd *exc, int *j);
-long long	check_first_char(t_execcmd *exc, int *j);
-long long	ft_atol(const char *nptr);
+int		exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs);
+int		is_exit_code(t_execcmd *exc);
+long	long				check_digits(t_execcmd *exc, int *j);
+long	long				check_first_char(t_execcmd *exc, int *j);
+long	long				ft_atol(const char *nptr);
 //export_aux.c
 void	print_export(t_shell *sh);
 char	**ordenate_envp(t_list *env_lst);
@@ -249,16 +249,17 @@ int		pwd(t_shell *sh, t_execcmd *cmd);
 void	exec_pwd(t_shell *sh);
 bool	sintax_valid_pwd(char *cmd, char **argv, t_shell *sh);
 //unset.c
-int	unset(t_shell *sh, t_execcmd *cmd);
+int		unset(t_shell *sh, t_execcmd *cmd);
 
 //ENVIRONMENT
 //environment.c
 void	init_empty_env(t_shell *sh);
 char	*get_value(char *env_var, int pos);
 char	*get_key(char *env_var, int pos);
+void	fill_env(t_shell *sh, char **env_var);
+//environment_path.c
 void	free_path(char **array);
 void	get_paths(t_shell *sh);
-void	fill_env(t_shell *sh, char **env_var);
 
 //EXEC
 //exec_tree_aux.c
@@ -366,10 +367,14 @@ void	transform_nodes(t_list *start, int type);
 void	set_heredoc_type(t_list *start);
 void	join_non_removable_nodes(t_shell *sh, t_list **tkns);
 void	remove_removable_nodes(t_shell *sh, t_list **tkns);
-//lexer.c
-void	clean_tokenlist(t_shell *sh, t_list **tkns);
+//lexer_home.c
+char	*expand_home(t_shell *sh, t_list *tmp);
+bool	is_home(t_list *tmp);
+//lexer_expander.c
 void	expand_general_tokens(t_shell *sh, t_list **tokens);
 void	expand_quote_tokens(t_shell *sh, t_list **tokens);
+//lexer.c
+void	clean_tokenlist(t_shell *sh, t_list **tkns);
 void	review_tkn_list(t_shell *sh, t_list **tkn);
 void	lexer(t_shell *sh, char *input);
 //path_aux.c

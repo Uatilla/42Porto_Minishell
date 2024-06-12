@@ -64,12 +64,15 @@ bool	handle_command_errors(t_execcmd *excmd)
 		if (!excmd->command && excmd->argv[0] && !isbuiltin(excmd->argv[0]))
 		{
 			if (is_file(excmd->argv[0]))
-				custom_error("bash: ", excmd->argv[0], "No such file or directory", 127);
+				custom_error("bash: ", excmd->argv[0], \
+					"No such file or directory", 127);
 			else
-				custom_error("bash: ", excmd->argv[0], "command not found", 127);
+				custom_error("bash: ", excmd->argv[0], \
+					"command not found", 127);
 			ret = false;
 		}
-		else if (!access(excmd->argv[0], X_OK) || (excmd->argv[0] && is_directory(excmd->argv[0])))
+		else if (!access(excmd->argv[0], X_OK) \
+			|| (excmd->argv[0] && is_directory(excmd->argv[0])))
 		{
 			custom_error("bash: ", excmd->argv[0], "Is a directory", 126);
 			ret = false;
