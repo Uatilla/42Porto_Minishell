@@ -17,6 +17,7 @@ void	execute_command(t_shell *sh, t_execcmd *excmd)
 	int	status;
 
 	status = 0;
+	set_main_signal();
 	if (isbuiltin(excmd->argv[0]))
 		g_signo = execute_builtin(sh, excmd, TREE);
 	else if (fork1(sh) == 0)

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 20:32:43 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 19:22:30 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:33:57 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,20 @@ bool	ch_fst(char *input, char search)
 	return (false);
 }
 
+bool	line_too_long(char *input)
+{
+	int	i;
+	
+	i = 0;
+	while (input[i])
+	{
+		if (i >= 1000)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 /*Do the validation of syntax analysing quotes, 
 and operators.*/
 bool	sintax_validation(char *input)
@@ -57,6 +71,11 @@ bool	sintax_validation(char *input)
 	int		i;
 
 	i = -1;
+	if (line_too_long(input))
+	{
+		ft_putstr_fd("Line too long!\n", 2);
+		return (false);
+	}
 	while (input[++i])
 	{
 		if (input[i] == '\'' || input[i] == '\"')
