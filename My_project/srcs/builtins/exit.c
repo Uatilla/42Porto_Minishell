@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:50:18 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/13 18:44:15 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:52:31 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ int	is_exit_code(t_execcmd *exc)
 	if (i != -2)
 	{
 		i = ft_atol(exc->argv[1]);
-		printf("%lld\n", i);
 		if (ft_strcmp(ft_lltoa(i), exc->argv[1]))
 			return (-1);
 		return (/*(unsigned long long)*/i/* % 256*/);
@@ -156,46 +155,38 @@ int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs)
 	long long	exit_code;
 	int			nbr_args;
 
-	
-	// long long	exit_code;
-	// int			nbr_args;
-
-	// nbr_args = 0;
-	// exit_code = 0;
-	// while (exit_cmd->argv[nbr_args])
-	// 	nbr_args++;
-	// if (exit_cmd->argv[1])
-	// {
-	// 	exit_code = is_exit_code(exit_cmd);
-	// 	if (exit_code < 0)
-	// 	{
-	// 		printf("OI\n");
-	// 		if (procs == TREE)
-	// 		{
-	// 			write(2, "exit: minishell: ", 18);
-	// 			custom_error(NULL, exit_cmd->argv[1],
-	// 				"numeric argument required", 2);
-	// 		}
-	// 		if (exit_code == -2)
-	// 			exit_code = 2;
-	// 	}
-	// }
-	// if (nbr_args > 2)
-	// {
-	// 	if (procs == PARENT)
-	// 	{
-	// 		custom_error("minishell: ", exit_cmd->argv[0], "too many arguments", 1);
-	// 	}
-	// }
-	// printf("exit = %lld\n", exit_code);
-	// g_signo = exit_code;
-	// printf("g_signo = %d\n", g_signo);
-	// if (procs == PARENT)
-	// {
-	// 	printf("exit\n");	
-	// 	clear_exit(sh, g_signo);
-	// }
-	// return (g_signo);
+	nbr_args = 0;
+	exit_code = 0;
+	while (exit_cmd->argv[nbr_args])
+		nbr_args++;
+	if (exit_cmd->argv[1])
+	{
+		exit_code = is_exit_code(exit_cmd);
+		if (exit_code < 0)
+		{
+			if (procs == TREE)
+			{
+				write(2, "exit: minishell: ", 18);
+				custom_error(NULL, exit_cmd->argv[1],
+					"numeric argument required", 2);
+			}
+			if (exit_code == -2)
+				exit_code = 2;
+		}
+	}
+	if (nbr_args > 2)
+	{
+		if (procs == PARENT)
+		{
+			custom_error("minishell: ", exit_cmd->argv[0], "too many arguments", 1);
+		}
+	}
+	g_signo = exit_code;
+	if (procs == PARENT)
+	{
+		clear_exit(sh, g_signo);
+	}
+	return (g_signo);
 }
 
 
