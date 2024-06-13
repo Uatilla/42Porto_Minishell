@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/13 12:17:55 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/13 22:25:32 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,10 +224,11 @@ int				env(t_shell *sh, t_execcmd *cmd);
 t_execcmd		*get_exec_node(t_shell *sh, t_cmd *node);
 //exit.c
 int				exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs);
-int				is_exit_code(t_execcmd *exc);
-long long		check_digits(t_execcmd *exc, int *j);
-long long		check_first_char(t_execcmd *exc, int *j);
+int				is_exit_code(char *nbr);
+bool			is_valid_number(char *nbr, long long *exit_code);
+//exit_utils.c
 long long		ft_atol(const char *nptr);
+char			*ft_lltoa(long long n);
 //export_aux.c
 void			print_export(t_shell *sh);
 char			**ordenate_envp(t_list *env_lst);

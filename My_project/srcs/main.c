@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 19:34:30 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/13 22:26:32 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	run_loop(t_shell *sh, char *prompt_input, int status)
 		waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			g_signo = WEXITSTATUS(status);
-		if (sh->nbr_pipes == 0 && g_signo == 0)
+		if (sh->nbr_pipes == 0)
 			builtins_parent(sh);
 		free(prompt_input);
 		reinit_shell(sh);
