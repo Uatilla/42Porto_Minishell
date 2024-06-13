@@ -134,7 +134,6 @@ int	is_exit_code(t_execcmd *exc)
 {
 	long long	i;
 	int			j;
-	// unsigned long nbr;
 
 	j = 0;
 	i = check_first_char(exc, &j);
@@ -145,7 +144,7 @@ int	is_exit_code(t_execcmd *exc)
 		i = ft_atol(exc->argv[1]);
 		if (ft_strcmp(ft_lltoa(i), exc->argv[1]))
 			return (-1);
-		return (/*(unsigned long long)*/i/* % 256*/);
+		return (i);
 	}
 	return (-2);
 }

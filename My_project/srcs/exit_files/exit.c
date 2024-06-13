@@ -14,7 +14,6 @@
 
 void	custom_error(char *bash, char *file, char *message, int error)
 {
-	// ft_putstr_fd("minishell: ", 2);
 	if (bash)
 		ft_putstr_fd(bash, 2);
 	if (file)

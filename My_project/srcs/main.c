@@ -14,56 +14,8 @@
 
 int	g_signo;
 
-void	reinit_shell(t_shell *sh)
+void	run_loop(t_shell *sh, char *prompt_input, int status)
 {
-	free_token_list(&sh->token_lst);
-	if (sh->cmd)
-		free_tree(sh->cmd);
-	ft_bzero(sh->index, sizeof(t_index));
-	sh->nbr_pipes = 0;
-}
-
-void	init_shell(t_shell *sh, char **env_var)
-{
-	ft_bzero(sh, sizeof(t_shell));
-	sh->index = malloc(sizeof(t_index));
-	if (!sh->index)
-	{
-		write(1, "Malloc error!", 14);
-		clear_exit(sh, 1);
-	}
-	ft_bzero(sh->index, sizeof(t_index));
-	if (!env_var[0])
-		init_empty_env(sh);
-	if (env_var)
-	{
-		fill_env(sh, env_var);
-		sh->envp = list_to_array(sh, sh->env_lst, 2);
-		get_paths(sh);
-	}
-}
-
-int	fork1(t_shell *sh)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		printf("Fork failed\n");
-		clear_exit(sh, 1);
-	}
-	sh->pid = pid;
-	return (pid);
-}
-
-/*This should be an item inside the structure because this
-variable must be used (probabily) in other functions.*/
-void	sh_loop(t_shell *sh)
-{
-	char	*prompt_input;
-	int		status;
-
 	while (1)
 	{
 		set_signals();
@@ -91,6 +43,17 @@ void	sh_loop(t_shell *sh)
 	}
 }
 
+/*This should be an item inside the structure because this
+variable must be used (probabily) in other functions.*/
+void	sh_loop(t_shell *sh)
+{
+	char	*prompt_input;
+	int		status;
+
+	prompt_input = NULL;
+	status = 0;
+	run_loop(sh, prompt_input, status);
+}
 
 int	main(int argc, char **argv, char **envp)
 {

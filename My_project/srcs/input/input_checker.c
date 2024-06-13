@@ -53,7 +53,7 @@ bool	ch_fst(char *input, char search)
 bool	line_too_long(char *input)
 {
 	int	i;
-	
+
 	i = 0;
 	while (input[i])
 	{
