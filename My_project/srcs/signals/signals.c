@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:18:48 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 13:03:03 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:38:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,28 +36,22 @@ void	set_child_signals(void)
 	signal(SIGQUIT, sigint_child_handler);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 void	sigint_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		rl_replace_line("", 0);
 		g_signo = 130;
 		write(2, "\n", 1);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
+}
+
+void	set_main_signal(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	set_signals(void)
@@ -65,11 +59,4 @@ void	set_signals(void)
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
-}
-
-
-void	set_main_signal(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 }

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 17:49:24 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:42:05 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 		ret = echo(sh, cmd);
 	else if (!ft_strcmp(cmd->argv[0], "unset"))
 		ret = unset(sh, cmd);
+	else if (!ft_strcmp(cmd->argv[0], "export"))
+		ret = export(sh, cmd, procs);
+	else if (!ft_strcmp(cmd->argv[0], "exit"))
+		ret = exit_bin(sh, cmd, procs);
 	else if (!ft_strcmp(cmd->argv[0], "export"))
 		ret = export(sh, cmd, procs);
 	else if (!ft_strcmp(cmd->argv[0], "exit"))
@@ -64,6 +68,10 @@ bool	isbuiltin(char *cmd)
 		return (true);
 	else if (ft_strcmp(cmd, "unset") == 0)
 		return (true);
+	else if (ft_strcmp(cmd, "echo") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		return (true);
 	return (false);
 }
 
@@ -91,7 +99,6 @@ void	builtins_parent(t_shell *sh)
 		{
 			cmd = parse_exec(sh, tmp);
 			execcmd = get_exec_node(sh, cmd);
-			
 			if (!ft_strcmp(execcmd->argv[0], "export"))
 				export_parent(sh, cmd);
 			else

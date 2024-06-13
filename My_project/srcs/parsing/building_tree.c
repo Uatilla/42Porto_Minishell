@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/06 19:23:31 by lebarbos         ###   ########.fr       */
+/*   Created: 2024/06/11 21:46:42 by lebarbos          #+#    #+#             */
+/*   Updated: 2024/06/11 22:12:23 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 /*CONSTRUCTORS*/
@@ -81,6 +80,24 @@ t_cmd	*parse_pipe(t_shell *sh, t_list *tkn_pos)
 /*Start the tree by the exec node.*/
 void	parsing_tree(t_shell *sh)
 {
-	(void)sh;
 	sh->cmd = parse_pipe(sh, sh->token_lst);
+}
+
+int	count_args(t_shell *sh, t_list *tkn_pos)
+{
+	t_token	*tkn_cont;
+	int		count;
+
+	count = 0;
+	(void)sh;
+	while (tkn_pos)
+	{
+		tkn_cont = (t_token *)tkn_pos->content;
+		if (tkn_cont->type == WORD)
+			count++;
+		else if (tkn_cont->type == PIPE)
+			break ;
+		tkn_pos = tkn_pos->next;
+	}
+	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:15:40 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/01 19:10:35 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:05:16 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	free_tree(t_cmd *cmd)
 	t_execcmd	*execcmd;
 
 	argc = 0;
-	(void)cmd;
 	if (cmd->n_type == N_PIPE)
 	{
 		free_tree(((t_pipecmd *)(cmd))->left);
@@ -34,10 +33,7 @@ void	free_tree(t_cmd *cmd)
 	{
 		execcmd = (t_execcmd *)cmd;
 		while (execcmd->argv[argc])
-		{
-			free(execcmd->argv[argc]);
-			argc++;
-		}
+			free(execcmd->argv[argc++]);
 		free(execcmd->argv);
 		free(execcmd);
 	}

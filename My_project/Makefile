@@ -6,13 +6,9 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/11 19:45:48 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/12 19:53:50 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-
-
-.SILENT:
 
 # Colors
 RESET 		=	\033[0m	
@@ -37,7 +33,7 @@ OBJS_DIR	=	objs
 LIBFT_DIR	=	./libraries/libft
 INCLUDES	=	includes
 SUB_DIR		=	environment exit_files input signals tokenization parsing  \
-				exec builtins
+				exec builtins expansion
 #SUB_DIR		=	environment exit input signals tokenization
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
@@ -56,8 +52,8 @@ SRCS		=	main.c print.c \
 				tokenization/tokens.c tokenization/tokens_aux.c \
 				tokenization/rename_tkn_typ.c \
 				parsing/building_tree.c parsing/construct_tree.c \
-				tokenization/expander.c \
-				tokenization/expander_aux.c tokenization/lexer.c \
+				expansion/expander.c \
+				expansion/expander_aux.c tokenization/lexer.c \
 				tokenization/lexer_aux.c tokenization/path.c \
 				tokenization/path_aux.c tokenization/handle_heredoc.c \
 				tokenization/handle_heredoc_aux.c \
@@ -66,7 +62,9 @@ SRCS		=	main.c print.c \
 				builtins/chdir_aux.c builtins/pwd.c builtins/builtins_aux.c \
 				builtins/echo.c builtins/unset.c builtins/export.c \
 				builtins/export_aux.c builtins/exit.c /builtins/env_aux.c \
-				builtins/export_aux2.c exit_files/exit_aux.c
+				builtins/export_aux2.c exit_files/exit_aux.c \
+				expansion/expander_aux2.c exec/exec_tree_aux.c \
+				parsing/path_functions.c environment/environment_path.c
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
@@ -75,16 +73,16 @@ LIBFT		=	./libraries/libft/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
-	printf "Compiling		$(GREEN)[OK]$(RESET)\n"
+	@ $(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
+	@ printf "Compiling		$(GREEN)[OK]$(RESET)\n"
 
 $(OBJS_DIR):
-	mkdir -p $(OBJS_DIR) $(ALL_OBJS_DIR)
-	printf "Objects directories  	$(YELLOW)[OK]$(RESET)\n"
+	@ mkdir -p $(OBJS_DIR) $(ALL_OBJS_DIR)
+	@ printf "Objects directories  	$(YELLOW)[OK]$(RESET)\n"
 
 $(OBJS): $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c | $(OBJS_DIR)
-	$(CC) -I $(INCLUDES) $(CFLAGS) -c $< -o $@
-	printf "Making binary files	$(YELLOW)[OK]$(RESET)\n"
+	@ $(CC) -I $(INCLUDES) $(CFLAGS) -c $< -o $@
+	@ printf "Making binary files	$(YELLOW)[OK]$(RESET)\n"
 
 #$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c 
 #	mkdir -p $(@D)
@@ -93,18 +91,18 @@ $(OBJS): $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c | $(OBJS_DIR)
 
 
 $(LIBFT):
-	printf "Making Libft		$(YELLOW)[OK]$(RESET)\n"
-	$(MAKE)  -sC $(LIBFT_DIR)
+	@ printf "Making Libft		$(YELLOW)[OK]$(RESET)\n"
+	@ $(MAKE)  -sC $(LIBFT_DIR)
 
 clean:
-	$(RM) $(OBJS_DIR)
-	printf "clean Minishell files	$(CYAN)[OK]$(RESET)\n"
-	$(MAKE) $(MK_FLAG) clean -sC $(LIBFT_DIR)
+	@ $(RM) $(OBJS_DIR)
+	@ printf "clean Minishell files	$(CYAN)[OK]$(RESET)\n"
+	@ $(MAKE) $(MK_FLAG) clean -sC $(LIBFT_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) $(MK_FLAG) fclean -sC $(LIBFT_DIR)
-	printf "fclean			$(CYAN)[OK]$(RESET)\n"
+	@ $(RM) $(NAME)
+	@ $(MAKE) $(MK_FLAG) fclean -sC $(LIBFT_DIR)
+	@ printf "fclean			$(CYAN)[OK]$(RESET)\n"
 
 leaks: readline.supp
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --log-file=output.log ./minishell

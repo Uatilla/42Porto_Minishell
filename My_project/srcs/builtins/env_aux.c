@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 19:10:11 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 19:10:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:50:20 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	att_env(t_shell *sh, char *key, char *new_value)
 	t_env	*node_content;
 	t_list	*to_remove;
 
+	to_remove = NULL;
 	last = find_last_word(sh->token_lst);
 	if (ft_strcmp(key, "_") == 0)
 	{
@@ -76,8 +77,9 @@ void	att_env(t_shell *sh, char *key, char *new_value)
 		node_content = create_env_node("_", get(last)->value);
 	}
 	else
-	{
 		node_content = create_env_node(key, new_value);
-	}
 	update_env_list(sh, node_content);
+	if (to_remove)
+		remove_env_node(&sh->env_lst, to_remove);
+	get_paths(sh);
 }

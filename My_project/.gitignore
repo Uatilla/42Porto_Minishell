@@ -5,3 +5,4 @@
 minishell
 /.vscode
 ../vscode/*
+/minishell_tester

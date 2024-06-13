@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:06:41 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 19:14:56 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:29:12 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,21 @@ t_env	*create_env_node(char *key, char *value)
 	else
 		node_content->value = NULL;
 	node_content->visible = true;
-	return node_content;
+	return (node_content);
 }
 
 void	update_env_list(t_shell *sh, t_env *node_content)
 {
 	t_list	*to_remove;
-	int		size;
+	// int		size;
 
 	to_remove = find_env_node(sh->env_lst, node_content->key);
-	size = ft_lstsize(sh->env_lst);
+	// size = ft_lstsize(sh->env_lst);
 	if (to_remove)
 		remove_env_node(&sh->env_lst, to_remove);
-	free_array(sh->envp, size);
 	ft_lstadd_back(&sh->env_lst, ft_lstnew(node_content));
+	if (sh->envp)
+		free_path(sh->envp);
 	sh->envp = list_to_array(sh, sh->env_lst, 2);
 }
 

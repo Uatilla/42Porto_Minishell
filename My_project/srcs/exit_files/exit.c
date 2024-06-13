@@ -6,15 +6,17 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 15:10:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 19:44:40 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:49:56 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	custom_error(char *file, char *message, int error)
+void	custom_error(char *bash, char *file, char *message, int error)
 {
-	ft_putstr_fd("bash: ", 2);
+	// ft_putstr_fd("minishell: ", 2);
+	if (bash)
+		ft_putstr_fd(bash, 2);
 	if (file)
 	{
 		ft_putstr_fd(file, 2);
@@ -60,31 +62,3 @@ void	free_token_list(t_list **token_list)
 {
 	ft_lstclear(token_list, free_token_content);
 }
-
-/*void	clear_exit(t_shell *sh, int status)
-{
-	int	i;
-
-	i = 0;
-	if (!sh)
-		exit(EXIT_FAILURE);
-	free_env_list(&sh->env_lst);
-	free_token_list(&sh->token_lst);
-	free(sh->index);
-	if (sh->paths)
-	{
-		while (sh->paths[i])
-		{
-			free(sh->paths[i]);
-			i++;
-		}
-		free(sh->paths);
-	}
-	if (sh->envp)
-	{
-		while (sh->envp[i])
-			free(sh->envp[i++]);
-	}
-	rl_clear_history();
-	exit(status);
-}*/
