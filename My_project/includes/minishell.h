@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 19:22:30 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:17:55 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,6 @@ typedef struct s_shell
 {
 	t_list		*env_lst;
 	t_list		*token_lst;
-	t_list		*heredocs;
 	t_index		*index;
 	int			pid;
 	int			nbr_pipes;
@@ -226,7 +225,7 @@ int		exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs);
 int		is_exit_code(t_execcmd *exc);
 long	long				check_digits(t_execcmd *exc, int *j);
 long	long				check_first_char(t_execcmd *exc, int *j);
-long	long				ft_atol(const char *nptr);
+long	long		ft_atol(const char *nptr);
 //export_aux.c
 void	print_export(t_shell *sh);
 char	**ordenate_envp(t_list *env_lst);
