@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/13 10:32:38 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:41:35 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	update_token_to_file(t_list *token, char *filename)
 	if (get(token)->value)
 		free(get(token)->value);
 	get(token)->value = ft_strdup(filename);
+	free(filename);
 }
 
 void	handle_readline(t_shell *sh, t_list *tmp, char *filename)
