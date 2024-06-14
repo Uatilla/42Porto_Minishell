@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 22:11:59 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/14 10:26:13 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:33:39 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,66 +39,6 @@ long long	ft_atol(const char *nptr)
 	}
 	return (signal * number);
 }
-
-// static	int	get_len(long int n)
-// {
-// 	long int	len;
-
-// 	len = 0;
-// 	if (n == 0)
-// 		return (1);
-// 	else if (n < 0)
-// 	{
-// 		n = n *(-1);
-// 		len++;
-// 	}
-// 	while (n > 0)
-// 	{
-// 		n = n / 10;
-// 		len++;
-// 	}
-// 	return (len);
-// }
-
-// static	char	*n_itoa(long int num, int len, char *str_ft_itoa)
-// {
-// 	int	i;
-
-// 	i = 1;
-// 	if (num == 0)
-// 		str_ft_itoa[0] = '0';
-// 	while (num > 0)
-// 	{
-// 		str_ft_itoa[len - i] = num % 10 + '0';
-// 		num = num / 10;
-// 		i++;
-// 	}
-// 	return (str_ft_itoa);
-// }
-
-// char	*ft_lltoa(long long n)
-// {
-// 	char		*str_ft_itoa;
-// 	char		*str_ft_itoa2;
-// 	long long	num;
-// 	int			len;
-
-// 	len = get_len(n);
-// 	str_ft_itoa = (char *)malloc(sizeof(char) * (len + 1));
-// 	if (!str_ft_itoa)
-// 		return (NULL);
-// 	if (n < 0)
-// 	{
-// 		num = n * (-1);
-// 		str_ft_itoa[0] = '-';
-// 	}
-// 	else
-// 		num = n;
-// 	str_ft_itoa2 = n_itoa(num, len, str_ft_itoa);
-// 	str_ft_itoa2[len] = '\0';
-// 	return (str_ft_itoa2);
-// }
-
 
 static int	ft_countsize(long long nbr)
 {

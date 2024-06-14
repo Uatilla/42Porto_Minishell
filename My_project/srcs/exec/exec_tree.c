@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/13 18:34:51 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:15:23 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,16 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 
 	rdcmd = (t_redircmd *)cmd;
 	close(rdcmd->fd);
-	if (rdcmd->file[0] == '$')
-	{
-		custom_error("minishell: ", rdcmd->file, "ambigous redirec", 1);
-		exit (g_signo);
-	}
-	if (rdcmd->file[0] == '$')
+	if (rdcmd->file[0] == '$' && get(cmd->curr_tkn_pos)->state != IN_SQUOTES)
 	{
 		custom_error("minishell: ", rdcmd->file, "ambigous redirec", 1);
 		exit (g_signo);
 	}
 	if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
 	{
-		perror(rdcmd->file);
 		g_signo = 1;
+		write(2, "minishell: ", 12);
+		perror(rdcmd->file);
 		exit (g_signo);
 	}
 	exec_tree(sh, rdcmd->cmd);
