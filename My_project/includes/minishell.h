@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/14 10:29:40 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:01:03 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ int				pwd(t_shell *sh, t_execcmd *cmd);
 void			exec_pwd(t_shell *sh);
 bool			sintax_valid_pwd(char *cmd, char **argv, t_shell *sh);
 //unset.c
-int				unset(t_shell *sh, t_execcmd *cmd);
+int				unset(t_shell *sh, t_execcmd *cmd, int procs);
 
 //ENVIRONMENT
 //environment.c

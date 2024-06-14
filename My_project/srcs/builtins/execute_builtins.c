@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:17:15 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/13 20:17:16 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:31:01 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
 	else if (!ft_strcmp(cmd->argv[0], "echo"))
 		ret = echo(sh, cmd);
 	else if (!ft_strcmp(cmd->argv[0], "unset"))
-		ret = unset(sh, cmd);
+		ret = unset(sh, cmd, procs);
 	else if (!ft_strcmp(cmd->argv[0], "export"))
 		ret = export(sh, cmd, procs);
 	else if (!ft_strcmp(cmd->argv[0], "exit"))

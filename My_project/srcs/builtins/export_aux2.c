@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 19:37:50 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 10:21:11 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:19:28 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	process_element(char **array, t_env *content, int index)
 
 	temp[0] = NULL;
 	temp[1] = NULL;
-	if (content->visible)
+	if (content->visible && ft_strcmp(content->key, "_"))
 	{
 		temp[1] = get_quoted_value(content->value);
 		temp[0] = ft_strjoin(content->key, "=");
