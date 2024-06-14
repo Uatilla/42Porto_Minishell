@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 19:08:50 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 10:21:16 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:07:06 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_export(char *export)
 	{
 		while (export[i] && export[i] != '=')
 		{
-			if (search_char("[]/{}!^$-+# \t", export[i]))
+			if (search_char("[]/{}!^$-+#?., \t", export[i]))
 				return (false);
 			i++;
 		}
@@ -43,6 +43,14 @@ int	handle_invalid_identifier(char *arg, int procs)
 {
 	if (procs == TREE)
 	{
+		if (arg[0] == '-')
+		{
+			write(2, "minishell: export: ", 20);
+			write(2, arg, 2);
+			write(2, ": invalid option\nexport: usage: ", 33);
+			write(2, "export [name[=value] ...] or export\n", 37);
+			return (2);
+		}
 		ft_putstr_fd("export: `", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
@@ -62,12 +70,19 @@ int	process_arguments(t_shell *sh, t_execcmd *execcmd, int procs)
 	while (execcmd->argv[i])
 	{
 		if (!check_export(execcmd->argv[i]))
+		{
 			ret = handle_invalid_identifier(execcmd->argv[i], procs);
+			return (ret);
+		}
 		else
 		{
 			extract_key_value(execcmd->argv[i], &key, &value);
 			if (procs == PARENT)
+			{
+				if (!value && find_env_node(sh->env_lst, key))
+					return (0);
 				att_env(sh, key, value);
+			}
 			free_key_value(key, value);
 		}
 		i++;

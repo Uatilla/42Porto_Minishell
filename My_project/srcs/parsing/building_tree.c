@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:46:42 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/14 13:06:37 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:48:12 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_cmd	*parse_redir(t_shell *sh, t_cmd *cmd)
 		cmd = redircmd(cmd, tkn_cont->value, \
 			O_WRONLY | O_CREAT | O_TRUNC, 1);
 	else if (redir_type == APPEND)
-		cmd = redircmd(cmd, tkn_cont->value, O_WRONLY | O_CREAT, 1);
+		cmd = redircmd(cmd, tkn_cont->value, O_WRONLY | O_CREAT | O_APPEND, 1); //nao estava append, estava truncando
 	if (!cmd)
 		clear_exit(sh, 1);
 	return (cmd);
