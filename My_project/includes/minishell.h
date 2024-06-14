@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/14 16:01:03 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:30:55 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,8 @@ int				export_parent(t_shell *sh, t_cmd *cmd);
 void			extract_key_value(const char *input, char **key, char **value);
 //chdir.c
 void			cd_others(t_shell *sh, char *dest_folder);
-void			cd_home(t_shell *sh);
+// void			cd_home(t_shell *sh);
+void	cd_home(t_shell *sh, char *home_path);
 void			exec_cd(t_shell *sh, char **argv);
 int				change_dir(t_shell *sh, t_execcmd *cmd);
 //chdir_aux.c

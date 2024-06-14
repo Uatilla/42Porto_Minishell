@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 19:37:50 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/14 15:19:28 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:54:38 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ void	process_element(char **array, t_env *content, int index)
 	if (content->visible && ft_strcmp(content->key, "_"))
 	{
 		temp[1] = get_quoted_value(content->value);
+		if (!temp[1])
+		{
+			array[index] = ft_strdup(content->key);
+			free(temp[1]);
+			return ;
+		}
 		temp[0] = ft_strjoin(content->key, "=");
 		array[index] = ft_strjoin(temp[0], temp[1]);
 		free(temp[0]);

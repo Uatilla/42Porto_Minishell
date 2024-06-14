@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:31:02 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 19:49:26 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:38:53 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ void	cd_others(t_shell *sh, char *dest_folder)
 	else
 	{
 		att_env(sh, "OLDPWD", old_pwd);
-		att_env(sh, "HOME", getcwd(new_pwd, sizeof(new_pwd)));
+		att_env(sh, "PWD", getcwd(new_pwd, sizeof(new_pwd))); //era HOME AQUI ANTES?
 	}
 }
 
-void	cd_home(t_shell *sh)
+void	cd_home(t_shell *sh, char *home_path)
 {
-	char	*home_path;
+	t_list	*home_node;
 	char	old_pwd[PATH_MAX];
 	char	new_pwd[PATH_MAX];
 
-	home_path = get_env(sh->env_lst, "HOME");
-	if (home_path)
+	home_node = find_env_node(sh->env_lst, "HOME");
+	if (((t_env *)home_node->content)->visible)
 	{
 		getcwd(old_pwd, sizeof(old_pwd));
 		g_signo = chdir(home_path);
@@ -50,20 +50,23 @@ void	cd_home(t_shell *sh)
 		else
 		{
 			att_env(sh, "OLDPWD", old_pwd);
-			att_env(sh, "HOME", getcwd(new_pwd, sizeof(new_pwd)));
+			att_env(sh, "PWD", getcwd(new_pwd, sizeof(new_pwd))); // aqui tbm era home?
 		}
 	}
 	else
 		custom_error("minishell: ", "cd", "HOME not set", 1);
-	free(home_path);
 }
 
 void	exec_cd(t_shell *sh, char **argv)
 {
-	if (!argv[1])
-		cd_home(sh);
+	char	*home_path;
+
+	home_path = get_env(sh->env_lst, "HOME");
+	if (!argv[1] || !ft_strcmp(argv[1], home_path))
+		cd_home(sh, home_path);
 	else
 		cd_others(sh, argv[1]);
+	free(home_path);
 }
 
 int	change_dir(t_shell *sh, t_execcmd *cmd)
