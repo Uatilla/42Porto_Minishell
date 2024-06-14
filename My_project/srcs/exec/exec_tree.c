@@ -45,8 +45,9 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 		if (excmd->argv[0] && !is_directory(excmd->argv[0]))
 			execute_command(sh, excmd);
 	}
-	else if (excmd->argv[0] && !ft_strcmp(excmd->argv[0], "exit") && sh->nbr_pipes == 0)
-			g_signo = 0;
+	else if (excmd->argv[0] && !ft_strcmp(excmd->argv[0], "exit") \
+			&& sh->nbr_pipes == 0)
+		g_signo = 0;
 	exit(g_signo);
 }
 

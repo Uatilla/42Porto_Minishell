@@ -55,10 +55,8 @@ t_env	*create_env_node(char *key, char *value)
 void	update_env_list(t_shell *sh, t_env *node_content)
 {
 	t_list	*to_remove;
-	// int		size;
 
 	to_remove = find_env_node(sh->env_lst, node_content->key);
-	// size = ft_lstsize(sh->env_lst);
 	if (to_remove)
 		remove_env_node(&sh->env_lst, to_remove);
 	ft_lstadd_back(&sh->env_lst, ft_lstnew(node_content));

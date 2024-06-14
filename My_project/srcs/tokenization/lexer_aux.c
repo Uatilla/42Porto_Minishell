@@ -12,41 +12,6 @@
 
 #include "minishell.h"
 
-char	*expand_home(t_shell *sh, t_list *tmp)
-{
-	char	*temp;
-	char	*ret;
-	char	*expand;
-
-	expand = ft_strdup("");
-	temp = get_env(sh->env_lst, "HOME");
-	if (!ft_strcmp("~", get(tmp)->value))
-		ret = ft_strdup(temp);
-	else
-	{
-		expand = ft_strdup(&get(tmp)->value[1]);
-		if (!expand)
-			clear_exit(sh, 1);
-		ret = ft_strjoin(temp, expand);
-		if (!ret)
-			clear_exit(sh, 1);
-	}
-	free(get(tmp)->value);
-	free(expand);
-	free(temp);
-	return (ret);
-}
-
-bool	is_home(t_list *tmp)
-{
-	if (!ft_strcmp("~", get(tmp)->value) ||
-		!ft_strncmp("~/", get(tmp)->value, 2))
-		return (true);
-	return (false);
-		
-}
-
-
 int	is_removable(int type)
 {
 	if (type >= 2 && type <= 6)
@@ -111,10 +76,11 @@ void	join_non_removable_nodes(t_shell *sh, t_list **tkns)
 
 void	remove_removable_nodes(t_shell *sh, t_list **tkns)
 {
-	t_list *tmp = *tkns;
-	t_list *next;
+	t_list	*tmp;
+	t_list	*next;
 
 	(void)sh;
+	tmp = *tkns;
 	while (tmp)
 	{
 		next = tmp->next;
@@ -123,18 +89,3 @@ void	remove_removable_nodes(t_shell *sh, t_list **tkns)
 		tmp = next;
 	}
 }
-	// t_list	*tmp;
-	// t_list	*next;
-
-	// tmp = *tkns;
-
-	// while (tmp)
-	// {
-	// 	next = tmp->next;
-	// 	if (is_removable(get(tmp)->type))
-	// 		remove_node(tkns, tmp);
-	// 	else if (is_home(tmp))
-	// 		get(tmp)->value = expand_home(sh, tmp);
-	// 	tmp = next;
-	// }
-// }
