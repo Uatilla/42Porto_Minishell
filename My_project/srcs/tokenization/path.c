@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/15 16:33:58 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 21:44:58 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,18 @@
 char	*read_and_join_input(char *join)
 {
 	char	*ret;
-	char	*temp;
 
 	ret = readline("> ");
 	if (!ret)
 		return (free(join), NULL);
 	ret = ft_strtrim_mod(ret, " \t");
-	temp = ft_strdup(join);
 	join = ft_strjoin_mod(join, ret);
-	free(temp);
 	free(ret);
 	join = ft_strtrim_mod(join, " \t");
 	return (join);
 }
 
-char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input)
+char	*open_pipe(t_shell *sh, char *input)
 {
 	char	*join;
 
@@ -46,6 +43,7 @@ char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input)
 		{
 			add_history(join);
 			free(join);
+			free(input);
 			reinit_shell(sh);
 			sh_loop(sh);
 		}

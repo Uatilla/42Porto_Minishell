@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/15 19:59:37 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 22:11:29 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ void	handle_readline(t_shell *sh, t_list *tmp, char *filename, char *input)
 		ret = readline("> ");
 		if (!ret || !ft_strcmp(ret, get(tmp)->value))
 		{
+			if (!ret)
+			{
+				ft_putstr_fd("minishell: warning: "\
+				"here-document delimited by end-of-file (wanted `", 2);
+				ft_putstr_fd(get(tmp)->value, 2);
+				ft_putstr_fd("')\n", 2);
+			}
 			if (ret)
 				free(ret);
 			free(input);
