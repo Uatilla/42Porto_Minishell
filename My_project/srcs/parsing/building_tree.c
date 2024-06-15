@@ -27,7 +27,7 @@ t_cmd	*parse_redir(t_shell *sh, t_cmd *cmd)
 		cmd = redircmd(cmd, tkn_cont->value, \
 			O_WRONLY | O_CREAT | O_TRUNC, 1);
 	else if (redir_type == APPEND)
-		cmd = redircmd(cmd, tkn_cont->value, O_WRONLY | O_CREAT | O_APPEND, 1); //nao estava append, estava truncando
+		cmd = redircmd(cmd, tkn_cont->value, O_WRONLY | O_CREAT | O_APPEND, 1);
 	if (!cmd)
 		clear_exit(sh, 1);
 	return (cmd);

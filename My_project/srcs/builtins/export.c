@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 19:08:50 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/14 19:07:06 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:58:10 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,6 @@ int	check_export(char *export)
 	return (true);
 }
 
-void	free_key_value(char *key, char *value)
-{
-	if (key)
-		free(key);
-	if (value)
-		free(value);
-}
-
 int	handle_invalid_identifier(char *arg, int procs)
 {
 	if (procs == TREE)
@@ -58,35 +50,41 @@ int	handle_invalid_identifier(char *arg, int procs)
 	return (1);
 }
 
-int	process_arguments(t_shell *sh, t_execcmd *execcmd, int procs)
+int	procs_args_aux(t_shell *sh, t_execcmd *execcmd, int procs, int ret)
 {
-	int		ret;
 	int		i;
 	char	*key;
 	char	*value;
 
-	ret = 0;
-	i = 1;
-	while (execcmd->argv[i])
+	i = 0;
+	while (execcmd->argv[++i])
 	{
 		if (!check_export(execcmd->argv[i]))
-		{
-			ret = handle_invalid_identifier(execcmd->argv[i], procs);
-			return (ret);
-		}
+			return (handle_invalid_identifier(execcmd->argv[i], procs));
 		else
 		{
 			extract_key_value(execcmd->argv[i], &key, &value);
 			if (procs == PARENT)
 			{
 				if (!value && find_env_node(sh->env_lst, key))
+				{
+					free_key_value(key, value);
 					return (0);
+				}
 				att_env(sh, key, value);
 			}
 			free_key_value(key, value);
 		}
-		i++;
 	}
+	return (ret);
+}
+
+int	process_arguments(t_shell *sh, t_execcmd *execcmd, int procs)
+{
+	int	ret;
+
+	ret = 0;
+	ret = procs_args_aux(sh, execcmd, procs, ret);
 	return (ret);
 }
 

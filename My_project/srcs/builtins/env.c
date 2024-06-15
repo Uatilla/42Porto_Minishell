@@ -72,9 +72,11 @@ int	env(t_shell *sh, t_execcmd *cmd)
 	if (cmd->argv[1])
 	{
 		if (cmd->argv[1][0] == '-')
-			custom_error("env: illegal option ", cmd->argv[1], "\nusage: env (with no arguments)", 1);
+			custom_error("env: illegal option ", cmd->argv[1], \
+				"\nusage: env (with no arguments)", 1);
 		else
-			custom_error("env: ", cmd->argv[1], "No such file or directory", 127);
+			custom_error("env: ", cmd->argv[1], \
+				"No such file or directory", 127);
 	}
 	else if (cmd)
 		print_env(sh);

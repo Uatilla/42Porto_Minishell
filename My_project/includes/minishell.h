@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/15 13:31:39 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 20:00:54 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void			extract_key_value(const char *input, char **key, char **value);
 //chdir.c
 void			cd_others(t_shell *sh, char *dest_folder);
 // void			cd_home(t_shell *sh);
-void	cd_home(t_shell *sh, char *home_path);
+void			cd_home(t_shell *sh, char *home_path);
 void			exec_cd(t_shell *sh, char **argv);
 int				change_dir(t_shell *sh, t_execcmd *cmd);
 //chdir_aux.c
@@ -278,6 +278,8 @@ void			run_pipe(t_shell *sh, t_cmd *cmd);
 void			run_redir(t_shell *sh, t_cmd *cmd);
 void			run_exec(t_shell *sh, t_cmd *cmd);
 void			execute_command(t_shell *sh, t_execcmd *excmd);
+//exec_utils.c
+void			ft_execve(t_shell *sh, t_execcmd *excmd);
 
 //EXIT_FILES
 //cleaning_tree.c
@@ -362,10 +364,11 @@ char			*generate_temp_filename(t_shell *sh, char *file, int i);
 void			append_doc_to_file(char *filename, char *content);
 char			*create_temp_file(t_shell *sh, char *file, int i);
 //handle_heredoc.c
-void			handle_readline(t_shell *sh, t_list *tmp, char *filename);
+void			handle_readline(t_shell *sh, t_list *tmp, \
+				char *filename, char *input);
 void			update_token_to_file(t_list *token, char *filename);
-void			get_doc(t_shell *sh, t_list *tmp, int i);
-void			handle_heredoc(t_shell *sh, t_list **tkns);
+void			get_doc(t_shell *sh, t_list *tmp, int i, char *input);
+void			handle_heredoc(t_shell *sh, t_list **tkns, char *input);
 //lexer_aux.c
 int				is_removable(int type);
 void			transform_nodes(t_list *start, int type);

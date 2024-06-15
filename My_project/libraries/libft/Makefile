@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/18 20:30:00 by uviana-a          #+#    #+#              #
-#    Updated: 2024/06/03 14:58:40 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/15 15:30:03 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ OBJS := ${SRCS_O}
 CC := cc
 RM := /bin/rm -rf 
 #command to forcing remove the directories without user confirmation.
-CFLAGS := -Wall -Wextra -Werror -I*.h
+CFLAGS := -Wall -Wextra -Werror -I./
 #alias from 'CC' adding the flags.
 
 AR := ar -rc #create a file with the object files {.o} - Sintax: "ar rc library.a ft_1.o ft2.o".

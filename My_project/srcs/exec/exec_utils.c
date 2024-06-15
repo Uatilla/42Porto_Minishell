@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment_path.c                                 :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 19:01:11 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/15 16:34:47 by lebarbos         ###   ########.fr       */
+/*   Created: 2024/06/15 19:56:47 by lebarbos          #+#    #+#             */
+/*   Updated: 2024/06/15 20:00:14 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-void	free_path(char **array)
+void	ft_execve(t_shell *sh, t_execcmd *excmd)
 {
-	int	i;
-
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
-
-void	get_paths(t_shell *sh)
-{
-	char	*path_aux;
-
-	if (sh->paths)
-		free_path(sh->paths);
-	path_aux = get_env(sh->env_lst, "PATH");
-	if (path_aux)
-		sh->paths = ft_split(path_aux, ':');
-	free(path_aux);
+	set_child_signals();
+	if (execve(excmd->command, excmd->argv, sh->envp) == -1)
+	{
+		perror(excmd->command);
+		if (access(excmd->argv[0], X_OK))
+			clear_exit(sh, 126);
+		exit(EXIT_FAILURE);
+	}
 }

@@ -29,7 +29,7 @@ void	cd_others(t_shell *sh, char *dest_folder)
 	else
 	{
 		att_env(sh, "OLDPWD", old_pwd);
-		att_env(sh, "PWD", getcwd(new_pwd, sizeof(new_pwd))); //era HOME AQUI ANTES?
+		att_env(sh, "PWD", getcwd(new_pwd, sizeof(new_pwd)));
 	}
 }
 
@@ -50,7 +50,7 @@ void	cd_home(t_shell *sh, char *home_path)
 		else
 		{
 			att_env(sh, "OLDPWD", old_pwd);
-			att_env(sh, "PWD", getcwd(new_pwd, sizeof(new_pwd))); // aqui tbm era home?
+			att_env(sh, "PWD", getcwd(new_pwd, sizeof(new_pwd)));
 		}
 	}
 	else

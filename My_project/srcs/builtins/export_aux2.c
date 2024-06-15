@@ -75,3 +75,11 @@ char	**list_to_array_export(t_list *env)
 	populate_array(array, env, size);
 	return (array);
 }
+
+void	free_key_value(char *key, char *value)
+{
+	if (key)
+		free(key);
+	if (value)
+		free(value);
+}

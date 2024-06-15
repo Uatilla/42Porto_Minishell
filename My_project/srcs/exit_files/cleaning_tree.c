@@ -40,11 +40,3 @@ void	free_tree(t_cmd *cmd)
 		free(execcmd);
 	}
 }
-
-	/*Clean all elements of the tree:
-		*argv[]: From ft_strdup() fill_execcmd()
-		cmd->argv[]: From the execcmd().
-		Exec Node = cmd: From execcmd().
-		Redir Node = cmd: From redircmd().
-		Pipe Node = cmd: From pipecmd().
-		*/

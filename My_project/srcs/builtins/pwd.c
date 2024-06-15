@@ -22,20 +22,12 @@ bool	sintax_valid_pwd(char *cmd, char **argv, t_shell *sh)
 	{
 		if (argv[1][0] == '-')
 		{
-			// if ((argv[1][1] == 'P' || argv[1][1] == 'L') \
-			// 	&& (only_white(argv[1], 2)))
-			// {
-			// 	custom_error("minishell: ", "pwd", "flags are out of scope", 0);
-			// 	return (false);
-			// }
-			// else
-			// {
-				write(2, "minishell: pwd: ", 17);
-				write(2, argv[1], 2);
-				write(2, ": invalid option\npwd: usage: pwd (without arguments)\n", 54);
-				g_signo = 2;
-				return (false);
-			// }
+			write(2, "minishell: pwd: ", 17);
+			write(2, argv[1], 2);
+			write(2, ": invalid option\n", 17);
+			write(2, "pwd: usage: pwd (without arguments)\n", 36);
+			g_signo = 2;
+			return (false);
 		}
 		else
 			return (true);

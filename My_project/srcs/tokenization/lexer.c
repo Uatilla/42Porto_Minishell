@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:24:48 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/14 16:46:53 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:46:45 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	lexer(t_shell *sh, char *input)
 	expand_general_tokens(sh, &sh->token_lst);
 	expand_quote_tokens(sh, &sh->token_lst);
 	clean_tokenlist(sh, &sh->token_lst);
-	handle_heredoc(sh, &sh->token_lst);
+	handle_heredoc(sh, &sh->token_lst, input);
 	if (sh->nbr_pipes == 0)
 		att_env(sh, "_", NULL);
 }

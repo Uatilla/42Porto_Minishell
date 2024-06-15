@@ -17,6 +17,8 @@ bool	check_word(char *word)
 	int	i;
 
 	i = 1;
+	if (!word[i])
+		return (false);
 	while (word[i])
 	{
 		if (word[i] != 'n')
@@ -42,6 +44,8 @@ int	check_flag(char **argv)
 			return (argc);
 		argc++;
 	}
+	if (!argv[argc])
+		return (argc);
 	return (1);
 }
 
@@ -65,13 +69,13 @@ void	exec_echo(char **argv, int argc)
 
 int	echo(t_shell *sh, t_execcmd *cmd)
 {
-	int	print_pos;
+	int	printable_wrd;
 
-	print_pos = 0;
+	printable_wrd = 0;
 	(void)sh;
 	(void)cmd;
 	g_signo = 0;
-	print_pos = check_flag(cmd->argv);
-	exec_echo(cmd->argv, print_pos);
+	printable_wrd = check_flag(cmd->argv);
+	exec_echo(cmd->argv, printable_wrd);
 	return (g_signo);
 }

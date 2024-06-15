@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/15 12:21:35 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/15 19:58:08 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ SRCS		=	main.c main_aux.c print.c \
 				builtins/echo.c builtins/unset.c builtins/export.c \
 				builtins/export_aux.c builtins/exit.c  builtins/exit_utils.c \
 				builtins/env_aux.c builtins/export_aux2.c \
-				exit_files/exit_aux.c \
+				exit_files/exit_aux.c exec/exec_utils.c \
 				builtins/execute_builtins.c \
 				expansion/expander_aux2.c exec/exec_tree_aux.c \
 				parsing/path_functions.c environment/environment_path.c \
@@ -75,7 +75,7 @@ LIBFT		=	./libraries/libft/libft.a
 # Rules
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT) includes/minishell.h
 	@ $(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 	@ printf "Compiling		$(GREEN)[OK]$(RESET)\n"
 
