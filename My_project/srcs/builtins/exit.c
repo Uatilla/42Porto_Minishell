@@ -15,10 +15,10 @@
 int	is_exit_code(char *nbr)
 {
 	long long	i;
-	int			j;
+	//int			j;
 	char		*nbr_converted;
 
-	j = 0;
+	//j = 0;
 	i = ft_atol(nbr);
 	nbr_converted = ft_lltoa(i);
 	if (ft_strcmp(nbr_converted, nbr))
@@ -60,14 +60,14 @@ bool	is_valid_number(char *nbr, long long *exit_code)
 
 bool	is_valid_exit(t_shell *sh, t_execcmd *cmd, long long *e_code, int procs)
 {
-	bool	ret;
+	//bool	ret;
 	int		nbr_args;
 
 	(void)sh;
 	nbr_args = 0;
 	while (cmd->argv[nbr_args])
 		nbr_args++;
-	ret = true;
+	//ret = true;
 	if ((cmd->argv[1] && !is_valid_number(cmd->argv[1], e_code))
 		|| !*cmd->argv[1])
 	{
