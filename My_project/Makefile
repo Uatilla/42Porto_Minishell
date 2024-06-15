@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/14 12:17:52 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/15 12:21:35 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SUB_DIR		=	environment exit_files input signals tokenization parsing  \
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
-CFLAGS		= -Wall -Wextra -Werror -g -O0 -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
 #LFLAGS		=	-L ${LIBFT_PATH} -lft -lreadline
 #MK_FLAG		= --no-print-directory
 

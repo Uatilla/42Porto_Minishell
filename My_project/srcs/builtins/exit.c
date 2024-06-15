@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:50:18 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/14 10:29:18 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 12:32:21 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ bool	is_valid_exit(t_shell *sh, t_execcmd *cmd, long long *e_code, int procs)
 		if (procs == PARENT)
 			printf("minishell: exit: %s: numeric argument required\n",
 				cmd->argv[1]);
+		*e_code = 2;
 		return (true);
 	}
 	if (nbr_args > 2)
