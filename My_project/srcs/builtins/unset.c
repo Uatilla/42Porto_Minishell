@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 17:20:22 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/14 16:49:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:59:37 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_unset(char **cmd, int procs, int argc)
 	int	ret;
 
 	ret = 0;
-	if (cmd[argc][0] == '-' && !cmd[argc][2] && argc == 1)
+	if (cmd[argc][0] == '-' && argc == 1)
 	{
 		if (procs == TREE)
 			custom_error("minishell: unset: ", cmd[argc],

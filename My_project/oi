@@ -1,0 +1,6 @@
+	@ $(MAKE)  -sC $(LIBFT_DIR)
+	@ $(MAKE) $(MK_FLAG) clean -sC $(LIBFT_DIR)
+	@ $(MAKE) $(MK_FLAG) fclean -sC $(LIBFT_DIR)
+	@ $(MAKE)  -sC $(LIBFT_DIR)
+	@ $(MAKE) $(MK_FLAG) clean -sC $(LIBFT_DIR)
+	@ $(MAKE) $(MK_FLAG) fclean -sC $(LIBFT_DIR)

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/15 14:41:35 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:59:06 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	run_loop(t_shell *sh, char *prompt_input, int status)
 {
 	while (1)
 	{
-		set_signals();
 		prompt_input = get_line(sh);
 		if (!prompt_input)
 			sh_loop(sh);
@@ -26,6 +25,7 @@ void	run_loop(t_shell *sh, char *prompt_input, int status)
 			sh_loop(sh);
 		set_main_signal();
 		lexer(sh, prompt_input);
+		add_history(prompt_input);
 		free(prompt_input);
 		if (fork1(sh) == 0)
 		{
@@ -52,6 +52,7 @@ void	sh_loop(t_shell *sh)
 
 	prompt_input = NULL;
 	status = 0;
+	set_signals();
 	run_loop(sh, prompt_input, status);
 }
 

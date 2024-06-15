@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 19:08:50 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/14 19:07:06 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:58:10 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,17 @@ int	procs_args_aux(t_shell *sh, t_execcmd *execcmd, int procs, int ret)
 	while (execcmd->argv[++i])
 	{
 		if (!check_export(execcmd->argv[i]))
-		{
-			ret = handle_invalid_identifier(execcmd->argv[i], procs);
-			return (ret);
-		}
+			return (handle_invalid_identifier(execcmd->argv[i], procs));
 		else
 		{
 			extract_key_value(execcmd->argv[i], &key, &value);
 			if (procs == PARENT)
 			{
 				if (!value && find_env_node(sh->env_lst, key))
+				{
+					free_key_value(key, value);
 					return (0);
+				}
 				att_env(sh, key, value);
 			}
 			free_key_value(key, value);

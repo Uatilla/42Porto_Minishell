@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/15 13:31:39 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:00:10 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,10 +362,11 @@ char			*generate_temp_filename(t_shell *sh, char *file, int i);
 void			append_doc_to_file(char *filename, char *content);
 char			*create_temp_file(t_shell *sh, char *file, int i);
 //handle_heredoc.c
-void			handle_readline(t_shell *sh, t_list *tmp, char *filename);
+void			handle_readline(t_shell *sh, t_list *tmp, \
+				char *filename, char *input);
 void			update_token_to_file(t_list *token, char *filename);
-void			get_doc(t_shell *sh, t_list *tmp, int i);
-void			handle_heredoc(t_shell *sh, t_list **tkns);
+void			get_doc(t_shell *sh, t_list *tmp, int i, char *input);
+void			handle_heredoc(t_shell *sh, t_list **tkns, char *input);
 //lexer_aux.c
 int				is_removable(int type);
 void			transform_nodes(t_list *start, int type);
