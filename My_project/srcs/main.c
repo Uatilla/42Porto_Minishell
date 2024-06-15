@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:16:52 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/15 13:32:15 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:41:35 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	run_loop(t_shell *sh, char *prompt_input, int status)
 			sh_loop(sh);
 		set_main_signal();
 		lexer(sh, prompt_input);
+		free(prompt_input);
 		if (fork1(sh) == 0)
 		{
 			set_child_signals();
@@ -38,8 +39,6 @@ void	run_loop(t_shell *sh, char *prompt_input, int status)
 			g_signo = WEXITSTATUS(status);
 		if (sh->nbr_pipes == 0)
 			builtins_parent(sh);
-		printf("%s\n", prompt_input);
-		free(prompt_input);
 		reinit_shell(sh);
 	}
 }

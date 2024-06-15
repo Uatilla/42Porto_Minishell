@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/15 13:25:30 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:40:45 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*handle_input(t_shell *sh, char *input)
 	free(input);
 	if (trimmed_input)
 		free(trimmed_input);
-	add_history(ret);
+	// add_history(ret);
 	return (ret);
 }
 
