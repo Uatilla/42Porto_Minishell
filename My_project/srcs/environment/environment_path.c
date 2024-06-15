@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:01:11 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 19:01:13 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:37:02 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_paths(t_shell *sh)
 
 	if (sh->paths)
 		free_path(sh->paths);
-	path_aux = get_path_aux(sh->envp);
+	path_aux = get_env(sh->env_lst, "PATH");
 	if (path_aux)
 		sh->paths = ft_split(path_aux, ':');
 	free(path_aux);

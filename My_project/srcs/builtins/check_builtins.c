@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 14:42:05 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:03:23 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	builtins_parent(t_shell *sh)
 	bool		builtin;
 	t_execcmd	*execcmd;
 	t_cmd		*cmd;
+	int			ret;
 
 	execcmd = NULL;
 	tmp = sh->token_lst;
@@ -69,10 +70,11 @@ void	builtins_parent(t_shell *sh)
 			cmd = parse_exec(sh, tmp);
 			execcmd = get_exec_node(sh, cmd);
 			if (!ft_strcmp(execcmd->argv[0], "export"))
-				export_parent(sh, cmd);
+				ret = export_parent(sh, cmd);
 			else
-				execute_builtin(sh, execcmd, PARENT);
-			free_tree(cmd);
+				ret = execute_builtin(sh, execcmd, PARENT);
+			if (cmd)
+				free_tree(cmd);
 			return ;
 		}
 		tmp = tmp->next;

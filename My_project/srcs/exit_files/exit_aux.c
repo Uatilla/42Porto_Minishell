@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 19:45:11 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 10:37:55 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:43:33 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,17 @@
 
 void	clear_exit(t_shell *sh, int status)
 {
-	int	i;
-
-	i = 0;
 	if (!sh)
 		exit(EXIT_FAILURE);
 	free_env_list(&sh->env_lst);
 	free_token_list(&sh->token_lst);
 	free(sh->index);
 	if (sh->paths)
-	{
-		while (sh->paths[i])
-		{
-			free(sh->paths[i]);
-			i++;
-		}
-		free(sh->paths);
-	}
-	i = 0;
+		free_path(sh->paths);
 	if (sh->envp)
-	{
-		while (sh->envp[i])
-			free(sh->envp[i++]);
-	}
+		free_path(sh->envp);
+	if (sh->cmd)
+		free_tree(sh->cmd);
 	rl_clear_history();
 	exit(status);
 }

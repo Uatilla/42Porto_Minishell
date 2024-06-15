@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:46:42 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 22:12:23 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:48:12 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_cmd	*parse_redir(t_shell *sh, t_cmd *cmd)
 		cmd = redircmd(cmd, tkn_cont->value, \
 			O_WRONLY | O_CREAT | O_TRUNC, 1);
 	else if (redir_type == APPEND)
-		cmd = redircmd(cmd, tkn_cont->value, O_WRONLY | O_CREAT, 1);
+		cmd = redircmd(cmd, tkn_cont->value, O_WRONLY | O_CREAT | O_APPEND, 1);
 	if (!cmd)
 		clear_exit(sh, 1);
 	return (cmd);
@@ -39,15 +39,18 @@ Stops when a pipe was found.*/
 t_cmd	*parse_exec(t_shell *sh, t_list *tkn_pos)
 {
 	t_cmd		*ret;
+	t_list		*tmp;
 	t_execcmd	*ex_cmd;
 	t_token		*tkn_cont;
 
 	(void)sh;
 	ret = execcmd(sh, tkn_pos);
 	ex_cmd = (t_execcmd *)ret;
-	while (ret->curr_tkn_pos)
+	tmp = ret->curr_tkn_pos;
+	while (tmp)
 	{
-		tkn_cont = ret->curr_tkn_pos->content;
+		tkn_cont = tmp->content;
+		ret->curr_tkn_pos = tmp;
 		if (tkn_cont->type == WORD)
 			fill_execcmd(sh, ex_cmd, tkn_cont->value);
 		else if (tkn_cont->type == INFILE || tkn_cont->type == OUTFILE
@@ -55,7 +58,7 @@ t_cmd	*parse_exec(t_shell *sh, t_list *tkn_pos)
 			ret = parse_redir(sh, ret);
 		else if (tkn_cont->type == PIPE)
 			break ;
-		ret->curr_tkn_pos = ret->curr_tkn_pos->next;
+		tmp = tmp->next;
 	}
 	return (ret);
 }

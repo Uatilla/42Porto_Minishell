@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:38:27 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/12 11:53:33 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:41:36 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ t_env	*get_content(t_shell *sh, char *key, char *value, bool visible)
 {
 	t_env	*content;
 
-	content = NULL;
-	ft_bzero(content, sizeof(t_env));
+	content = ft_calloc(sizeof(t_env), 1);
 	if (!content)
 		clear_exit(sh, 1);
 	content->key = ft_strdup(key);

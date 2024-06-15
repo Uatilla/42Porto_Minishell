@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/13 22:25:32 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:31:39 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,8 @@ int				export_parent(t_shell *sh, t_cmd *cmd);
 void			extract_key_value(const char *input, char **key, char **value);
 //chdir.c
 void			cd_others(t_shell *sh, char *dest_folder);
-void			cd_home(t_shell *sh);
+// void			cd_home(t_shell *sh);
+void			cd_home(t_shell *sh, char *home_path);
 void			exec_cd(t_shell *sh, char **argv);
 int				change_dir(t_shell *sh, t_execcmd *cmd);
 //chdir_aux.c
@@ -229,6 +230,7 @@ bool			is_valid_number(char *nbr, long long *exit_code);
 //exit_utils.c
 long long		ft_atol(const char *nptr);
 char			*ft_lltoa(long long n);
+
 //export_aux.c
 void			print_export(t_shell *sh);
 char			**ordenate_envp(t_list *env_lst);
@@ -251,7 +253,7 @@ int				pwd(t_shell *sh, t_execcmd *cmd);
 void			exec_pwd(t_shell *sh);
 bool			sintax_valid_pwd(char *cmd, char **argv, t_shell *sh);
 //unset.c
-int				unset(t_shell *sh, t_execcmd *cmd);
+int				unset(t_shell *sh, t_execcmd *cmd, int procs);
 
 //ENVIRONMENT
 //environment.c

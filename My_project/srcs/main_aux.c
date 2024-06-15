@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:06:07 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/13 20:06:08 by uviana-a         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:49:25 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	reinit_shell(t_shell *sh)
 {
 	free_token_list(&sh->token_lst);
-	if (sh->cmd)
-		free_tree(sh->cmd);
 	ft_bzero(sh->index, sizeof(t_index));
 	sh->nbr_pipes = 0;
 }

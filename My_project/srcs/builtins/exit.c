@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:50:18 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/13 22:28:09 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:04:53 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 int	is_exit_code(char *nbr)
 {
 	long long	i;
-	//int			j;
 	char		*nbr_converted;
 
-	//j = 0;
 	i = ft_atol(nbr);
 	nbr_converted = ft_lltoa(i);
 	if (ft_strcmp(nbr_converted, nbr))
@@ -35,10 +33,11 @@ bool	is_valid_number(char *nbr, long long *exit_code)
 	int	i;
 
 	i = 0;
-	if ((nbr[0] == '-' || nbr[0] == '+') && !nbr[1])
+	if ((nbr[0] == '-' || nbr[0] == '+'))
 	{
 		i++;
-		return (false);
+		if (nbr[1] == '\0')
+			return (false);
 	}
 	while (nbr[i])
 	{
@@ -46,7 +45,7 @@ bool	is_valid_number(char *nbr, long long *exit_code)
 			return (false);
 		i++;
 	}
-	if (is_exit_code(nbr))
+	if (!ft_strcmp(nbr, "-9223372036854775808") || is_exit_code(nbr))
 	{
 		*exit_code = ft_atol(nbr);
 		return (true);
@@ -60,20 +59,19 @@ bool	is_valid_number(char *nbr, long long *exit_code)
 
 bool	is_valid_exit(t_shell *sh, t_execcmd *cmd, long long *e_code, int procs)
 {
-	//bool	ret;
 	int		nbr_args;
 
 	(void)sh;
 	nbr_args = 0;
 	while (cmd->argv[nbr_args])
 		nbr_args++;
-	//ret = true;
 	if ((cmd->argv[1] && !is_valid_number(cmd->argv[1], e_code))
 		|| !*cmd->argv[1])
 	{
 		if (procs == PARENT)
 			printf("minishell: exit: %s: numeric argument required\n",
 				cmd->argv[1]);
+		*e_code = 2;
 		return (true);
 	}
 	if (nbr_args > 2)
@@ -105,6 +103,10 @@ int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs)
 		g_signo = (unsigned int)exit_code % 256;
 	}
 	if (should_exit && procs == PARENT)
+	{
+		if (exit_cmd)
+			free_tree((t_cmd *)exit_cmd);
 		clear_exit(sh, g_signo);
+	}
 	return (g_signo);
 }

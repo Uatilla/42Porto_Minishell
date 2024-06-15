@@ -17,7 +17,7 @@ bool	check_word(char *word)
 	int	i;
 
 	i = 1;
-	if(!word[i])
+	if (!word[i])
 		return (false);
 	while (word[i])
 	{
@@ -45,7 +45,7 @@ int	check_flag(char **argv)
 		argc++;
 	}
 	if (!argv[argc])
-        return (argc);
+		return (argc);
 	return (1);
 }
 

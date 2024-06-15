@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 22:11:59 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/13 22:24:19 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:33:39 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,61 +40,56 @@ long long	ft_atol(const char *nptr)
 	return (signal * number);
 }
 
-static	int	get_len(long int n)
+static int	ft_countsize(long long nbr)
 {
-	long int	len;
+	int	size;
 
-	len = 0;
-	if (n == 0)
-		return (1);
-	else if (n < 0)
+	size = 1;
+	if (nbr < 0)
 	{
-		n = n *(-1);
-		len++;
+		size++;
+		nbr = -nbr;
 	}
-	while (n > 0)
+	while (nbr >= 10)
 	{
-		n = n / 10;
-		len++;
+		size++;
+		nbr = nbr / 10;
 	}
-	return (len);
+	return (size);
 }
 
-static	char	*n_itoa(long int num, int len, char *str_ft_itoa)
+static void	ft_putnstr(long long n, char *str, int size)
 {
-	int	i;
+	int	check;
 
-	i = 1;
-	if (num == 0)
-		str_ft_itoa[0] = '0';
-	while (num > 0)
+	check = 0;
+	str[size] = '\0';
+	while (size > check)
 	{
-		str_ft_itoa[len - i] = num % 10 + '0';
-		num = num / 10;
-		i++;
+		if (n < 0)
+		{
+			str[0] = '-';
+			n = -n;
+			check++;
+		}
+		else
+		{
+			str[size - 1] = (n % 10) + '0';
+			n = n / 10;
+			size--;
+		}
 	}
-	return (str_ft_itoa);
 }
 
 char	*ft_lltoa(long long n)
 {
-	char		*str_ft_itoa;
-	char		*str_ft_itoa2;
-	long long	num;
-	int			len;
+	char	*str;
+	int		size;
 
-	len = get_len(n);
-	str_ft_itoa = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str_ft_itoa)
+	size = ft_countsize(n);
+	str = malloc(sizeof(char) * (size + 1));
+	if (!str)
 		return (NULL);
-	if (n < 0)
-	{
-		num = n * (-1);
-		str_ft_itoa[0] = '-';
-	}
-	else
-		num = n;
-	str_ft_itoa2 = n_itoa(num, len, str_ft_itoa);
-	str_ft_itoa2[len] = '\0';
-	return (str_ft_itoa2);
+	ft_putnstr(n, str, size);
+	return (str);
 }
