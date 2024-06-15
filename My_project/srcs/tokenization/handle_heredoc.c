@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/15 16:48:55 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:59:37 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	get_doc(t_shell *sh, t_list *tmp, int i, char *input)
 		g_signo = WEXITSTATUS(status);
 	if (g_signo == 130)
 	{
+		free(input);
 		reinit_shell(sh);
 		sh_loop(sh);
 	}

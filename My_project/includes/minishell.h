@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:58 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/15 17:00:10 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 20:00:54 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,8 @@ void			run_pipe(t_shell *sh, t_cmd *cmd);
 void			run_redir(t_shell *sh, t_cmd *cmd);
 void			run_exec(t_shell *sh, t_cmd *cmd);
 void			execute_command(t_shell *sh, t_execcmd *excmd);
+//exec_utils.c
+void			ft_execve(t_shell *sh, t_execcmd *excmd);
 
 //EXIT_FILES
 //cleaning_tree.c
