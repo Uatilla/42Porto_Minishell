@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:50:18 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/15 12:32:21 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:04:53 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,10 @@ int	exit_bin(t_shell *sh, t_execcmd *exit_cmd, int procs)
 		g_signo = (unsigned int)exit_code % 256;
 	}
 	if (should_exit && procs == PARENT)
+	{
+		if (exit_cmd)
+			free_tree((t_cmd *)exit_cmd);
 		clear_exit(sh, g_signo);
+	}
 	return (g_signo);
 }

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 19:09:50 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:25:30 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ char	*handle_input(t_shell *sh, char *input)
 	{
 		add_history(input);
 		free(input);
-		reinit_shell(sh);
+		if (trimmed_input)
+			free(trimmed_input);
 		sh_loop(sh);
 	}
 	else if (trimmed_input[ft_strlen(trimmed_input) - 1] == '|')
@@ -73,8 +74,10 @@ char	*handle_input(t_shell *sh, char *input)
 		free(trimmed_input);
 	}
 	else
-		ret = trimmed_input;
+		ret = ft_strdup(trimmed_input);
 	free(input);
+	if (trimmed_input)
+		free(trimmed_input);
 	add_history(ret);
 	return (ret);
 }

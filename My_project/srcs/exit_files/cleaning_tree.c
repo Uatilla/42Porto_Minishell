@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:15:40 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/11 20:05:16 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:39:52 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	free_tree(t_cmd *cmd)
 		while (execcmd->argv[argc])
 			free(execcmd->argv[argc++]);
 		free(execcmd->argv);
+		if (execcmd->command)
+			free(execcmd->command);
 		free(execcmd);
 	}
 }
