@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:01:27 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/14 18:36:15 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:34:49 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	sintax_valid_pwd(char *cmd, char **argv, t_shell *sh)
 		return (true);
 	if (!(check_args(argv)))
 	{
-		if (argv[1][0] == '-')
+		if (argv[1][0] == '-' && argv[1][1])
 		{
 			write(2, "minishell: pwd: ", 17);
 			write(2, argv[1], 2);

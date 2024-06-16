@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:50:18 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/15 14:04:53 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:33:15 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,17 @@ bool	is_valid_exit(t_shell *sh, t_execcmd *cmd, long long *e_code, int procs)
 	if ((cmd->argv[1] && !is_valid_number(cmd->argv[1], e_code))
 		|| !*cmd->argv[1])
 	{
-		if (procs == PARENT)
-			printf("minishell: exit: %s: numeric argument required\n",
-				cmd->argv[1]);
+		if (procs == TREE)
+			custom_error("minishell: ", cmd->argv[1],
+				"numeric argument required", 2);
 		*e_code = 2;
 		return (true);
 	}
 	if (nbr_args > 2)
 	{
 		*e_code = 1;
-		if (procs == PARENT)
-			printf("minishell: exit: too many arguments\n");
+		if (procs == TREE)
+			write(2, "minishell: exit: too many arguments\n", 37);
 		return (false);
 	}
 	return (true);
