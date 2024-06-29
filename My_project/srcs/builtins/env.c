@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:06:41 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/13 10:29:12 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:21:44 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ t_env	*create_env_node(char *key, char *value)
 void	update_env_list(t_shell *sh, t_env *node_content)
 {
 	t_list	*to_remove;
-	// int		size;
 
 	to_remove = find_env_node(sh->env_lst, node_content->key);
-	// size = ft_lstsize(sh->env_lst);
 	if (to_remove)
 		remove_env_node(&sh->env_lst, to_remove);
 	ft_lstadd_back(&sh->env_lst, ft_lstnew(node_content));
@@ -71,7 +69,16 @@ int	env(t_shell *sh, t_execcmd *cmd)
 {
 	if (!sh->env_lst)
 		return (1);
-	if (cmd)
+	if (cmd->argv[1])
+	{
+		if (cmd->argv[1][0] == '-')
+			custom_error("env: illegal option ", cmd->argv[1], \
+				"\nusage: env (with no arguments)", 1);
+		else
+			custom_error("env: ", cmd->argv[1], \
+				"No such file or directory", 127);
+	}
+	else if (cmd)
 		print_env(sh);
-	return (0);
+	return (g_signo);
 }

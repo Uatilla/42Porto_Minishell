@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:42:37 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/11 21:45:14 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:15:43 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,7 @@ char	*ft_check_command_location(t_shell *sh, char *command, char *path_i)
 
 	path_command = NULL;
 	path_aux = ft_strjoin(path_i, "/");
-	if (command[0] == '/' || (ft_strncmp(command, "./", 2) == 0))
-		path_command = ft_strdup(command);
-	else if (ft_strnstr(command, ".sh", ft_strlen(command))
-		&& ft_strchr(command, '/'))
-		path_command = ft_strdup(command);
-	else
-		path_command = ft_strjoin(path_aux, command);
+	path_command = ft_strjoin(path_aux, command);
 	free(path_aux);
 	if (!path_command)
 		clear_exit(sh, 1);
@@ -35,14 +29,13 @@ char	*ft_check_command_location(t_shell *sh, char *command, char *path_i)
 	return (NULL);
 }
 
-char	*find_path(t_shell *sh, char *command)
+char	*relative_path(t_shell *sh, char *command)
 {
 	char	*path_command;
 	int		i;
 
 	i = 0;
-	if (!command || !*command)
-		return (NULL);
+	path_command = NULL;
 	if (!sh->paths)
 		return (NULL);
 	else
@@ -55,5 +48,24 @@ char	*find_path(t_shell *sh, char *command)
 			i++;
 		}
 	}
-	return (NULL);
+	return (path_command);
+}
+
+char	*find_path(t_shell *sh, char *command)
+{
+	char	*path_command;
+	int		i;
+
+	i = 0;
+	path_command = NULL;
+	if (!command || !*command)
+		return (NULL);
+	if (command[0] == '/' || (ft_strncmp(command, "./", 2) == 0))
+		path_command = ft_strdup(command);
+	else if (ft_strnstr(command, ".sh", ft_strlen(command))
+		&& ft_strchr(command, '/'))
+		path_command = ft_strdup(command);
+	else
+		path_command = relative_path(sh, command);
+	return (path_command);
 }

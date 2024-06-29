@@ -6,42 +6,11 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:09:38 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 14:42:05 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 14:03:23 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	execute_builtin(t_shell *sh, t_execcmd *cmd, int procs)
-{
-	int	ret;
-
-	ret = 0;
-	if (!ft_strcmp(cmd->argv[0], "env"))
-		ret = env(sh, cmd);
-	else if (!ft_strcmp(cmd->argv[0], "cd"))
-	{
-		if (procs == PARENT)
-			ret = change_dir(sh, cmd);
-		else
-			ret = g_signo;
-	}
-	else if (!ft_strcmp(cmd->argv[0], "pwd"))
-		ret = pwd(sh, cmd);
-	else if (!ft_strcmp(cmd->argv[0], "echo"))
-		ret = echo(sh, cmd);
-	else if (!ft_strcmp(cmd->argv[0], "unset"))
-		ret = unset(sh, cmd);
-	else if (!ft_strcmp(cmd->argv[0], "export"))
-		ret = export(sh, cmd, procs);
-	else if (!ft_strcmp(cmd->argv[0], "exit"))
-		ret = exit_bin(sh, cmd, procs);
-	else if (!ft_strcmp(cmd->argv[0], "export"))
-		ret = export(sh, cmd, procs);
-	else if (!ft_strcmp(cmd->argv[0], "exit"))
-		ret = exit_bin(sh, cmd, procs);
-	return (ret);
-}
 
 t_execcmd	*get_exec_node(t_shell *sh, t_cmd *node)
 {
@@ -89,6 +58,7 @@ void	builtins_parent(t_shell *sh)
 	bool		builtin;
 	t_execcmd	*execcmd;
 	t_cmd		*cmd;
+	int			ret;
 
 	execcmd = NULL;
 	tmp = sh->token_lst;
@@ -100,10 +70,11 @@ void	builtins_parent(t_shell *sh)
 			cmd = parse_exec(sh, tmp);
 			execcmd = get_exec_node(sh, cmd);
 			if (!ft_strcmp(execcmd->argv[0], "export"))
-				export_parent(sh, cmd);
+				ret = export_parent(sh, cmd);
 			else
-				execute_builtin(sh, execcmd, PARENT);
-			free_tree(cmd);
+				ret = execute_builtin(sh, execcmd, PARENT);
+			if (cmd)
+				free_tree(cmd);
 			return ;
 		}
 		tmp = tmp->next;

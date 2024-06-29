@@ -6,7 +6,7 @@
 #    By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/06/12 19:53:50 by lebarbos         ###   ########.fr        #
+#    Updated: 2024/06/16 13:36:15 by lebarbos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,14 +38,14 @@ SUB_DIR		=	environment exit_files input signals tokenization parsing  \
 ALL_OBJS_DIR	= $(foreach dir, $(SUB_DIR), $(addprefix $(OBJS_DIR)/, $(dir)))
 
 # Flags
-CFLAGS		= -Wall -Wextra -Werror -g -O0 #-fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -g #-fsanitize=address
 #LFLAGS		=	-L ${LIBFT_PATH} -lft -lreadline
 #MK_FLAG		= --no-print-directory
 
 # Files
-SRCS		=	main.c print.c \
+SRCS		=	main.c main_aux.c print.c \
 				environment/environment.c \
-				exit_files/exit.c exit_files/cleaning_tree.c\
+				exit_files/exit.c exit_files/cleaning_tree.c \
 				signals/signals.c signals/signals_heredoc.c \
 				input/input_checker.c input/input_checker_utils.c \
 				input/sintax_valid.c \
@@ -56,15 +56,18 @@ SRCS		=	main.c print.c \
 				expansion/expander_aux.c tokenization/lexer.c \
 				tokenization/lexer_aux.c tokenization/path.c \
 				tokenization/path_aux.c tokenization/handle_heredoc.c \
-				tokenization/handle_heredoc_aux.c \
-				exec/exec_tree.c \
+				tokenization/handle_heredoc_aux.c tokenization/lexer_expander.c\
+				exec/exec_tree.c tokenization/lexer_home.c \
 				builtins/check_builtins.c builtins/env.c builtins/chdir.c \
 				builtins/chdir_aux.c builtins/pwd.c builtins/builtins_aux.c \
 				builtins/echo.c builtins/unset.c builtins/export.c \
-				builtins/export_aux.c builtins/exit.c /builtins/env_aux.c \
-				builtins/export_aux2.c exit_files/exit_aux.c \
+				builtins/export_aux.c builtins/exit.c  builtins/exit_utils.c \
+				builtins/env_aux.c builtins/export_aux2.c \
+				exit_files/exit_aux.c exec/exec_utils.c \
+				builtins/execute_builtins.c \
 				expansion/expander_aux2.c exec/exec_tree_aux.c \
-				parsing/path_functions.c environment/environment_path.c
+				parsing/path_functions.c environment/environment_path.c \
+				
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 LIBFT		=	./libraries/libft/libft.a
 
@@ -72,7 +75,7 @@ LIBFT		=	./libraries/libft/libft.a
 # Rules
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT) includes/minishell.h
 	@ $(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 	@ printf "Compiling		$(GREEN)[OK]$(RESET)\n"
 
@@ -105,7 +108,7 @@ fclean: clean
 	@ printf "fclean			$(CYAN)[OK]$(RESET)\n"
 
 leaks: readline.supp
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --log-file=output.log ./minishell
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-fds=yes --log-file=output.log ./minishell
 
 readline.supp:
 	echo "{" > readline.supp

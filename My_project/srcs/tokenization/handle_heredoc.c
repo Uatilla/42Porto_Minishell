@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:40:49 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/13 18:41:35 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/15 22:11:29 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	update_token_to_file(t_list *token, char *filename)
 	free(filename);
 }
 
-void	handle_readline(t_shell *sh, t_list *tmp, char *filename)
+void	handle_readline(t_shell *sh, t_list *tmp, char *filename, char *input)
 {
 	char	*ret;
 
@@ -29,8 +29,18 @@ void	handle_readline(t_shell *sh, t_list *tmp, char *filename)
 		ret = readline("> ");
 		if (!ret || !ft_strcmp(ret, get(tmp)->value))
 		{
-			free(ret);
-			exit (g_signo);
+			if (!ret)
+			{
+				ft_putstr_fd("minishell: warning: "\
+				"here-document delimited by end-of-file (wanted `", 2);
+				ft_putstr_fd(get(tmp)->value, 2);
+				ft_putstr_fd("')\n", 2);
+			}
+			if (ret)
+				free(ret);
+			free(input);
+			free(filename);
+			clear_exit(sh, 0);
 		}
 		if (!get(tmp)->not_expand)
 			ret = expand_heredoc(sh, ret);
@@ -39,7 +49,7 @@ void	handle_readline(t_shell *sh, t_list *tmp, char *filename)
 	}
 }
 
-void	get_doc(t_shell *sh, t_list *tmp, int i)
+void	get_doc(t_shell *sh, t_list *tmp, int i, char *input)
 {
 	char	*filename;
 	int		status;
@@ -51,7 +61,7 @@ void	get_doc(t_shell *sh, t_list *tmp, int i)
 	if (fork1(sh) == 0)
 	{
 		set_heredoc_signal();
-		handle_readline(sh, tmp, filename);
+		handle_readline(sh, tmp, filename, input);
 	}
 	waitpid(0, &status, 0);
 	update_token_to_file(tmp, filename);
@@ -59,12 +69,13 @@ void	get_doc(t_shell *sh, t_list *tmp, int i)
 		g_signo = WEXITSTATUS(status);
 	if (g_signo == 130)
 	{
+		free(input);
 		reinit_shell(sh);
 		sh_loop(sh);
 	}
 }
 
-void	handle_heredoc(t_shell *sh, t_list **tkns)
+void	handle_heredoc(t_shell *sh, t_list **tkns, char *input)
 {
 	t_list	*tmp;
 	int		i;
@@ -74,7 +85,7 @@ void	handle_heredoc(t_shell *sh, t_list **tkns)
 	while (tmp)
 	{
 		if (get(tmp)->type == HEREDOC)
-			get_doc(sh, tmp, i++);
+			get_doc(sh, tmp, i++, input);
 		tmp = tmp->next;
 	}
 }

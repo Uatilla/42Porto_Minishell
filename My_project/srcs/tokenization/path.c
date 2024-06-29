@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:14:55 by lebarbos          #+#    #+#             */
-/*   Updated: 2024/06/12 19:09:50 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/16 13:36:37 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,18 @@
 char	*read_and_join_input(char *join)
 {
 	char	*ret;
-	char	*temp;
 
 	ret = readline("> ");
 	if (!ret)
 		return (free(join), NULL);
 	ret = ft_strtrim_mod(ret, " \t");
-	temp = ft_strdup(join);
 	join = ft_strjoin_mod(join, ret);
-	free(temp);
 	free(ret);
 	join = ft_strtrim_mod(join, " \t");
 	return (join);
 }
 
-char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input)
+char	*open_pipe(t_shell *sh, char *input)
 {
 	char	*join;
 
@@ -46,6 +43,7 @@ char	*open_pipe(__attribute__((unused)) t_shell *sh, char *input)
 		{
 			add_history(join);
 			free(join);
+			free(input);
 			reinit_shell(sh);
 			sh_loop(sh);
 		}
@@ -64,18 +62,17 @@ char	*handle_input(t_shell *sh, char *input)
 	{
 		add_history(input);
 		free(input);
-		reinit_shell(sh);
+		if (trimmed_input)
+			free(trimmed_input);
 		sh_loop(sh);
 	}
 	else if (trimmed_input[ft_strlen(trimmed_input) - 1] == '|')
-	{
 		ret = open_pipe(sh, trimmed_input);
-		free(trimmed_input);
-	}
 	else
-		ret = trimmed_input;
+		ret = ft_strdup(trimmed_input);
 	free(input);
-	add_history(ret);
+	if (trimmed_input)
+		free(trimmed_input);
 	return (ret);
 }
 
@@ -88,7 +85,7 @@ char	*get_line(t_shell *sh)
 	{
 		write(1, "exit\n", 5);
 		rl_clear_history();
-		clear_exit(sh, 1);
+		clear_exit(sh, g_signo);
 	}
 	return (handle_input(sh, input));
 }

@@ -6,7 +6,7 @@
 /*   By: lebarbos <lebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:02:57 by uviana-a          #+#    #+#             */
-/*   Updated: 2024/06/13 18:34:51 by lebarbos         ###   ########.fr       */
+/*   Updated: 2024/06/16 13:47:27 by lebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,27 @@
 void	execute_command(t_shell *sh, t_execcmd *excmd)
 {
 	int	status;
+	int	pid;
 
 	status = 0;
+	pid = 0;
 	set_main_signal();
 	if (isbuiltin(excmd->argv[0]))
 		g_signo = execute_builtin(sh, excmd, TREE);
-	else if (fork1(sh) == 0)
+	else
 	{
-		set_child_signals();
-		if (execve(excmd->command, excmd->argv, sh->envp) == -1)
-		{
-			perror(excmd->command);
-			if (access(excmd->argv[0], X_OK))
-				exit (126);
-		}
+		pid = fork1(sh);
+		if (pid == 0)
+			ft_execve(sh, excmd);
 	}
-	set_main_signal();
-	if (WIFEXITED(status) && waitpid(0, &status, 0) != -1)
-		g_signo = WEXITSTATUS(status);
+	if (waitpid(pid, &status, 0) != -1)
+	{
+		if (WIFEXITED(status))
+			g_signo = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			g_signo = 128 + WTERMSIG(status);
+	}
+	set_signals();
 }
 
 void	run_exec(t_shell *sh, t_cmd *cmd)
@@ -45,9 +48,10 @@ void	run_exec(t_shell *sh, t_cmd *cmd)
 		if (excmd->argv[0] && !is_directory(excmd->argv[0]))
 			execute_command(sh, excmd);
 	}
-	else if (excmd->argv[0] && !ft_strcmp(excmd->argv[0], "exit") && sh->nbr_pipes == 0)
-			g_signo = 0;
-	exit(g_signo);
+	else if (excmd->argv[0] && !ft_strcmp(excmd->argv[0], "exit") \
+			&& sh->nbr_pipes == 0)
+		g_signo = 0;
+	clear_exit(sh, g_signo);
 }
 
 void	run_redir(t_shell *sh, t_cmd *cmd)
@@ -56,21 +60,17 @@ void	run_redir(t_shell *sh, t_cmd *cmd)
 
 	rdcmd = (t_redircmd *)cmd;
 	close(rdcmd->fd);
-	if (rdcmd->file[0] == '$')
+	if (rdcmd->file[0] == '$' && get(cmd->curr_tkn_pos)->state != IN_SQUOTES)
 	{
-		custom_error("minishell: ", rdcmd->file, "ambigous redirec", 1);
-		exit (g_signo);
-	}
-	if (rdcmd->file[0] == '$')
-	{
-		custom_error("minishell: ", rdcmd->file, "ambigous redirec", 1);
-		exit (g_signo);
+		custom_error("minishell: ", rdcmd->file, "ambigous redirect", 1);
+		clear_exit(sh, g_signo);
 	}
 	if (open(rdcmd->file, rdcmd->mode, rdcmd->perm) < 0)
 	{
-		perror(rdcmd->file);
 		g_signo = 1;
-		exit (g_signo);
+		write(2, "minishell: ", 12);
+		perror(rdcmd->file);
+		clear_exit(sh, g_signo);
 	}
 	exec_tree(sh, rdcmd->cmd);
 }
@@ -95,7 +95,7 @@ void	run_pipe(t_shell *sh, t_cmd *cmd)
 	waitpid(pid2, &status, 0);
 	if (WIFEXITED(status))
 		g_signo = WEXITSTATUS(status);
-	exit(g_signo);
+	clear_exit(sh, g_signo);
 }
 
 void	exec_tree(t_shell *sh, t_cmd *cmd)
