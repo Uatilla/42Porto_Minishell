@@ -1,0 +1,491 @@
+==163388== Memcheck, a memory error detector
+==163388== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==163388== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==163388== Command: ./minishell
+==163388== Parent PID: 158000
+==163388== 
+==163414== 
+==163414== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==163414== Open file descriptor 3: /home/lebarbos/Desktop/42Porto_Minishell/My_project/output.log
+==163414==    <inherited from parent>
+==163414== 
+==163414== 
+==163414== HEAP SUMMARY:
+==163414==     in use at exit: 218,559 bytes in 527 blocks
+==163414==   total heap usage: 1,041 allocs, 514 frees, 252,472 bytes allocated
+==163414== 
+==163414== 1 bytes in 1 blocks are still reachable in loss record 1 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x408B98: ft_strtrim (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x402C3B: get_token_state (tokens.c:46)
+==163414==    by 0x402E5D: fill_token_lst (tokens.c:86)
+==163414==    by 0x40429C: lexer (lexer.c:45)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 1 bytes in 1 blocks are still reachable in loss record 2 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x405EC9: create_env_node (env.c:48)
+==163414==    by 0x407B13: att_env (env_aux.c:77)
+==163414==    by 0x404323: lexer (lexer.c:53)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 1 bytes in 1 blocks are still reachable in loss record 3 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x4037D8: fill_execcmd (construct_tree.c:22)
+==163414==    by 0x4035A8: parse_exec (building_tree.c:55)
+==163414==    by 0x40365C: parse_pipe (building_tree.c:73)
+==163414==    by 0x4036FC: parsing_tree (building_tree.c:86)
+==163414==    by 0x401344: run_loop (main.c:32)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 2 bytes in 1 blocks are still reachable in loss record 4 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x405EAB: create_env_node (env.c:46)
+==163414==    by 0x407B13: att_env (env_aux.c:77)
+==163414==    by 0x404323: lexer (lexer.c:53)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 3 bytes in 1 blocks are still reachable in loss record 5 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x40984C: ft_substr (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x408BB9: ft_strtrim (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x40484A: handle_input (path.c:62)
+==163414==    by 0x404982: get_line (path.c:93)
+==163414==    by 0x4012E0: run_loop (main.c:22)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 12 bytes in 1 blocks are still reachable in loss record 9 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x4014D7: init_shell (main_aux.c:27)
+==163414==    by 0x401432: main (main.c:63)
+==163414== 
+==163414== 16 bytes in 1 blocks are still reachable in loss record 16 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x409C45: ft_lstnew (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x402E72: fill_token_lst (tokens.c:87)
+==163414==    by 0x40429C: lexer (lexer.c:45)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 16 bytes in 1 blocks are still reachable in loss record 17 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x409C45: ft_lstnew (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x405F4F: update_env_list (env.c:62)
+==163414==    by 0x407B3A: att_env (env_aux.c:81)
+==163414==    by 0x404323: lexer (lexer.c:53)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 16 bytes in 1 blocks are still reachable in loss record 18 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x4038BF: execcmd (construct_tree.c:43)
+==163414==    by 0x40354C: parse_exec (building_tree.c:47)
+==163414==    by 0x40365C: parse_pipe (building_tree.c:73)
+==163414==    by 0x4036FC: parsing_tree (building_tree.c:86)
+==163414==    by 0x401344: run_loop (main.c:32)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 24 bytes in 1 blocks are still reachable in loss record 22 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x402D57: fill_token_lst (tokens.c:69)
+==163414==    by 0x40429C: lexer (lexer.c:45)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 24 bytes in 1 blocks are still reachable in loss record 23 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x405E9E: create_env_node (env.c:45)
+==163414==    by 0x407B13: att_env (env_aux.c:77)
+==163414==    by 0x404323: lexer (lexer.c:53)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 32 bytes in 1 blocks are still reachable in loss record 27 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x403859: execcmd (construct_tree.c:36)
+==163414==    by 0x40354C: parse_exec (building_tree.c:47)
+==163414==    by 0x40365C: parse_pipe (building_tree.c:73)
+==163414==    by 0x4036FC: parsing_tree (building_tree.c:86)
+==163414==    by 0x401344: run_loop (main.c:32)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 104 bytes in 1 blocks are still reachable in loss record 35 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x4093C5: ft_split (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x408A5A: get_paths (environment_path.c:33)
+==163414==    by 0x407B43: att_env (env_aux.c:82)
+==163414==    by 0x404323: lexer (lexer.c:53)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 164 bytes in 12 blocks are still reachable in loss record 37 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x40984C: ft_substr (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x4095D5: ft_fill_split (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x4093F4: ft_split (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x408A5A: get_paths (environment_path.c:33)
+==163414==    by 0x407B43: att_env (env_aux.c:82)
+==163414==    by 0x404323: lexer (lexer.c:53)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 456 bytes in 1 blocks are still reachable in loss record 40 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x404A80: initialize_array (path_aux.c:19)
+==163414==    by 0x404BDA: list_to_array (path_aux.c:67)
+==163414==    by 0x405F8C: update_env_list (env.c:65)
+==163414==    by 0x407B3A: att_env (env_aux.c:81)
+==163414==    by 0x404323: lexer (lexer.c:53)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== 726 bytes in 55 blocks are still reachable in loss record 43 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x401915: get_key (environment.c:63)
+==163414==    by 0x4019F0: fill_env (environment.c:88)
+==163414==    by 0x401559: init_shell (main_aux.c:38)
+==163414==    by 0x401432: main (main.c:63)
+==163414== 
+==163414== 880 bytes in 55 blocks are still reachable in loss record 45 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x409C45: ft_lstnew (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x401A50: fill_env (environment.c:93)
+==163414==    by 0x401559: init_shell (main_aux.c:38)
+==163414==    by 0x401432: main (main.c:63)
+==163414== 
+==163414== 1,320 bytes in 55 blocks are still reachable in loss record 55 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x4019B3: fill_env (environment.c:84)
+==163414==    by 0x401559: init_shell (main_aux.c:38)
+==163414==    by 0x401432: main (main.c:63)
+==163414== 
+==163414== 2,886 bytes in 55 blocks are still reachable in loss record 60 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x40189C: get_value (environment.c:52)
+==163414==    by 0x401A09: fill_env (environment.c:89)
+==163414==    by 0x401559: init_shell (main_aux.c:38)
+==163414==    by 0x401432: main (main.c:63)
+==163414== 
+==163414== 3,615 bytes in 56 blocks are still reachable in loss record 61 of 86
+==163414==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163414==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163414==    by 0x404C31: list_to_array (path_aux.c:74)
+==163414==    by 0x405F8C: update_env_list (env.c:65)
+==163414==    by 0x407B3A: att_env (env_aux.c:81)
+==163414==    by 0x404323: lexer (lexer.c:53)
+==163414==    by 0x401324: run_loop (main.c:28)
+==163414==    by 0x4013EA: sh_loop (main.c:55)
+==163414==    by 0x40143B: main (main.c:64)
+==163414== 
+==163414== LEAK SUMMARY:
+==163414==    definitely lost: 0 bytes in 0 blocks
+==163414==    indirectly lost: 0 bytes in 0 blocks
+==163414==      possibly lost: 0 bytes in 0 blocks
+==163414==    still reachable: 10,299 bytes in 302 blocks
+==163414==         suppressed: 208,260 bytes in 225 blocks
+==163414== 
+==163414== For lists of detected and suppressed errors, rerun with: -s
+==163414== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==163443== 
+==163443== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==163443== Open file descriptor 3: /home/lebarbos/Desktop/42Porto_Minishell/My_project/output.log
+==163443==    <inherited from parent>
+==163443== 
+==163443== 
+==163443== HEAP SUMMARY:
+==163443==     in use at exit: 218,618 bytes in 530 blocks
+==163443==   total heap usage: 1,267 allocs, 737 frees, 262,059 bytes allocated
+==163443== 
+==163443== 2 bytes in 1 blocks are still reachable in loss record 1 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x405EAB: create_env_node (env.c:46)
+==163443==    by 0x407B13: att_env (env_aux.c:77)
+==163443==    by 0x404323: lexer (lexer.c:53)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 5 bytes in 1 blocks are still reachable in loss record 2 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x40984C: ft_substr (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x408BB9: ft_strtrim (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x40484A: handle_input (path.c:62)
+==163443==    by 0x404982: get_line (path.c:93)
+==163443==    by 0x4012E0: run_loop (main.c:22)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 5 bytes in 1 blocks are still reachable in loss record 3 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x40984C: ft_substr (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x402E20: fill_token_lst (tokens.c:81)
+==163443==    by 0x40429C: lexer (lexer.c:45)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 5 bytes in 1 blocks are still reachable in loss record 4 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x405EC9: create_env_node (env.c:48)
+==163443==    by 0x407B13: att_env (env_aux.c:77)
+==163443==    by 0x404323: lexer (lexer.c:53)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 5 bytes in 1 blocks are still reachable in loss record 5 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x4037D8: fill_execcmd (construct_tree.c:22)
+==163443==    by 0x4035A8: parse_exec (building_tree.c:55)
+==163443==    by 0x40365C: parse_pipe (building_tree.c:73)
+==163443==    by 0x4036FC: parsing_tree (building_tree.c:86)
+==163443==    by 0x401344: run_loop (main.c:32)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 12 bytes in 1 blocks are still reachable in loss record 9 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x4014D7: init_shell (main_aux.c:27)
+==163443==    by 0x401432: main (main.c:63)
+==163443== 
+==163443== 16 bytes in 1 blocks are still reachable in loss record 15 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x409C45: ft_lstnew (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x402E72: fill_token_lst (tokens.c:87)
+==163443==    by 0x40429C: lexer (lexer.c:45)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 16 bytes in 1 blocks are still reachable in loss record 16 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x409C45: ft_lstnew (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x405F4F: update_env_list (env.c:62)
+==163443==    by 0x407B3A: att_env (env_aux.c:81)
+==163443==    by 0x404323: lexer (lexer.c:53)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 16 bytes in 1 blocks are still reachable in loss record 17 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x4038BF: execcmd (construct_tree.c:43)
+==163443==    by 0x40354C: parse_exec (building_tree.c:47)
+==163443==    by 0x40365C: parse_pipe (building_tree.c:73)
+==163443==    by 0x4036FC: parsing_tree (building_tree.c:86)
+==163443==    by 0x401344: run_loop (main.c:32)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 24 bytes in 1 blocks are still reachable in loss record 20 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x402D57: fill_token_lst (tokens.c:69)
+==163443==    by 0x40429C: lexer (lexer.c:45)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 24 bytes in 1 blocks are still reachable in loss record 21 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x405E9E: create_env_node (env.c:45)
+==163443==    by 0x407B13: att_env (env_aux.c:77)
+==163443==    by 0x404323: lexer (lexer.c:53)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 32 bytes in 1 blocks are still reachable in loss record 26 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x403859: execcmd (construct_tree.c:36)
+==163443==    by 0x40354C: parse_exec (building_tree.c:47)
+==163443==    by 0x40365C: parse_pipe (building_tree.c:73)
+==163443==    by 0x4036FC: parsing_tree (building_tree.c:86)
+==163443==    by 0x401344: run_loop (main.c:32)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 104 bytes in 1 blocks are still reachable in loss record 35 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x4093C5: ft_split (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x408A5A: get_paths (environment_path.c:33)
+==163443==    by 0x407B43: att_env (env_aux.c:82)
+==163443==    by 0x404323: lexer (lexer.c:53)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 164 bytes in 12 blocks are still reachable in loss record 37 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x40984C: ft_substr (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x4095D5: ft_fill_split (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x4093F4: ft_split (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x408A5A: get_paths (environment_path.c:33)
+==163443==    by 0x407B43: att_env (env_aux.c:82)
+==163443==    by 0x404323: lexer (lexer.c:53)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 456 bytes in 1 blocks are still reachable in loss record 40 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x404A80: initialize_array (path_aux.c:19)
+==163443==    by 0x404BDA: list_to_array (path_aux.c:67)
+==163443==    by 0x405F8C: update_env_list (env.c:65)
+==163443==    by 0x407B3A: att_env (env_aux.c:81)
+==163443==    by 0x404323: lexer (lexer.c:53)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== 726 bytes in 55 blocks are still reachable in loss record 43 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x401915: get_key (environment.c:63)
+==163443==    by 0x4019F0: fill_env (environment.c:88)
+==163443==    by 0x401559: init_shell (main_aux.c:38)
+==163443==    by 0x401432: main (main.c:63)
+==163443== 
+==163443== 880 bytes in 55 blocks are still reachable in loss record 45 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x409C45: ft_lstnew (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x401A50: fill_env (environment.c:93)
+==163443==    by 0x401559: init_shell (main_aux.c:38)
+==163443==    by 0x401432: main (main.c:63)
+==163443== 
+==163443== 1,320 bytes in 55 blocks are still reachable in loss record 55 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x4019B3: fill_env (environment.c:84)
+==163443==    by 0x401559: init_shell (main_aux.c:38)
+==163443==    by 0x401432: main (main.c:63)
+==163443== 
+==163443== 2,886 bytes in 55 blocks are still reachable in loss record 60 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x40189C: get_value (environment.c:52)
+==163443==    by 0x401A09: fill_env (environment.c:89)
+==163443==    by 0x401559: init_shell (main_aux.c:38)
+==163443==    by 0x401432: main (main.c:63)
+==163443== 
+==163443== 3,619 bytes in 56 blocks are still reachable in loss record 61 of 86
+==163443==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163443==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163443==    by 0x404C31: list_to_array (path_aux.c:74)
+==163443==    by 0x405F8C: update_env_list (env.c:65)
+==163443==    by 0x407B3A: att_env (env_aux.c:81)
+==163443==    by 0x404323: lexer (lexer.c:53)
+==163443==    by 0x401324: run_loop (main.c:28)
+==163443==    by 0x4013EA: sh_loop (main.c:55)
+==163443==    by 0x40143B: main (main.c:64)
+==163443== 
+==163443== LEAK SUMMARY:
+==163443==    definitely lost: 0 bytes in 0 blocks
+==163443==    indirectly lost: 0 bytes in 0 blocks
+==163443==      possibly lost: 0 bytes in 0 blocks
+==163443==    still reachable: 10,317 bytes in 302 blocks
+==163443==         suppressed: 208,301 bytes in 228 blocks
+==163443== 
+==163443== For lists of detected and suppressed errors, rerun with: -s
+==163443== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==163388== 
+==163388== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==163388== Open file descriptor 3: /home/lebarbos/Desktop/42Porto_Minishell/My_project/output.log
+==163388==    <inherited from parent>
+==163388== 
+==163388== 
+==163388== HEAP SUMMARY:
+==163388==     in use at exit: 208,735 bytes in 227 blocks
+==163388==   total heap usage: 1,267 allocs, 1,040 frees, 262,059 bytes allocated
+==163388== 
+==163388== 5 bytes in 1 blocks are still reachable in loss record 1 of 68
+==163388==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163388==    by 0x40984C: ft_substr (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163388==    by 0x408BB9: ft_strtrim (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163388==    by 0x40484A: handle_input (path.c:62)
+==163388==    by 0x404982: get_line (path.c:93)
+==163388==    by 0x4012E0: run_loop (main.c:22)
+==163388==    by 0x4013EA: sh_loop (main.c:55)
+==163388==    by 0x40143B: main (main.c:64)
+==163388== 
+==163388== 5 bytes in 1 blocks are still reachable in loss record 2 of 68
+==163388==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163388==    by 0x409959: ft_strdup (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163388==    by 0x4037D8: fill_execcmd (construct_tree.c:22)
+==163388==    by 0x4035A8: parse_exec (building_tree.c:55)
+==163388==    by 0x405D67: builtins_parent (check_builtins.c:69)
+==163388==    by 0x40139F: run_loop (main.c:40)
+==163388==    by 0x4013EA: sh_loop (main.c:55)
+==163388==    by 0x40143B: main (main.c:64)
+==163388== 
+==163388== 16 bytes in 1 blocks are still reachable in loss record 10 of 68
+==163388==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163388==    by 0x4098ED: ft_calloc (in /home/lebarbos/Desktop/42Porto_Minishell/My_project/minishell)
+==163388==    by 0x4038BF: execcmd (construct_tree.c:43)
+==163388==    by 0x40354C: parse_exec (building_tree.c:47)
+==163388==    by 0x405D67: builtins_parent (check_builtins.c:69)
+==163388==    by 0x40139F: run_loop (main.c:40)
+==163388==    by 0x4013EA: sh_loop (main.c:55)
+==163388==    by 0x40143B: main (main.c:64)
+==163388== 
+==163388== 32 bytes in 1 blocks are still reachable in loss record 16 of 68
+==163388==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163388==    by 0x403859: execcmd (construct_tree.c:36)
+==163388==    by 0x40354C: parse_exec (building_tree.c:47)
+==163388==    by 0x405D67: builtins_parent (check_builtins.c:69)
+==163388==    by 0x40139F: run_loop (main.c:40)
+==163388==    by 0x4013EA: sh_loop (main.c:55)
+==163388==    by 0x40143B: main (main.c:64)
+==163388== 
+==163388== 456 bytes in 1 blocks are still reachable in loss record 27 of 68
+==163388==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==163388==    by 0x404A80: initialize_array (path_aux.c:19)
+==163388==    by 0x404BDA: list_to_array (path_aux.c:67)
+==163388==    by 0x405F8C: update_env_list (env.c:65)
+==163388==    by 0x407B3A: att_env (env_aux.c:81)
+==163388==    by 0x404323: lexer (lexer.c:53)
+==163388==    by 0x401324: run_loop (main.c:28)
+==163388==    by 0x4013EA: sh_loop (main.c:55)
+==163388==    by 0x40143B: main (main.c:64)
+==163388== 
+==163388== LEAK SUMMARY:
+==163388==    definitely lost: 0 bytes in 0 blocks
+==163388==    indirectly lost: 0 bytes in 0 blocks
+==163388==      possibly lost: 0 bytes in 0 blocks
+==163388==    still reachable: 514 bytes in 5 blocks
+==163388==         suppressed: 208,221 bytes in 222 blocks
+==163388== 
+==163388== For lists of detected and suppressed errors, rerun with: -s
+==163388== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
