@@ -62,6 +62,8 @@ void	builtins_parent(t_shell *sh)
 
 	execcmd = NULL;
 	tmp = sh->token_lst;
+	ret = -1;
+	ret++;
 	while (tmp)
 	{
 		builtin = isbuiltin_parent(get(tmp)->value);

@@ -56,7 +56,8 @@ char	*find_path(t_shell *sh, char *command)
 	char	*path_command;
 	int		i;
 
-	i = 0;
+	i = -1;
+	i++;
 	path_command = NULL;
 	if (!command || !*command)
 		return (NULL);
