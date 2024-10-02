@@ -5,10 +5,11 @@ Leila Dantas - https://github.com/leilatdantas
 Uatilla  Almeida - https://github.com/Uatilla
 
 # Minishell
-![T-4nH1-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/9049a9e5-0d3d-48aa-8b98-ac58232bbcd9)
+![Screencastfrom2024-10-0211-42-55-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/4b41ef52-b0bd-4490-b691-3bc39729518d)
 
 
-**Philosophers** is a C project developed as part of the 42 School Common Core Program. The primary objective of this project is to create a program that effectively manages data races and avoid deadlocks. Just as in economics, where resources are finite and must be allocated wisely, programming requires careful management of resources—typically data—that need to be accessed by multiple processes or threads. It is essential to ensure that this data remains accurate and reliable. In this context, mutexes are employed to lock the data, preventing concurrent access and ensuring its integrity.
+
+**Minishell** is a C project developed as part of the 42 School Common Core Program. The primary objective of this project is to create a program that effectively manages data races and avoid deadlocks. Just as in economics, where resources are finite and must be allocated wisely, programming requires careful management of resources—typically data—that need to be accessed by multiple processes or threads. It is essential to ensure that this data remains accurate and reliable. In this context, mutexes are employed to lock the data, preventing concurrent access and ensuring its integrity.
 
 For more detailed information, look at the [**subject of this project**](https://cdn.intra.42.fr/pdf/pdf/138384/en.subject.pdf).
 
