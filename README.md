@@ -49,6 +49,11 @@ Here is a [link](https://github.com/gdamion/Norminette/blob/master/norme.en.pdf)
 
 # Technical overview
 
+## Building the AST (Abstract Syntax Tree)
+
+![image](https://github.com/user-attachments/assets/f54d8149-0cf9-40b4-8d0b-a80fff469ff5)
+
+
 
 ## Sources
 
