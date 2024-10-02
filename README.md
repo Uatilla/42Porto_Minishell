@@ -18,11 +18,8 @@ One of our learnings after building this project is that **everyone can apply ma
 ## How to use it
 
 ### Getting Started
-**Program start process:**
-![Untitled(1)](https://github.com/user-attachments/assets/6ba44dce-98b3-41d8-92f4-3262e822bb91)
-
-**Event handler:**
-![Untitled(2)](https://github.com/user-attachments/assets/25738721-7ddf-4647-812f-f013c1d59bd0)
+**Program overview:**
+![image](https://github.com/user-attachments/assets/06a9d501-482f-46fa-91d1-82de3bbcac73)
 
 
 
