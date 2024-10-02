@@ -57,7 +57,18 @@ Here is a [link](https://github.com/gdamion/Norminette/blob/master/norme.en.pdf)
 
 ## Sources
 
+# Credits
 
+This project would not be possible without the guidelines of the video:
+
+**Shell Program Explained and Shell Code-- More Detail**
+Both videos from HHP3 on YouTube, its just the best content!
+
+[Link](https://www.youtube.com/watch?v=ubt-UjcQUYg)
+
+[Link](https://www.youtube.com/watch?v=ZjzMdsTWF0U)
+
+ I strongly recommend to anyone who wants to build this project from scratch, that deep dive on this videos, there is a lot of valuable information there.
 
 ## Contributing
 
