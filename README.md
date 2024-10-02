@@ -1,6 +1,6 @@
 This project was done by:
 
-Jhonas Leal - https://github.com/Jburlama
+Leila Dantas - https://github.com/leilatdantas
 
 Uatilla  Almeida - https://github.com/Uatilla
 
