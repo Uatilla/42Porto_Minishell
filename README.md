@@ -1,6 +1,10 @@
-# Philosophers
-**Threads, Mutexes and so on** 
+This project was done by:
 
+Jhonas Leal - https://github.com/Jburlama
+
+Uatilla  Almeida - https://github.com/Uatilla
+
+# Minishell
 ![T-4nH1-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/9049a9e5-0d3d-48aa-8b98-ac58232bbcd9)
 
 
@@ -8,55 +12,30 @@
 
 For more detailed information, look at the [**subject of this project**](https://cdn.intra.42.fr/pdf/pdf/138384/en.subject.pdf).
 
+One of our learnings after building this project is that **everyone can apply mathematics or physics without being a mathematician or physician.**
+
 ## How to use it
 
 ### Getting Started
-[![MasterHead](https://github.com/user-attachments/assets/46b2dd48-f6d5-43d9-bfb4-b14cdd9faa18)](https://www.linkedin.com/in/uatilla/)
-You just need to download or clone this git repository.
-`git@github.com:Uatilla/42Porto_Philosophers.git`
+**Program start process:**
+![Untitled(1)](https://github.com/user-attachments/assets/6ba44dce-98b3-41d8-92f4-3262e822bb91)
+
+**Event handler:**
+![Untitled(2)](https://github.com/user-attachments/assets/25738721-7ddf-4647-812f-f013c1d59bd0)
+
+
 
 ## Usage
-![Screencastfrom2024-10-0210-51-23-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/0d3475a4-097d-4616-a21a-817c317f699b)
 
 If you want to run the project yourself:
 
 	- First clone this git repository to your machine.
  
 	- Enter the repo and run ``` make ```
-  
-	- Run ./philo <number_of_philosophers> <time_to_die> <time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]
-
-<table>
-  <tr>
-    <th>Argument</th>
-    <th>Rule</th>
-  </tr>
-  <tr>
-    <td>number_of_philosophers</td>
-    <td>0 < 200 </td>
-  </tr>
-  <tr>
-    <td>time_to_die</td>
-    <td>> 60 </td>
-  </tr>
-  <tr>
-    <td>time_to_eat</td>
-    <td>> 60 </td>
-  </tr>
-  <tr>
-    <td>time_to_sleep</td>
-    <td>> 60 </td>
-  </tr>
-  <tr>
-    <td>[number_of_times_each_philosopher_must_eat]</td>
-    <td>> 0 </td>
-  </tr>
-</table>
-
-* To delete all files built except the library you can run: `make clean`.
-* To delete all files built including the library you can run: `make fclean`.
-* To delete all .o files, library, and rebuild the files to run the program again, run: `make re`.
-
+ 
+	- The first time will download and set up the minilibx
+ 
+	- Run ./minishell
 
 ## Rules
 
@@ -65,6 +44,10 @@ If you want to run the project yourself:
 The Norminette is a tool provided by 42 Network to check whether the source code complies with the school's norm. The rules include the prohibition of ‘for’ loops, a limit of 25 lines, and no more than 4 parameters in each function, among other specifications.
 
 Here is a [link](https://github.com/gdamion/Norminette/blob/master/norme.en.pdf) to more details about what is evaluated by the Norminette tool.
+
+
+# Technical overview
+
 
 ## Sources
 
