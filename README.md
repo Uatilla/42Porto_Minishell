@@ -8,12 +8,17 @@ Uatilla  Almeida - https://github.com/Uatilla
 ![Screencastfrom2024-10-0211-42-55-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/4b41ef52-b0bd-4490-b691-3bc39729518d)
 
 **Minishell** is a C project developed as part of the 42 School Common Core Program. It is a smaller shell environment that adheres to POSIX standards and aims to replicate some of the behavior of the original Unix shell program. The primary objectives of this project are to:
+ 
+    *Handling environment variables
+    *Managing variable expansions
+    *Executing commands
+    *Managing redirections, including heredoc, append, input files, and output files
+    *Managing pipes and command chaining
+    *Error handling and reporting
+    *Basic signal handling in child and/or parent processes
+    *Handling other basic shell features
 
-    *Handle environment variables
-    *Execute commands
-    *Manage redirections, including heredoc, append, input files, and output files
-    *Manage pipes
-    *Handle other basic shell features
+    
 
 Understanding the construction of **Abstract Syntax Trees (ASTs)** [see more](https://en.wikipedia.org/wiki/Abstract_syntax_tree), was one of the most fascinating aspects of this project. This task was also one of the most challenging and rewarding parts of the project, as it required a deep understanding of C programming concepts and data structures.
 
@@ -24,9 +29,6 @@ For more detailed information, look at the [**subject of this project**](https:/
 ### Getting Started
 **Program overview:**
 ![image](https://github.com/user-attachments/assets/360bf9e6-a80e-4f8e-9587-71d3cc9b266c)
-
-
-
 
 
 ## Usage
@@ -52,13 +54,77 @@ Here is a [link](https://github.com/gdamion/Norminette/blob/master/norme.en.pdf)
 
 # Technical overview
 
+## Syntax Analysis
+
+![screencast-from-2024-10-03-13-24-13_ss5HZxb8-ezgif com-resize](https://github.com/user-attachments/assets/d7bbc5b2-26ca-4acd-8db3-b966d8b271e9)
+
+The syntax analysis is a very good approach to take in this project, since there are many details to handle and Minishell represents a significant increase in complexity compared to previous projects in the Common Core. This helps improve the quality of the input and ensures that only valid commands will be processed by your project.
+- Examples of syntax errors:
+>
+
+	command1 > | command2
+ 	command1 >>> command2
+	command1 | | command2 	
+ 
+
+
+- Once the input has been validated it's time to go ahead and tokenize it.
+![image](https://github.com/user-attachments/assets/144f8e76-d0cb-4127-83e7-b2aedb15a6aa)
+
+
+## Lexer
+![image](https://github.com/user-attachments/assets/d5efc80e-00eb-447a-a5e6-3b06d454b60d)
+
+
+The Lexer is where the input will be transformed into a single linked list. The purpose here is to break the input down into "pieces" that can be dealt with accordingly. For this reason, the tokenization will consider aspects of the input, such as *what is the type of this command?*, *is it in quotes?*, *in double or single quotes?*, or *should this command be expanded?*. Having the answers to these questions will help ensure the correct processing, construction, and execution of the binary tree.
+- Look to the structures below to understand more how the token list works:
+
+```c
+typedef struct s_token
+{
+	char		*value;
+	t_token_type	type;
+	t_token_state	state;
+	int		pos;
+	bool		not_expand;
+}	t_token;
+```
+
+```c
+typedef enum s_token_type
+{
+	WORD,
+	PIPE,
+	GREATER,
+	LESSER,
+	D_GREATER,
+	D_LESSER,
+	E_SPACE,
+	APPEND,
+	OUTFILE,
+	INFILE,
+	HEREDOC
+}	t_token_type;
+```
+
+```c
+typedef enum s_token_state
+{
+	GENERAL,
+	IN_DQUOTES,
+	IN_SQUOTES
+}	t_token_state;
+```
+
+
+## Parsing
+
 ## Building the AST (Abstract Syntax Tree)
 
 ![image](https://github.com/user-attachments/assets/f54d8149-0cf9-40b4-8d0b-a80fff469ff5)
 
+## Execution
 
-
-## Sources
 
 # Credits
 
