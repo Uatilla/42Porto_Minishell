@@ -19,7 +19,9 @@ One of our learnings after building this project is that **everyone can apply ma
 
 ### Getting Started
 **Program overview:**
-![image](https://github.com/user-attachments/assets/06a9d501-482f-46fa-91d1-82de3bbcac73)
+![image](https://github.com/user-attachments/assets/360bf9e6-a80e-4f8e-9587-71d3cc9b266c)
+
+
 
 
 
