@@ -7,13 +7,17 @@ Uatilla  Almeida - https://github.com/Uatilla
 # Minishell
 ![Screencastfrom2024-10-0211-42-55-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/4b41ef52-b0bd-4490-b691-3bc39729518d)
 
+**Minishell** is a C project developed as part of the 42 School Common Core Program. It is a smaller shell environment that adheres to POSIX standards and aims to replicate some of the behavior of the original Unix shell program. The primary objectives of this project are to:
 
+    *Handle environment variables
+    *Execute commands
+    *Manage redirections, including heredoc, append, input files, and output files
+    *Manage pipes
+    *Handle other basic shell features
 
-**Minishell** is a C project developed as part of the 42 School Common Core Program. The primary objective of this project is to create a program that effectively manages data races and avoid deadlocks. Just as in economics, where resources are finite and must be allocated wisely, programming requires careful management of resources—typically data—that need to be accessed by multiple processes or threads. It is essential to ensure that this data remains accurate and reliable. In this context, mutexes are employed to lock the data, preventing concurrent access and ensuring its integrity.
+Understanding the construction of **Abstract Syntax Trees (ASTs)** [see more](https://en.wikipedia.org/wiki/Abstract_syntax_tree), was one of the most fascinating aspects of this project. This task was also one of the most challenging and rewarding parts of the project, as it required a deep understanding of C programming concepts and data structures.
 
 For more detailed information, look at the [**subject of this project**](https://cdn.intra.42.fr/pdf/pdf/138331/en.subject.pdf).
-
-One of our learnings after building this project is that **everyone can apply mathematics or physics without being a mathematician or physician.**
 
 ## How to use it
 
