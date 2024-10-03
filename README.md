@@ -124,25 +124,80 @@ typedef enum s_token_state
 
 For more details about quoting in bash [see the manual](https://www.gnu.org/software/bash/manual/bash.html#Quoting).
 
-#### Token Nodes
+#### Token nodes
 ![image](https://github.com/user-attachments/assets/1ef8baee-0abe-4538-9341-62576bfff01a)
 
 For more details about how the redirection works in bash [see the manual](https://www.gnu.org/software/bash/manual/bash.html#Redirections).
 
-### Token List
+### Token list
 After applying the logic previously explained here is the token list result of our input:
   
 ![image](https://github.com/user-attachments/assets/ebefa809-fee1-45e1-9d68-16e337791cc1)
 
 
 ## Parsing the Abstract Syntax Tree - AST
+After building the tree, it will have this visual aspect, but let's dive into how we get it:
+![image](https://github.com/user-attachments/assets/2dbf76ac-b1f3-4ff9-af92-addeb6084d78)
 
-![image](https://github.com/user-attachments/assets/f54d8149-0cf9-40b4-8d0b-a80fff469ff5)
+
+### Tree nodes
+Each circle in a tree branch could be called a "leaf". We have various types of leafs (more details below), let's understand what they are and what information they can provide.
+**It's crucial to note that both building and execution of the tree work *recursively*. Therefore, we need to have a "default leaf" to run the functions, which can be cast into something specific when required.**
+
+**Default tree node**: Observe that all the following nodes have two fields in common: *t_node_type n_type* and *t_list curr_tkn_pos*.
+
+- *t_node_type n_type*: This field identifies the original type of the tree node, even when it's been cast as a default (t_cmd) node.
+- *t_list curr_tkn_pos*: This field indicates the current position in the token list, which helps the tree "understand" which nodes to parse next.
+
+```c
+typedef struct s_cmd
+{
+	t_node_type	n_type;
+	t_list		*curr_tkn_pos;
+}	t_cmd;
+```
+
+**Specifics tree node**:
+```c
+typedef struct s_pipecmd
+{
+	t_node_type	n_type;
+	t_list		*curr_tkn_pos;
+	t_cmd		*left;
+	t_cmd		*right;
+}	t_pipecmd;
+```
+
+```c
+typedef struct s_redircmd
+{
+	t_node_type	n_type;
+	t_list		*curr_tkn_pos;
+	t_cmd		*cmd;
+	char		*file;
+	int		mode;
+	int		fd;
+	int		perm;
+}	t_redircmd;
+```
+
+```c
+typedef struct s_execcmd
+{
+	t_node_type	n_type;
+	t_list		*curr_tkn_pos;
+	char		*command;
+	char		**argv;
+}	t_execcmd;
+```
+### Tree parsing
+Remember, the content was extracted from two remarkable videos from HHP3, available on YouTube. I highly recommend checking out **credits section** and accessing the content direct from the source.
+![image](https://github.com/user-attachments/assets/1097dcac-6a26-4b6f-a806-20765aaf7a95)
 
 ## Executing
 
 ## Builtins
-
+"Good"
 # Credits
 
 This project would not be possible without the guidelines of the video:
