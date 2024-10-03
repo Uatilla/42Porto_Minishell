@@ -76,8 +76,11 @@ The syntax analysis is a very good approach to take in this project, since there
 ![image](https://github.com/user-attachments/assets/d5efc80e-00eb-447a-a5e6-3b06d454b60d)
 
 
-The Lexer is where the input will be transformed into a single linked list. The purpose here is to break the input down into "pieces" that can be dealt with accordingly. For this reason, the tokenization will consider aspects of the input, such as *what is the type of this command?*, *is it in quotes?*, *in double or single quotes?*, or *should this command be expanded?*. Having the answers to these questions will help ensure the correct processing, construction, and execution of the binary tree.
-- Look to the structures below to understand more how the token list works:
+The Lexer is where the input will be transformed into something more suitable for the program to use. The result of this step is called **tokens**. 
+Tokens are the smallest "unit" of the command that the program can handle accordingly. For this reason, the tokenization will consider aspects of the input, such as *what is the type of this command?*, *is it in quotes?*, *is it in double or single quotes?*, or *should this command be expanded?*. Having the answers to these questions will help ensure the correct processing, construction, and execution of the binary tree.
+
+### Token Structures
+See here which kind of information each node of the token list has:
 
 ```c
 typedef struct s_token
@@ -115,15 +118,28 @@ typedef enum s_token_state
 	IN_SQUOTES
 }	t_token_state;
 ```
+### Explaining in details
+#### Quotes
+![image](https://github.com/user-attachments/assets/889f83bb-2676-436c-9aab-d0efc8c8b77b)
 
 
-## Parsing
 
-## Building the AST (Abstract Syntax Tree)
+For more details about quoting in bash [see the manual](https://www.gnu.org/software/bash/manual/bash.html#Quoting).
+
+
+
+
+### Token List
+After applying the logic previously explained here is the token list result of our input:
+  
+![image](https://github.com/user-attachments/assets/ebefa809-fee1-45e1-9d68-16e337791cc1)
+
+
+## Parsing the Abstract Syntax Tree - AST
 
 ![image](https://github.com/user-attachments/assets/f54d8149-0cf9-40b4-8d0b-a80fff469ff5)
 
-## Execution
+## Executing
 
 
 # Credits
