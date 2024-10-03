@@ -122,12 +122,12 @@ typedef enum s_token_state
 #### Quotes
 ![image](https://github.com/user-attachments/assets/889f83bb-2676-436c-9aab-d0efc8c8b77b)
 
-
-
 For more details about quoting in bash [see the manual](https://www.gnu.org/software/bash/manual/bash.html#Quoting).
 
+#### Token Nodes
+![image](https://github.com/user-attachments/assets/1ef8baee-0abe-4538-9341-62576bfff01a)
 
-
+For more details about how the redirection works in bash [see the manual](https://www.gnu.org/software/bash/manual/bash.html#Redirections).
 
 ### Token List
 After applying the logic previously explained here is the token list result of our input:
@@ -148,7 +148,7 @@ This project would not be possible without the guidelines of the video:
 
 **Shell Program Explained and Shell Code-- More Detail**
 Both videos from HHP3 on YouTube, it's just the best content!
- I strongly recommend to anyone who wants to build this project from scratch, that deep dive on these videos, there is a lot of valuable information there. [here](https://www.youtube.com/watch?v=ubt-UjcQUYg) and [here](https://www.youtube.com/watch?v=ZjzMdsTWF0U).
+ I strongly recommend to anyone who wants to build this project from scratch, that deep dive on these videos, there is a lot of valuable information there [here](https://www.youtube.com/watch?v=ubt-UjcQUYg) and [here](https://www.youtube.com/watch?v=ZjzMdsTWF0U).
 
 Don't forget to go directly to the source: **RTFM** [Link](https://www.gnu.org/software/bash/manual/bash.html#Introduction)
 ## Contributing
