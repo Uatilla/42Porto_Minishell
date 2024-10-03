@@ -147,14 +147,10 @@ After applying the logic previously explained here is the token list result of o
 This project would not be possible without the guidelines of the video:
 
 **Shell Program Explained and Shell Code-- More Detail**
-Both videos from HHP3 on YouTube, its just the best content!
+Both videos from HHP3 on YouTube, it's just the best content!
+ I strongly recommend to anyone who wants to build this project from scratch, that deep dive on these videos, there is a lot of valuable information there. [here](https://www.youtube.com/watch?v=ubt-UjcQUYg) and [here](https://www.youtube.com/watch?v=ZjzMdsTWF0U).
 
-[Link](https://www.youtube.com/watch?v=ubt-UjcQUYg)
-
-[Link](https://www.youtube.com/watch?v=ZjzMdsTWF0U)
-
- I strongly recommend to anyone who wants to build this project from scratch, that deep dive on this videos, there is a lot of valuable information there.
-
+Don't forget to go directly to the source: **RTFM** [Link](https://www.gnu.org/software/bash/manual/bash.html#Introduction)
 ## Contributing
 
 Contributions to the project are welcome! If you have any ideas, improvements, or bug fixes, please submit them as issues or pull requests to this repository.
