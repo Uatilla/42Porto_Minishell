@@ -24,6 +24,11 @@ Understanding the construction of **Abstract Syntax Trees (ASTs)** [see more](ht
 
 For more detailed information, look at the [**subject of this project**](https://cdn.intra.42.fr/pdf/pdf/138331/en.subject.pdf).
 
+
+SHOW HERE A BASIC OVERVIEW OF THE STEPS FOR IMPLEMENTATION
+
+SYNTAX ANALYSIS > LEXER > EXPANSION > PARSING TREE > EXECUTION
+
 ## How to use it
 
 ### Getting Started
@@ -197,7 +202,16 @@ Remember, the content was extracted from two remarkable videos from HHP3, availa
 ## Executing
 
 ## Builtins
-"Good"
+In bash, a builtin is a command that is built into the shell itself, rather than being implemented as a separate executable file. One of the main advantages of Builtins are the fact that they run quickly than external commands, since the shell does not have to initialize a new process to execute them.
+To see more about builtins [see the manual](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html).
+- `cd`		Changes the working directory to a the directory passed as argument, without argumens it changes to home.
+- `echo`	Displays a line of text, it has an optional flag `-n`, which prevents it to displaying a new line character at the end of the output.
+- `env`		Displays the environment variables.
+- `exit`	Terminates the shell, it accepts an optional argument `n`, which sets the exit status to `n`.
+- `export`	Adds name to the environment, set's value of name to value, If no argument is given, displays list of exported variables.
+- `pwd`		Shows the current directory as an absolute path.
+- `unset`	Accepts argument name. Removes the variable name from the environment.
+
 # Credits
 
 This project would not be possible without the guidelines of the video:
