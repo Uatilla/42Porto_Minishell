@@ -214,6 +214,7 @@ Remember, the content was extracted from two remarkable videos from HHP3, availa
 
 
 ## Executing
+![image](https://github.com/user-attachments/assets/4dd795f4-7e1d-47e2-8d50-5aaac289deb7)
 
 ## Builtins
 In bash, a builtin is a command that is built into the shell itself, rather than being implemented as a separate executable file. One of the main advantages of builtins are the fact that they run quickly than external commands, since the shell does not have to initialize a new process to execute them.
