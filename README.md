@@ -70,7 +70,7 @@ The Norminette is a tool provided by 42 Network to check whether the source cod
 Here is a [link](https://github.com/gdamion/Norminette/blob/master/norme.en.pdf) to more details about what is evaluated by the Norminette tool.
 
 
-# Technical overview
+# Implementation
 
 ## Syntax Analysis
 
