@@ -231,6 +231,13 @@ Here are the list of builtins implemented in this project:
 - `pwd`		Shows the current directory as an absolute path.
 - `unset`	Accepts argument name and removes the variable name (if it exists) from the environment.
 
+# My comments
+This project was my first experience working in a group, and I gained valuable insights from it. Keeping the code up-to-date and working together with others was challenging, but maintaining clear communication was our primary achievement. This helped us avoid building redundant functions, promptly correct errors as they were found by any team member, and provide mutual support. Additionally, we emphasized testing, testing, and more testing, with special thanks to Leila for her exceptional testing approach.
+
+As I mentioned earlier, this project represented a significant step up in complexity compared to previous Common Core projects. Building the Abstract Syntax Tree from scratch was a rewarding learning experience, and I am confident that this knowledge will benefit us in our future programming endeavors.
+
+**I hope that our project can serve as a foundation for future 42 students to build upon and create their improved version, specially in the builtin execution phase that looking with new eyes for sure it can be improved using signals to communicate between parent/child processes.**
+
 # Credits
 
 This project would not be possible without the guidelines of the video:
