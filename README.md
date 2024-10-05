@@ -14,6 +14,7 @@ Uatilla  Almeida - https://github.com/Uatilla
     *Executing commands
     *Managing redirections, including heredoc, append, input files, and output files
     *Managing pipes and command chaining
+    *Build our own Builtins as 'cd', 'echo', 'env', 'exit', 'export', 'pwd' and 'unset'
     *Error handling and reporting
     *Basic signal handling in child and/or parent processes
     *Handling other basic shell features
@@ -22,16 +23,28 @@ Uatilla  Almeida - https://github.com/Uatilla
 
 Understanding the construction of **Abstract Syntax Trees (ASTs)** [see more](https://en.wikipedia.org/wiki/Abstract_syntax_tree), was one of the most fascinating aspects of this project. This task was also one of the most challenging and rewarding parts of the project, as it required a deep understanding of C programming concepts and data structures.
 
-For more detailed information, look at the [**subject of this project**](https://cdn.intra.42.fr/pdf/pdf/138331/en.subject.pdf).
+For more detailed information about the challenge, look at the [**subject of this project**](https://cdn.intra.42.fr/pdf/pdf/138331/en.subject.pdf).
+
+## What Bash and Shell means?
+
+A **bash** is a specific type of shell commonly used in Unix-based operating systems, including Linux. Bash stands for `Bourne Again SHell`, and it is an upgrade of the original Bourne Shell (sh). It provides a command-line interface for users to interact with the operating system, execute commands, manage files, and automate tasks using scripting.
+
+A **shell**, in general, is a user interface for accessing an operating system's services. It can be categorized into two types: command-line interface (CLI) and graphical user interface (GUI). A shell in the context of Unix-like systems, like bash, is a CLI that interprets user commands, passes them to the operating system for execution, and displays the results.
+
+Of course, I strongly recommend you go directly to the manual if you want to build this project and throughly understand these concepts, [see the manual](https://www.gnu.org/software/bash/manual/bash.html#What-is-Bash_003f).
+
+### How a shell works
+
+Now that we understood that Bash is just a type of Shell, let's divide it into 4 steps **(actually my project has 5), Syntax Analysis was added just to help me deal with errors from the input easily and reduce complexity during further steps**.
+This article really helped me on having a first overview about what were supposed to be built [link](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf).
+
+### Steps overview
+
+![image](https://github.com/user-attachments/assets/f196033b-edcb-4c55-813b-abdc936a0b25)
 
 
-SHOW HERE A BASIC OVERVIEW OF THE STEPS FOR IMPLEMENTATION
 
-SYNTAX ANALYSIS > LEXER > EXPANSION > PARSING TREE > EXECUTION
-
-## How to use it
-
-### Getting Started
+## Getting Started
 **Program overview:**
 ![image](https://github.com/user-attachments/assets/360bf9e6-a80e-4f8e-9587-71d3cc9b266c)
 
@@ -197,28 +210,34 @@ typedef struct s_execcmd
 ```
 ### Tree parsing
 Remember, the content was extracted from two remarkable videos from HHP3, available on YouTube. I highly recommend checking out **credits section** and accessing the content direct from the source.
-![image](https://github.com/user-attachments/assets/1097dcac-6a26-4b6f-a806-20765aaf7a95)
+![image](https://github.com/user-attachments/assets/5b4d830b-a274-41a6-9a09-0a6ce3b6a564)
+
 
 ## Executing
 
 ## Builtins
-In bash, a builtin is a command that is built into the shell itself, rather than being implemented as a separate executable file. One of the main advantages of Builtins are the fact that they run quickly than external commands, since the shell does not have to initialize a new process to execute them.
+In bash, a builtin is a command that is built into the shell itself, rather than being implemented as a separate executable file. One of the main advantages of builtins are the fact that they run quickly than external commands, since the shell does not have to initialize a new process to execute them.
 To see more about builtins [see the manual](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html).
-- `cd`		Changes the working directory to a the directory passed as argument, without argumens it changes to home.
+- `cd`		Changes the working directory to a the directory passed as argument, without argumens it changes to `home`.
 - `echo`	Displays a line of text, it has an optional flag `-n`, which prevents it to displaying a new line character at the end of the output.
 - `env`		Displays the environment variables.
 - `exit`	Terminates the shell, it accepts an optional argument `n`, which sets the exit status to `n`.
-- `export`	Adds name to the environment, set's value of name to value, If no argument is given, displays list of exported variables.
+- `export`	Adds name to the environment, set's value of name to value, if no argument is given, displays list of exported variables.
 - `pwd`		Shows the current directory as an absolute path.
-- `unset`	Accepts argument name. Removes the variable name from the environment.
+- `unset`	Accepts argument name and removes the variable name (if it exists) from the environment.
 
 # Credits
 
 This project would not be possible without the guidelines of the video:
 
 **Shell Program Explained and Shell Code-- More Detail**
+
 Both videos from HHP3 on YouTube, it's just the best content!
  I strongly recommend to anyone who wants to build this project from scratch, that deep dive on these videos, there is a lot of valuable information there [here](https://www.youtube.com/watch?v=ubt-UjcQUYg) and [here](https://www.youtube.com/watch?v=ZjzMdsTWF0U).
+
+**Writing your own shell**
+
+Very good manual to understand the project concept and have a first overview about what is supposed to be built, [check it out](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf).
 
 Don't forget to go directly to the source: **RTFM** [Link](https://www.gnu.org/software/bash/manual/bash.html#Introduction)
 ## Contributing
