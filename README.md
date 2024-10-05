@@ -217,7 +217,11 @@ Remember, the content was extracted from two remarkable videos from HHP3, availa
 
 ## Builtins
 In bash, a builtin is a command that is built into the shell itself, rather than being implemented as a separate executable file. One of the main advantages of builtins are the fact that they run quickly than external commands, since the shell does not have to initialize a new process to execute them.
-To see more about builtins [see the manual](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html).
+
+In this project builtins are handled during the execution phase. The first string of a command array is sent to a function called `is_builtin`. If the result is positive, it returns `True`; otherwise, it returns `False`. This validation is an `if-else` statement, which directs the program to the appropriate builtin execution in the `execute_builtin` function.
+
+Here are the list of builtins implemented in this project:
+
 - `cd`		Changes the working directory to a the directory passed as argument, without argumens it changes to `home`.
 - `echo`	Displays a line of text, it has an optional flag `-n`, which prevents it to displaying a new line character at the end of the output.
 - `env`		Displays the environment variables.
