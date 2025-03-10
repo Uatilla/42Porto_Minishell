@@ -57,8 +57,6 @@ If you want to run the project yourself:
  
 	- Enter the repo and run ``` make ```
  
-	- The first time will download and set up the minilibx
- 
 	- Run ./minishell
 
 ## Rules
